@@ -1,0 +1,739 @@
+% !TeX spellcheck = bg_BG
+\documentclass[leqno]{beamer}
+\mode<presentation>
+\usetheme{Warsaw}
+\useoutertheme{split}
+\usepackage{amsmath}
+\usepackage{amstext}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsbsy}
+\usepackage[T2A]{fontenc}
+\usepackage[cp1251]{inputenc}
+\usepackage[english,bulgarian]{babel}
+\usepackage[]{graphicx}
+\usepackage{xcolor}
+\newtheorem{thm}{Теорема}
+\newtheorem{prop}{Твърдение}
+\newtheorem{lem}{Лема}
+\newtheorem{cor}{Следствие}
+% \theoremstyle{remark} % наименованието е в италик (а не в курсив), тялото е стандартно (а не в италик)
+\theoremstyle{definition} % наименованието е в курсив, тялото е стандартно (а не в италик)
+\newtheorem{remark}{Забележка}
+\newtheorem{defin}{Дефиниция}
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\eeq}{\end{equation}}
+\newcommand{\bs}{\boldsymbol}
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\sign}{sign}
+\DeclareMathOperator*{\meas}{meas}
+\DeclareMathOperator*{\essinf}{essinf}
+\DeclareMathOperator*{\Ran}{Ran} \DeclareMathOperator*{\intr}{int}
+\DeclareMathOperator*{\grad}{grad}
+\DeclareMathOperator*{\dist}{dist}
+\title[]{Неокейнсиански модели}
+\author[]{Андрей Василев \\ \href{mailto:avassilev@fmi.uni-sofia.bg}{avassilev@fmi.uni-sofia.bg} }
+\date{}
+
+
+\begin{document}
+
+\begin{frame}
+\begin{titlepage}
+
+\end{titlepage}
+\end{frame}
+
+
+
+
+\begin{frame}
+\frametitle{Основни въпроси}
+\begin{itemize}
+\item Общи положения
+\item Домакинства
+\item Фирми
+\item Равновесие
+\item Изследване на модела за различни форми на парична политика
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Общи положения}
+\framesubtitle{}
+\begin{itemize}
+\item Запазват се основните характеристики на разгледаните класически монетарни модели: липса на правителство, затворена икономика и т.н.
+\item Подобно на класическите модели имаме домакинства, фирми и централна банка.
+\item Основни разлики с класическите модели:
+	\begin{itemize}
+	\item Монополистична конкуренция
+	\item Негъвкавост в цените
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+
+
+\newcounter{slidenum}\stepcounter{slidenum}
+\begin{frame}
+\frametitle{Домакинства (\arabic{slidenum})}
+\framesubtitle{}
+Вече имаме не една стока, а множество (по-точно континуум) от стоки, потреблението на всяка от които е $ C_t(i),~i\in [0,1],$ по цена $ P_t(i)$.\bigskip
+
+Почти позната формулировка:
+\[ \max_{\{C_t\},\{N_t\}} E_0 \sum_{t=0}^{\infty}\beta^t U(C_t,N_t), \] но сега $ C_t $ е индекс (агрегатор) на потребление (интерпретация!), зададен от \[ C_t := \left(C_t(i)^{\frac{\varepsilon-1}{\varepsilon}}\,di\right)^{\frac{\varepsilon}{\varepsilon-1}}. \]
+Бюджетно ограничение: \[ Q_t B_t = B_{t-1} + W_t N_t - \int_{0}^{1}P_t(i) C_t(i)\,di - T_t  \]
+
+Допълнително изискване:
+$  \lim\limits_{T\rightarrow \infty} E_t\{B_T\} \geq 0  $
+\end{frame}
+
+
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Домакинства (\arabic{slidenum})}
+\framesubtitle{}
+В предходните лекции показахме, че задачата за минимизиране на разходите $ \int_0^1 P_t(i)C_t(i) \,di$ при ограничение зададена стойност на агрегатора $ C_t $ има решение 
+\begin{equation}
+C_t(i)=\left(\frac{P_t(i)}{P_t}\right)^{-\varepsilon}C_t,~\forall i \in [0,1]
+\label{eq:indivdemand}
+\end{equation} и е в сила \[ \int_0^1 P_t(i)C_t(i) \,di = P_t C_t, \] където $ P_t := \left(\int_0^1 P_t(i)^{1-\varepsilon}\,di\right)^{\frac{1}{1-\varepsilon}} $.
+
+Следователно в крайна сметка бюджетното ограничение има познатия вид \[ Q_t B_t = B_{t-1} + W_t N_t - P_t C_t - T_t  .\]
+\end{frame}
+
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Домакинства (\arabic{slidenum})}
+\framesubtitle{}
+За функцията на полезност \[ U(C_t,N_t)=\frac{C_t^{1-\sigma}}{1-\sigma}-\frac{N_t^{1+\varphi}}{1+\varphi},~\sigma>0,~\varphi \geq 1 \] лог-линеаризираните необходими условия отново имат вида 
+\begin{equation}
+w_t - p_t = \sigma c_t + \varphi n_t, 
+\label{eq:llinlabsupply}
+\end{equation}
+\begin{equation}
+c_t = E_t\{c_{t+1}\} - \frac{1}{\sigma}(i_t-E_t\{\pi_{t+1}\}-\rho).
+\label{eq:llinEuler}
+\end{equation}
+
+Отново при нужда ще използваме лог-линейна функция на търсене на пари \begin{equation}
+m_t-p_t = y_t-\eta i_t.
+\label{eq:llinmondem}
+\end{equation}
+\end{frame}
+
+
+
+\begin{frame}\setcounter{slidenum}{1}
+\frametitle{Фирми (\arabic{slidenum})}
+\framesubtitle{Постановка}
+\begin{itemize}
+\item Имаме континуум от фирми, които индексираме с $ i\in[0,1] $.
+\item Фирмите функционират в условия на монополистична конкуренция.
+\item Всяка фирма произвежда точно една от стоките в икономиката в количество, означавано с $ Y_t(i)$, използвайки технологията \[ Y_t(i) = A_t N_t(i)^{1-\alpha} \] при търсене на съответната стока, зададено с \eqref{eq:indivdemand}, и приемайки $ P_t $ и $ C_t $ за дадени.
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Фирми (\arabic{slidenum})}
+\framesubtitle{Постановка}\begin{itemize}
+\item Във всеки период $ t $ дадена фирма с вероятност $ 1-\theta $ получава възможност да промени цената на стоката си $ P_t(i) $, а с вероятност $ \theta $ запазва цената на стойността от предходния период (схема на Калво, Calvo(1983)).
+\item За простота приемаме, че фирмите са идентични и имат еднакви външни ограничения (допускане за симетрия).
+\item Тогава за дадена целева функция те ще вземат едни и същи решения и за улеснение можем да изпускаме индексирането по стоките $ i $.
+\item С $ P^*_t $ означаваме цената, която дадена фирма би избрала, когато в период $ t $ получи възможност да я актуализира. 
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Фирми (\arabic{slidenum})}
+\framesubtitle{Оптимално ценообразуване}
+Една фирма решава задачата за максимизиране на условната печалба \begin{equation}
+\max_{P^*_t}E_t \sum_{k=0}^{\infty}\theta^k \left\{ Q_{t,t+k} \left( P^*_t Y_{t+k|t}-\Psi_{t+k}(Y_{t+k|t}) \right) \right\}
+\label{eq:CalvoOptProblem}
+\end{equation} при ограничения \[ Y_{t+k|t} = \left(\frac{P^*_t}{P_{t+k}}\right)^{-\varepsilon} C_{t+k},\quad k=0,1,2,\ldots \]
+Означения:\begin{itemize}
+\item Стохастичен дисконтов фактор (множител) -- $ Q_{t,t+k} $
+
+\[ Q_{t,t+k} := \beta^k (C_{t+k}/C_t)^{-\sigma}(P_t/P_{t+k}) \]
+\item Функция на общите разходи (в зависимост от произвежданите количества) -- $ \Psi_t(\cdot) $
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Фирми (\arabic{slidenum})}
+\framesubtitle{Оптимално ценообразуване}
+След заместване на израза за $ Y_{t+k|t} $ във формулата за условната печалба имаме
+\[ E_t \sum_{k=0}^{\infty}\theta^k \left\{ Q_{t,t+k} \left[ P^*_t \left(\frac{P^*_t}{P_{t+k}}\right)^{-\varepsilon} C_{t+k}-\Psi_{t+k}\left(\left(\frac{P^*_t}{P_{t+k}}\right)^{-\varepsilon} C_{t+k}\right) \right] \right\} \]
+
+За получаване на необходимо условие за оптималност: 1) диференцираме по $ P^*_t $ и 2) приравняваме на нула. Диференцирането на израза в квадратни скоби дава 
+\[ \left(\frac{P^*_t}{P_{t+k}}\right)^{-\varepsilon} C_{t+k} + P^*_t (-\varepsilon)\frac{(P_t^*)^{-\varepsilon-1}}{P_{t+k}^{-\varepsilon}}C_{t+k} - \psi_{t+k|t} (-\varepsilon)\frac{(P_t^*)^{-\varepsilon-1}}{P_{t+k}^{-\varepsilon}}C_{t+k}, \]където $ \psi_{t+k|t}:= \Psi'_{t+k}(Y_{t+k|t})$ са номиналните пределни разходи в период $ t+k $ при цена, определена в период $ t $.
+\end{frame}
+
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Фирми (\arabic{slidenum})}
+\framesubtitle{Оптимално ценообразуване}
+Правим следните преобразувания:
+\begin{equation*}
+\begin{split}
+ Y_{t+k|t} - \varepsilon Y_{t+k|t} + \frac{\varepsilon}{P^*_t}\psi_{t+k|t}Y_{t+k|t} = \\{}\\ 
+ Y_{t+k|t} \left( 1-\varepsilon +\frac{\varepsilon}{P^*_t}\psi_{t+k|t} \right)= \\{}\\
+ \frac{Y_{t+k|t}}{P^*_t} \left( (1-\varepsilon)P^*_t + \frac{1-\varepsilon}{1-\varepsilon}\varepsilon \psi_{t+k|t}  \right) = \\{}\\
+ Y_{t+k|t}\frac{1-\varepsilon}{P^*_t} \left( P^*_t - \underbrace{\frac{\varepsilon}{\varepsilon-1}}_{\mathcal{M}} \psi_{t+k|t}  \right).
+\end{split}
+\end{equation*}  
+\end{frame}
+
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Фирми (\arabic{slidenum})}
+\framesubtitle{Оптимално ценообразуване}
+След заместване, приравняване на нула, използване на линейното свойство на очакването и съкращаване на $ \frac{1-\varepsilon}{P^*_t} $ получаваме необходимото условие за оптималност
+\begin{equation}
+ \sum_{k=0}^{\infty}\theta^k E_t \left\{ Q_{t,t+k}Y_{t+k|t} \left[  P^*_t - \mathcal{M} \psi_{t+k|t} \right] \right\} = 0.
+\label{eq:CalvoOptFOC}
+\end{equation}
+
+За специалния случай, когато цените са гъвкави ($ \theta = 0 $), условието \eqref{eq:CalvoOptFOC} приема вида \[ P^*_t = \mathcal{M} \psi_{t|t}, \] което може да се интерпретира като формиране на цената $ P^*_t $ чрез прилагане на надбавка $ \mathcal{M} $ върху пределните разходи $ \psi_{t|t} $.
+\end{frame}
+
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Фирми (\arabic{slidenum})}
+\framesubtitle{Оптимално ценообразуване}
+Ще пресметнем лог-линейно приближение на \eqref{eq:CalvoOptFOC} около стационарно състояние с нулева инфлация. За целта дефинираме ценови индекс между периоди $ t $ и $ t+k $ като $ \Pi_{t,t+k} := P_{t+k}/P_t $ и реални пределни разходи в период $ t+k $ при цена, определена в период $ t $, като $ \text{MC}_{t+k|t} :=  \psi_{t+k|t}/P_{t+k}$. Тогава \eqref{eq:CalvoOptFOC} може да се запише като \begin{equation}
+\sum_{k=0}^{\infty}\theta^k E_t \left\{ Q_{t,t+k}Y_{t+k|t} \left[ \frac{P^*_t}{P_{t-1}} - \mathcal{M} \text{MC}_{t+k|t} \Pi_{t-1,t+k} \right] \right\} = 0.
+\label{eq:CalvoOptFOC1}
+\end{equation}
+
+За стационарно състояние с нулева инфлация имаме $P^*_t = P_{t+k}$, $P^*_t/P_{t-1}=1$ и $\Pi_{t-1,t+k}=1$, откъдето $ Y_{t+k|t}=Y $ и $  \text{MC}_{t+k|t}= \text{MC} $. Освен това в стационарното състояние $ Q_{t,t+k} = \beta^k $. Тогава от \eqref{eq:CalvoOptFOC1} следва $\text{MC} = 1/\mathcal{M}$.\pause\newline
+\textbf{Задача:} Проверете последното твърдение.
+\end{frame}
+
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Фирми (\arabic{slidenum})}
+\framesubtitle{Оптимално ценообразуване}
+Връзката \eqref{eq:CalvoOptFOC1} може да бъде записана като 
+\begin{equation*}
+ \sum_{k=0}^{\infty}(\beta \theta)^k E_t \left\{ \widetilde{Q}_{t,t+k} Y_{t+k|t} \left[ \frac{P^*_t}{P_{t-1}} - \mathcal{M} \text{MC}_{t+k|t} \Pi_{t-1,t+k} \right] \right\} = 0 ,
+\end{equation*} където $ \widetilde{Q}_{t,t+k} := \left(\frac{C_{t+k}}{C_t}\right)^{-\sigma}\left(\frac{P_t}{P_{t+k}}\right) $. Тогава \begin{equation*}
+\begin{split}
+&\sum_{k=0}^{\infty}(\beta \theta)^k E_t \left\{ e^{\widetilde{q}_{t,t+k}}e^{y_{t+k|t}}e^{p^*_t}e^{-p_{t-1}} \right\} =\\
+& \sum_{k=0}^{\infty}(\beta \theta)^k E_t \left\{ e^{\widetilde{q}_{t,t+k}}e^{y_{t+k|t}} e^\mu e^{\text{mc}_{t+k|t}}e^{p_{t+k}}e^{-p_{t-1}} \right\},
+\end{split}
+\end{equation*} където е използвано означението $ \mu := \ln \mathcal{M} $. (При това означение в стационарното състояние имаме $ \text{mc}=-\mu $.)
+\end{frame}
+
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Фирми (\arabic{slidenum})}
+\framesubtitle{Оптимално ценообразуване}
+Нека означим стационарната стойност на $e^{\widetilde{q}_{t,t+k}}e^{y_{t+k|t}}e^{p^*_t}e^{-p_{t-1}}$ с $ e^{\text{EQ}_1} $, а тази на $ e^{\widetilde{q}_{t,t+k}}e^{y_{t+k|t}} e^\mu e^{\text{mc}_{t+k|t}}e^{p_{t+k}}e^{-p_{t-1}} $ ще означим с $ e^{\text{EQ}_2} $. Имаме $ e^{\text{EQ}_1} = e^{\text{EQ}_2} $.
+
+При линеаризиране на последния запис на НУ за оптималност около избраното стационарно състояние получаваме 
+\begin{equation*}
+\begin{split}
+&\sum_{k=0}^{\infty}(\beta \theta)^k E_t \biggl\{ e^{\text{EQ}_1} + e^{\text{EQ}_1}(\widetilde{q}_{t,t+k}-\widetilde{q}) + e^{\text{EQ}_1}(y_{t+k|t}-y) +\\ 
+& e^{\text{EQ}_1} (p^*_t-p^*) - e^{\text{EQ}_1}(p_{t-1}-p) \biggr\} =\sum_{k=0}^{\infty}(\beta \theta)^k E_t \biggl\{ e^{\text{EQ}_2} + \\
+& e^{\text{EQ}_2}(\widetilde{q}_{t,t+k}-\widetilde{q}) + e^{\text{EQ}_2}(y_{t+k|t}-y) + e^{\text{EQ}_2} (\underbrace{\text{mc}_{t+k|t}-\text{mc}}_{:=~ \widehat{\text{mc}}_{t+k|t}})+\\
+& e^{\text{EQ}_2}(p_{t+k}-p) - e^{\text{EQ}_2}(p_{t-1}-p) \biggr\}.
+\end{split}
+\end{equation*}
+\end{frame}
+
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Фирми (\arabic{slidenum})}
+\framesubtitle{Оптимално ценообразуване}
+След съкращаване получаваме
+\begin{equation*}
+\sum_{k=0}^{\infty}(\beta \theta)^k E_t \left\{ p^*_t - p_{t-1} \right\} =\sum_{k=0}^{\infty}(\beta \theta)^k E_t \left\{ \widehat{\text{mc}}_{t+k|t} + p_{t+k} - p_{t-1} \right\},\text{ т.е.}
+\end{equation*}
+\begin{equation}
+p^*_t - p_{t-1} = (1-\beta\theta)\sum_{k=0}^{\infty}(\beta \theta)^k E_t \left\{ \widehat{\text{mc}}_{t+k|t} + (p_{t+k} - p_{t-1}) \right\}.
+\label{eq:CalvoFOCLLin}
+\end{equation}
+
+\textbf{Задача:} Покажете, че \eqref{eq:CalvoFOCLLin} може да се запише като \[ p^*_t  = \mu + (1-\beta\theta)\sum_{k=0}^{\infty}(\beta \theta)^k E_t \left\{ \text{mc}_{t+k|t} + p_{t+k}  \right\}. \]
+
+Понеже за $ \mathcal{M} \approx 1 $ имаме $ \mu \approx \mathcal{M} - 1 $ (нетна надбавка), последният израз се интерпретира като формиране на цената чрез надбавка над претеглените очаквани номинални пределни разходи.
+\end{frame}
+
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Фирми (\arabic{slidenum})}
+\framesubtitle{Извеждане на общата динамика на цените}
+\begin{itemize}
+\item Нека $ S(t)\subset [0,1] $ е множеството на фирмите, които не са получили възможност да актуализират цената си в период~$ t $. Понеже сме приели, че сме в симетричния случай, всяка такава фирма в период $ t $ ще има една и съща цена $ P_{t-1}(i)=P_{t-1} $.
+\item Останалите фирми са свободни да актуализират цената си и, както видяхме, избират цена $ P^*_t $.
+\item Тогава общият ценови индекс ще има вида 
+\begin{equation*}
+\begin{split}
+P_t & = \left[\int_{S(t)}P_{t-1}(i)^{1-\varepsilon}\,di + \int_{[0,1]\setminus S(t)}(P^*_{t})^{1-\varepsilon}\,di \right]^{\frac{1}{1-\varepsilon}}\\
+& = \left[\theta (P_{t-1})^{1-\varepsilon} + (1-\theta)(P^*_{t})^{1-\varepsilon} \right]^{\frac{1}{1-\varepsilon}},
+\end{split}
+\end{equation*} където вторият ред следва от (вариант на) закона за големите числа.
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Фирми (\arabic{slidenum})}
+\framesubtitle{Извеждане на общата динамика на цените}
+При използване на стандартната дефиниция $ \Pi_t := P_t/P_{t-1} $ имаме \begin{equation}
+\Pi_t^{1-\varepsilon} = \theta + (1-\theta)\left(\frac{P^*_t}{P_{t-1}}\right)^{1-\varepsilon}.
+\label{eq:AggrInfl}
+\end{equation}
+
+При лог-линеаризиране на \eqref{eq:AggrInfl} в околност на стационарно състояние с нулева инфлация, т.е. $ \Pi_t = \Pi = 1 $ и $ P^*_t = P^* = P_t = P $, имаме \begin{equation}
+\pi_t = (1-\theta)(p^*_t-p_{t-1}) .
+\label{eq:AggrInflLLin}
+\end{equation} \pause
+\textbf{Задача:} Изведете уравнение \eqref{eq:AggrInflLLin}.
+\end{frame}
+
+
+
+\begin{frame}\setcounter{slidenum}{1}
+\frametitle{Равновесие (\arabic{slidenum})}
+\framesubtitle{Пазар на стоки}
+Условие за изравняване на търсенето и предлагането за всяка стока:
+\[ Y_t(i)=C_t(i),\quad \forall i\in [0,1],~ t=0,1,\ldots \]
+
+Дефинираме общото производство в икономиката като \[ Y_t:= \left[ \int_{0}^{1} Y_t(i)^{\frac{\varepsilon-1}{\varepsilon}}\,di \right]^{\frac{\varepsilon}{\varepsilon-1}}. \]
+
+Тогава получаваме, че имаме изравняване и на съвкупното търсене и предлагане:
+\[ Y_t = C_t.\]
+
+Като използваме последната връзка, от уравнението на Ойлер \eqref{eq:llinEuler} получаваме \begin{equation}
+y_t = E_t\{y_{t+1}\} - \frac{1}{\sigma}(i_t-E_t\{\pi_{t+1}\}-\rho).
+\label{eq:llinEulerOutput}
+\end{equation}
+\end{frame}
+
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Равновесие (\arabic{slidenum})}
+\framesubtitle{Пазар на труд}
+Изравняване на търсенето и предлагането на труд:
+\[ N_t = \int_{0}^{1}N_t(i)\,di . \]
+
+След заместване на $ N_t(i) $  от производствената функция в горното условие получаваме \begin{equation*}
+\begin{split}
+N_t & = \int_{0}^{1} \left(\frac{Y_t(i)}{A_t}\right)^{\frac{1}{1-\alpha}}\,di = \int_{0}^{1} \left(\frac{P_t(i)^{-\varepsilon}Y_t}{A_t P_t^{-\varepsilon}}\right)^{\frac{1}{1-\alpha}}\,di\\
+& = \left(\frac{Y_t}{A_t}\right)^{\frac{1}{1-\alpha}} \int_{0}^{1} \left(\frac{P_t(i)}{P_t}\right)^{-\frac{\varepsilon}{1-\alpha}}\,di.
+\end{split}
+\end{equation*}
+Логаритмуваме и получаваме \[ (1-\alpha)n_t = y_t - a_t + d_t, \] където $ d_t := (1-\alpha)\ln \int_{0}^{1} \left(\frac{P_t(i)}{P_t}\right)^{-\frac{\varepsilon}{1-\alpha}}\,di $.
+\end{frame}
+
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Равновесие (\arabic{slidenum})}
+\framesubtitle{Пазар на труд}
+Величината $ d_t $ може да се интерпретира като измерител на ,,разсейването'' (разпръснатостта) на цените между различните фирми. За нея може да се докаже, че в околност на стационарно състояние с нулева инфлация тя е пренебрежима в сравнение с другите величини и може да се изпусне. \bigskip
+
+Така получаваме линейно приближение за връзката между съвкупно производство, технологии и заетост \begin{equation}
+y_t = a_t + (1-\alpha)n_t.
+\label{eq:yna}
+\end{equation}
+
+Обърнете внимание, че ако сме се съгласили да работим с точност до линейно приближение, уравнение \eqref{eq:yna} е еквивалентно с това да сме приели, че имаме производствена функция от типа Коб-Дъглас на макро ниво:
+\[ Y_t = A_t N_t^{1-\alpha}. \] 
+\end{frame}
+
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Равновесие (\arabic{slidenum})}
+\framesubtitle{Следствия от производствената технология на макро ниво}
+Пределният продукт на труда $ \text{MPN}_t $ за производствената функция $ Y_t = A_t N_t^{1-\alpha} $ има вида \[  \text{MPN}_t = \frac{\partial}{\partial N_t} \left(A_t N_t^{1-\alpha}\right) = (1-\alpha)A_t N_t^{-\alpha}, \] откъдето \[ \text{mpn}_t = \ln (1-\alpha) + a_t - \alpha n_t .\]
+
+За тази производствена технология общите номинални разходи за производство са $ \text{TC}^n_t = W_t N_t = W_t \left(\frac{Y_t}{A_t}\right)^{\frac{1}{1-\alpha}} $ и тогава номиналните пределни разходи са \[ \text{MC}^n_t = \frac{\partial \text{TC}^n_t}{\partial Y_t} = \frac{W_t}{(1-\alpha)A_t N_t^{-\alpha}} = \frac{W_t}{\text{MPN}_t} .\]
+\end{frame}
+
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Равновесие (\arabic{slidenum})}
+\framesubtitle{Следствия от производствената технология на макро ниво}
+Реалните пределни разходи са \[ \text{MC}_t := \frac{\text{MC}^n_t}{P_t} = \frac{W_t}{P_t(1-\alpha)A_t N_t^{-\alpha}} = \frac{W_t}{P_t \text{MPN}_t}. \]
+
+Тогава логаритмуваните реални пределни разходи за икономиката са \begin{equation*}
+\begin{split}
+\text{mc}_t & = (w_t-p_t)-\text{mpn}_t\\
+& = (w_t - p_t) -(a_t - \alpha n_t) - \ln (1-\alpha)\\
+& = (w_t - p_t) -\frac{1}{1-\alpha}(a_t - \alpha y_t) - \ln (1-\alpha),
+\end{split}
+\end{equation*} където последният ред е получен с използване на \eqref{eq:yna}.
+
+Ако искаме да запишем усреднени реални пределни разходи или усреднен реален продукт на труда, в нашия случай предходните формули запазват вида си, понеже формално трябва да разделим на ,,броя'' на агентите в икономиката, който е мярката на интервала $ [0,1] $, т.е. 1.
+\end{frame}
+
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Равновесие (\arabic{slidenum})}
+\framesubtitle{Резултати на ниво фирма}
+Предходните разсъждения могат формално да се приложат и на ниво фирма, а не само на агрегирано ниво за цялата икономика, тъй като структурата на задачата е същата. Единствената разлика ще бъде, че за отделната фирма търсенето, съответно производството, реалните пределни разходи и пределният продукт на труда, се формират за период $ t+k $ евентуално при цена, определена в $ t $. Съответно имаме
+\begin{equation*}
+\begin{split}
+\text{mc}_{t+k|t} & = (w_{t+k}-p_{t+k})-\text{mpn}_{t+k|t}\\
+& = (w_{t+k} - p_{t+k}) -\frac{1}{1-\alpha}(a_{t+k} - \alpha y_{t+k|t}) - \ln (1-\alpha).
+\end{split}
+\end{equation*}\bigskip
+
+Ще използваме последната формула, за да изразим реалните пределни разходи за една фирма чрез усреднените реални пределни разходи за икономиката като цяло.
+\end{frame}
+
+
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Равновесие (\arabic{slidenum})}
+\framesubtitle{Резултати на ниво фирма}
+Имаме
+\begin{equation*}
+\begin{split}
+\text{mc}_{t+k|t} & = (w_{t+k} - p_{t+k}) -\frac{1}{1-\alpha}(a_{t+k} - \alpha y_{t+k|t}) - \ln (1-\alpha)\\
+& = (w_{t+k} - p_{t+k}) -\frac{1}{1-\alpha}(a_{t+k} {\color{red}~\pm~\alpha y_{t+k}}  - \alpha y_{t+k|t}) - \ln (1-\alpha)\\
+& = \text{mc}_{t+k} + \frac{\alpha }{1-\alpha}(y_{t+k|t} - y_{t+k}) \\
+& = \text{mc}_{t+k} + \frac{\alpha }{1-\alpha}({\color{red} -\varepsilon(p^*_t - p_{t+k})+c_{t+k}} - y_{t+k})
+\end{split}
+\end{equation*}
+
+Окончателно получаваме \begin{equation}\begin{split}
+\text{mc}_{t+k|t}& = \text{mc}_{t+k} - \frac{\alpha \varepsilon}{1-\alpha}( p^*_t - p_{t+k})\\
+& =  \text{mc}_{t+k} + \frac{\alpha }{1-\alpha}(y_{t+k|t} - y_{t+k}).
+\end{split}
+\label{eq:mc-firm+macro}
+\end{equation}
+\end{frame}
+
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Равновесие (\arabic{slidenum})}
+\framesubtitle{Резултати на ниво фирма}
+
+При $ \alpha = 0 $ (постоянна възвращаемост от мащаба) получаваме като частен случай на \eqref{eq:mc-firm+macro} връзката $ \text{mc}_{t+k|t}= \text{mc}_{t+k} $, т.е. пределните разходи на фирмата не зависят от индивидуалната цена (или обем на производството) и са едни и същи за различните фирми.\bigskip
+
+От формула \eqref{eq:mc-firm+macro} също така се вижда, че:
+\begin{itemize}
+\item по-големият обем на производството за дадена фирма спрямо средното за икономиката води до по-големи реални пределни разходи спрямо средните;
+\item при по-висока цена, определена в момент $ t $, в сравнение със средната цена за момент $ t+k $ реалните пределни разходи на фирмата са под средните.
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Равновесие (\arabic{slidenum})}
+\framesubtitle{Уравнение за инфлацията}
+При заместване на израза за $ \text{mc}_{t+k|t} $ от \eqref{eq:mc-firm+macro} в уравнение \eqref{eq:CalvoFOCLLin} и преобразуване получаваме 
+\begin{equation*}
+\begin{split}
+ p^*_t - p_{t-1} & = (1-\beta\theta)\sum_{k=0}^{\infty}(\beta \theta)^k E_t \left\{ \Theta \widehat{\text{mc}}_{t+k} + (p_{t+k} - p_{t-1}) \right\}\\
+ & = (1-\beta\theta)\Theta \sum_{k=0}^{\infty}(\beta \theta)^k E_t \left\{ \widehat{\text{mc}}_{t+k} \right\} + \sum_{k=0}^{\infty}(\beta \theta)^k E_t \left\{ \pi_{t+k} \right\},
+\end{split}
+\end{equation*}където $ \Theta := \frac{1-\alpha}{1-\alpha + \alpha \varepsilon} \leq 1 $.\bigskip
+
+\textbf{Задача:} Покажете, че първият и вторият ред на горното равенство са еквивалентни. \bigskip
+
+Горното равенство може да бъде записано като \begin{equation}
+p^*_t-p_{t-1} = \beta\theta E_t\{p^*_{t+1}-p_t\} + (1-\beta\theta)\Theta \widehat{\text{mc}}_t + \pi_t.
+\label{eq:p*pt-1Recursive}
+\end{equation}
+\end{frame}
+
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Равновесие (\arabic{slidenum})}
+\framesubtitle{Уравнение за инфлацията}
+Като заместим \eqref{eq:AggrInflLLin} в \eqref{eq:p*pt-1Recursive} стигаме до уравнението за инфлацията \begin{equation}
+\pi_t = \beta E_t\{\pi_{t+1}\} + \lambda \widehat{\text{mc}}_t ,
+\label{eq:InflEq}
+\end{equation} където $ \lambda := \frac{(1-\theta)(1-\beta \theta)}{\theta}\Theta $.\bigskip
+
+След рекурсивно заместване в \eqref{eq:InflEq} можем да получим инфлацията, изразена като функция на очакваните отклонения на реалните пределни разходи от стационарната им стойност \[ \pi_t = \lambda \sum_{k=0}^{\infty} \beta^k E_t \left\{ \widehat{\text{mc}}_{t+k} \right\} .\]
+\end{frame}
+
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Равновесие (\arabic{slidenum})}
+\framesubtitle{Усреднени реални пределни разходи като функция на производство и технология}
+Усреднените реални пределни разходи могат да бъдат записани във вида
+\begin{equation}
+\begin{split}
+\text{mc}_t & = \underbrace{(w_t-p_t)}_{\text{прилагаме }\eqref{eq:llinlabsupply}} - \text{mpn}_t\\
+& = (\sigma y_t + \varphi n_t) - (y_t-n_t) - \ln (1-\alpha)\\
+& = \left(\sigma+\frac{\varphi+\alpha}{1-\alpha}\right)y_t - \frac{1+\varphi}{1-\alpha}a_t - \ln (1-\alpha).
+\end{split}
+\label{eq:averagerealMC}
+\end{equation}\bigskip
+
+Ако цените са гъвкави, реалните пределни разходи са постоянни: $ \text{mc} = -\mu $.\bigskip
+
+\textbf{Задача:} Убедете се в това, като използвате \eqref{eq:CalvoOptFOC1}.
+\end{frame}
+
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Равновесие (\arabic{slidenum})}
+\framesubtitle{Естествено ниво на производство}
+Дефинираме \textit{естественото ниво на производство} $ y^n_t $ като нивото на производство в условия на гъвкави цени:\begin{equation}
+\text{mc} = \left(\sigma+\frac{\varphi+\alpha}{1-\alpha}\right)y^n_t - \frac{1+\varphi}{1-\alpha}a_t - \ln (1-\alpha),
+\label{eq:NatLevOutput}
+\end{equation} откъдето \begin{equation}
+y^n_t=\psi^n_{ya}a_t + \vartheta^n_a
+\label{eq:NatLevOutputShort}
+\end{equation} при означенията \[ \psi^n_{ya}:=\frac{1+\varphi}{\sigma (1-\alpha)+\varphi+\alpha},\quad \vartheta^n_y := -\frac{(1-\alpha) (\mu - \ln (1-\alpha))}{\sigma (1-\alpha)+\varphi+\alpha} > 0. \]
+
+Ако $ \mu=0 $, т.е. няма надбавка, което се интерпретира като условия на съвършена конкуренция, тогава \eqref{eq:NatLevOutputShort} съвпада с формулата за случая на класическия монетарен модел.
+\end{frame}
+
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Равновесие (\arabic{slidenum})}
+\framesubtitle{Отклонение от потенциалното производство. Връзка с реалните пределни разходи.}
+Изваждайки \eqref{eq:NatLevOutput} от \eqref{eq:averagerealMC} получаваме \begin{equation}
+\widehat{\text{mc}}_t = \left(\sigma+\frac{\varphi+\alpha}{1-\alpha}\right)\underbrace{(y_t-y^n_t)}_{:=~\widetilde{y}_t} = \left(\sigma+\frac{\varphi+\alpha}{1-\alpha}\right)\widetilde{y}_t.
+\label{eq:mchat}
+\end{equation}
+
+Величината $ \widetilde{y}_t $ представлява отклонението на (лог) производството от потенциалната му стойност и за краткост я наричаме \textit{отклонение от потенциалното производство} (output gap). В случая потенциалната стойност е стойността на производството при гъвкави цени.
+\end{frame}
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Равновесие (\arabic{slidenum})}
+\framesubtitle{Неокейнсианска крива на Филипс}
+Като заместим израза за $ \widehat{\text{mc}}_t $ от \eqref{eq:mchat} в уравнение \eqref{eq:InflEq} можем да получим инфлацията в даден период като функция на очакваната инфлация и отклонението от потенциалното производство
+\begin{equation}
+\pi_t = \beta E_t\{\pi_{t+1}\} + \kappa \widetilde{y}_t,
+\label{eq:NKPC}
+\end{equation}при $ \kappa := \lambda \left(\sigma+\frac{\varphi+\alpha}{1-\alpha}\right) $.\bigskip
+
+Уравнение \eqref{eq:NKPC} се нарича \textit{неокейнсианска крива на Филипс} (New Keynesian Phillips Curve).\bigskip
+
+За сравнение, в курса по Макроикономика-1 във ФМИ се разглежда опростен вариант на крива на Филипс:
+\[ \pi_t = \bar{\pi} + b \hat{y}_t + \varepsilon_{2,t}. \]
+\end{frame}
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Равновесие (\arabic{slidenum})}
+\framesubtitle{Динамично IS уравнение}
+Нека запишем уравнение \eqref{eq:llinEulerOutput} като \[ \underbrace{y_t {\color{red}- y_t^n}}_{ \widetilde{y}_t} =\underbrace{ E_t\{y_{t+1}\} {\color{blue}-E_t\{y^n_{t+1}\}}}_{E_t \{\widetilde{y}_{t+1}\}} \underbrace{{\color{blue}+E_t\{y^n_{t+1}\}} {\color{red}- y_t^n}}_{E_t \{\Delta y^n_{t+1}\}} - \frac{1}{\sigma}(i_t-E_t\{\pi_{t+1}\}-\rho) . \]
+
+След преобразуване получаваме т.нар. \textit{динамично IS уравнение} (динамична IS крива, dynamic IS equation): \begin{equation}
+\widetilde{y}_t = -\frac{1}{\sigma} (i_t-E_t\{\pi_{t+1}\} - r^n_t)+ E_t \{\widetilde{y}_{t+1}\},
+\label{eq:DIS}
+\end{equation} където $ r^n_t $ е \textit{естественото ниво на лихвения процент} и се дефинира като \begin{equation}
+\begin{split}
+r_t^n &:= \rho + \sigma E_t \{\Delta y^n_{t+1}\}\\
+& \phantom{:}= \rho + \sigma \psi_{ya}^n  E_t \{\Delta a^n_{t+1}\}.
+\end{split}
+\label{eq:NatInterest}
+\end{equation}
+
+За сравнение, вариант на IS крива от Макроикономика-1:
+$  \hat{y}_t = -a(r_t-\bar{r})+\varepsilon_{1,t}. $ 
+\end{frame}
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Равновесие (\arabic{slidenum})}
+\framesubtitle{Динамично IS уравнение}
+Динамичното IS уравнение \eqref{eq:DIS} може да бъде записано като
+\begin{equation*}
+\begin{split}
+\widetilde{y}_t &= -\frac{1}{\sigma}(r_t - r^n_t)+ E_t \{\widetilde{y}_{t+1}\}\\
+&= -\frac{1}{\sigma} \sum_{k=0}^{T-1} E_t\{r_{t+k}-r^n_{t+k}\} + E_t\{\tilde{y}_{t+T}\},~T=1,2,\ldots
+\end{split}
+\end{equation*}
+
+Нека е в сила $ \lim_{T\rightarrow \infty}E_t\{\tilde{y}_{t+T}\} = 0 $, т.е. очакваме в дългосрочен план влиянието на номиналните негъвкавости в икономиката да бъде елиминирано.
+
+Тогава след граничен преход за $T\rightarrow \infty $ имаме 
+\begin{equation}
+\widetilde{y}_t = -\frac{1}{\sigma} \sum_{k=0}^{\infty} E_t\{r_{t+k}-r^n_{t+k}\} ,
+\label{eq:DIS-r-rn}
+\end{equation} т.е. отклонението от потенциалното производство е функция на очакваните отклонения на реалния лихвен процент от естественото му ниво.
+\end{frame}
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Равновесие (\arabic{slidenum})}
+\framesubtitle{Обобщение: неокейнсианският модел преди въвеждане на икономическа политика}
+\begin{itemize}
+\item Неокейнсианската крива на Филипс определя инфлацията при зададена траектория на отклонението от потенциалното производство.
+\item Динамичното IS уравнение определя потенциалното производство при зададени траектории на: \begin{itemize}
+\item естественото ниво на лихвения процент $ r^n_t $ --- от \eqref{eq:NatInterest} е ясно, че то е екзогенно, като зависи само от процеса за технологията;
+\item реалния лихвен процент $ r_t:=i_t-E_t\{\pi_{t+1}\} $ --- той по дефиниция зависи от номиналния лихвен процент $ i_t $.
+\end{itemize}
+\item За да решим модела е необходимо да въведем и някаква форма на икономическа политика. По-нататък ще разглеждаме варианти за въвеждане конкретно на парична политика.
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}\setcounter{slidenum}{1}
+\frametitle{Въвеждане на парична политика (\arabic{slidenum})}
+\framesubtitle{Просто правило за определяне на номиналния лихвен процент}
+Приемаме, че номиналният лихвен процент се определя по правилото
+\begin{equation}
+i_t = \rho + \phi_{\pi}\pi_t + \phi_y \widetilde{y}_t + \nu_t,
+\label{eq:SimpleIntRule}
+\end{equation} където $ \phi_\pi,~ \phi_y \geq 0 $, а $ \nu_t $ най-често се приема за случаен компонент с нулева средна.\bigskip
+
+В литературата правило за определяне на лихвения процент от типа на \eqref{eq:SimpleIntRule} се нарича \textit{правило на Тейлър}.
+\end{frame}
+
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Въвеждане на парична политика (\arabic{slidenum})}
+\framesubtitle{Просто правило за определяне на номиналния лихвен процент}
+След заместване на \eqref{eq:SimpleIntRule} в \eqref{eq:DIS}, опростяване и последващо заместване на резултата в \eqref{eq:NKPC} получаваме системата \begin{equation}
+\left[\begin{array}{l}
+\widetilde{y}_t \\ 
+\pi_t
+\end{array} \right] = \mathbf{A}_T \left[\begin{array}{l}
+E_t\{\widetilde{y}_{t+1}\} \\ 
+E_t\{\pi_{t+1}\}
+\end{array} \right] + \mathbf{B}_T (\hat{r}^n_t-\nu_t),
+\label{eq:NKM_rule}
+\end{equation} където $ \hat{r}^n_t := r_t^n -\rho $ и \[ \mathbf{A}_T := \Omega \left[ \begin{matrix}
+\sigma & 1-\beta \phi_\pi \\ 
+\sigma \kappa & \kappa + \beta (\sigma + \phi_y)
+\end{matrix}  \right] ,~ \mathbf{B}_T := \Omega \left[\begin{matrix}
+1 \\ 
+\kappa
+\end{matrix}\right] \text{ за }\Omega := \frac{1}{\sigma + \phi_y + \kappa \phi_\pi}. \]
+
+И двете променливи $ \tilde{y}_t $ и $ \pi_t $ зависят от променливи, които ще бъдат определени през следващия период, съответно условията на Бланшар-Кан изискват и двете собствени числа на матрицата $ \mathbf{A}_T $ да бъдат по-големи по модул от 1. Това условие е изпълнено, ако е в сила \[ \kappa(\phi_\pi-1)+(1-\beta)\phi_y>0. \]
+\end{frame}
+
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Въвеждане на парична политика (\arabic{slidenum})}
+\framesubtitle{Просто правило за определяне на номиналния лихвен процент}
+Ще разгледаме ефектите при избраното правило за определяне на лихвения процент от шокове в паричната политика и в технологиите. За целта приемаме, че динамиката на $ \nu_t $ и $ a_t $ се задава от AR(1) процесите
+\[ \begin{split}
+\nu_t & = \rho_\nu \nu_{t-1} + \varepsilon^\nu_t,  \qquad \rho_\nu \in [0,1),~\varepsilon^\nu_t \text{ -- бял шум със средна 0,} \\
+a_t &= \rho_a a_{t-1} + \varepsilon^a_t, \qquad \rho_a \in [0,1),~\varepsilon^a_t \text{ -- бял шум със средна 0.}
+\end{split} \] \bigskip
+
+В книгата на Gal\'{\i} тези два случая са разгледани аналитично, като променливите от модела са представени като функция на съответните шокове (вж. \S\S 3.4.1.1 и 3.4.1.2). Ние ще изследваме ефектите числено с помощта на Dynare.\bigskip
+
+\textbf{Забележка:} По-нататък ще използваме означението $ l_t := m_t-p_t $ за реалните парични баланси.
+\end{frame}
+
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Въвеждане на парична политика (\arabic{slidenum})}
+\framesubtitle{Просто правило за определяне на номиналния лихвен процент -- шок в $ \nu_t $}
+\begin{center}
+\includegraphics[width=1.0\linewidth]{G-3-1}
+\end{center}
+\end{frame}
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Въвеждане на парична политика (\arabic{slidenum})}
+\framesubtitle{Просто правило за определяне на номиналния лихвен процент -- шок в $ a_t $}
+\begin{figure}
+\begin{center}
+\includegraphics[width=1.0\linewidth]{G-3-2}
+\end{center}
+\end{figure}
+\end{frame}
+
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Въвеждане на парична политика (\arabic{slidenum})}
+\framesubtitle{Екзогенно зададено парично предлагане}
+При този вариант на парична политика се предполага, че централната банка определя не номиналния лихвен процент, а паричното предлагане $ m_t $.
+
+За записване на системата в подходящ вид са необходими някои трансформации. Уравнение \eqref{eq:llinmondem} може да бъде записано във вида 
+\[ \widetilde{y}_t - \eta i_t = l_t - y^n_t. \] След заместване в \eqref{eq:DIS} и опростяване получаваме \begin{equation}
+(1+\sigma \eta) \widetilde{y}_t = \sigma\eta E_t\{\widetilde{y}_{t+1}\} + l_t +\eta E_t \{\pi_{t+1}\} + \eta r^n_t - y^n_t.
+\label{eq:DIS-transf}
+\end{equation}
+
+Освен това, от тъждеството $ l_t := m_t-p_t $ следва $ \Delta l_t := \Delta m_t - \Delta p_t $, т.е. \begin{equation}
+l_{t-1} = l_t + \pi_t - \Delta m_t.
+\label{eq:RealMonBalTransf}
+\end{equation}
+\end{frame}
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Въвеждане на парична политика (\arabic{slidenum})}
+\framesubtitle{Екзогенно зададено парично предлагане}
+Ще разгледаме реакциите на модела при шокове в паричното предлагане и в технологиите. Приемаме, че $ \Delta m_t $ и $ a_t $ се описват с процесите
+\begin{equation*}
+\begin{split}
+\Delta m_t & = \rho_m \Delta m_{t-1} + \varepsilon^m_t,\quad  \rho_m \in [0,1),~\varepsilon^m_t \text{ -- бял шум със средна 0,} \\
+a_t &= \rho_a a_{t-1} + \varepsilon^a_t,\quad  \rho_a \in [0,1),~\varepsilon^a_t \text{ -- бял шум със средна 0.}
+\end{split}
+\end{equation*}
+\end{frame}
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Въвеждане на парична политика (\arabic{slidenum})}
+\framesubtitle{Екзогенно зададено парично предлагане -- шок в $ \Delta m_t $}
+\begin{figure}
+\begin{center}
+\includegraphics[width=1.0\linewidth]{G-3-3}
+\end{center}
+\end{figure}
+\end{frame}
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Въвеждане на парична политика (\arabic{slidenum})}
+\framesubtitle{Екзогенно зададено парично предлагане -- шок в $ a_t $}
+\begin{figure}
+\begin{center}
+\includegraphics[width=1.0\linewidth]{G-3-4}
+\end{center}
+\end{figure}
+\end{frame}
+
+\end{document}
+
+
+

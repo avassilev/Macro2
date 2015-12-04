@@ -1,0 +1,312 @@
+% !TeX spellcheck = bg_BG
+\documentclass[leqno]{beamer}
+\mode<presentation>
+\usetheme{Warsaw}
+\useoutertheme{split}
+\usepackage{amsmath}
+\usepackage{amstext}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsbsy}
+%\usepackage[bookmarks=false]{hyperref}
+%\usepackage[round]{natbib}
+%\usepackage{rotating}
+%\usepackage{pstricks}
+\usepackage[T2A]{fontenc}
+\usepackage[cp1251]{inputenc}
+\usepackage[english,bulgarian]{babel}
+\usepackage[]{graphicx}
+\usepackage{xcolor}
+\newtheorem{thm}{Теорема}
+\newtheorem{prop}{Твърдение}
+\newtheorem{lem}{Лема}
+\newtheorem{cor}{Следствие}
+% \theoremstyle{remark} % наименованието е в италик (а не в курсив), тялото е стандартно (а не в италик)
+\theoremstyle{definition} % наименованието е в курсив, тялото е стандартно (а не в италик)
+\newtheorem{remark}{Забележка}
+\newtheorem{defin}{Дефиниция}
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\eeq}{\end{equation}}
+\newcommand{\bs}{\boldsymbol}
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\sign}{sign}
+\DeclareMathOperator*{\meas}{meas}
+\DeclareMathOperator*{\essinf}{essinf}
+\DeclareMathOperator*{\Ran}{Ran} \DeclareMathOperator*{\intr}{int}
+\DeclareMathOperator*{\grad}{grad}
+\DeclareMathOperator*{\dist}{dist}
+\title[]{Детерминистични динамични оптимизационни задачи с явни управления}
+\author[]{Андрей Василев \\ \href{mailto:avassilev@fmi.uni-sofia.bg}{avassilev@fmi.uni-sofia.bg} }
+\date{}
+
+
+\begin{document}\newcounter{slidenum}
+
+\begin{frame}
+\begin{titlepage}
+
+\end{titlepage}
+\end{frame}
+
+\begin{frame}
+\frametitle{Основни въпроси}
+\begin{itemize}
+\item Пример: решаване на задача във вариационна формулировка
+\item Постановка на задачата с явни управления
+\item Извеждане на необходими условия за оптималност
+\item Достатъчни условия за оптималност
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Пример: Извеждане на НУ за задача във вариационна формулировка (\arabic{slidenum})}
+Задача:
+\[ \max_{\{c_t\}} \sum_{t=0}^{\infty}\beta^t \ln c_t  \]
+\[ k_{t+1} = (1-\delta)k_t + y_t - c_t,\quad k_0>0 \text{ -- дадено} \] \[ y_t=A k_t^\alpha , \quad 0<\underline{\epsilon} \leq c_t \leq \overline{\epsilon}, \quad \alpha,\beta \in (0,1), \quad A>0\]
+
+НУ: 
+\[ \sum_{t=0}^{\infty}\beta^t \underbrace{\ln ((1-\delta)k_t + A k_t^\alpha - k_{t+1})}_{= F(x_t,x_{t+1})}. \]
+
+{\color{red}Уравнение на Ойлер: \[ F_y(x_t,x_{t+1})+\beta F_x(x_{t+1},x_{t+2})=0 \]}
+\end{frame}
+
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Пример: Извеждане на НУ за задача във вариационна формулировка (\arabic{slidenum})}
+При прилагане на уравнението на Ойлер:
+\[ \frac{-1}{(1-\delta)k_t +A k_t^\alpha -k_{t+1}} + \beta \frac{(1-\delta) + \alpha A k_{t+1}^{\alpha -1}}{(1-\delta)k_{t+1} +A k_{t+1}^\alpha -k_{t+2}} = 0 \]
+
+Последното има вида 
+\[ G(x_{t+2},x_{t+1},x_t)=0, \]
+т.е. нелинейно диференчно уравнение от II ред.
+
+\pause \bigskip
+Въпрос: Можете ли да намерите решението на това уравнение за $ \beta = 0.95,~A=1,~ \delta = 0.05,~ \alpha = 0.5 $ и $ k_0 = 2 $? \pause Ако не, какво още е необходимо?
+\end{frame}
+
+
+\begin{frame}\setcounter{slidenum}{1}
+\frametitle{Постановка на задачата с явни управления (\arabic{slidenum})}
+$X \subset \mathbb{R}^n$  -- \emph{фазово пространство}, пространство на състоянията на променливите $x=(x^1,\ldots,x^n)$. \bigskip
+
+Приемаме, че $\forall x \in X,~ \exists U(x) \subset \mathbb{R}^m, U(x)\neq \emptyset$. Елементите $u=(u^1,\ldots,u^m)$ се наричат \emph{управления}. \bigskip
+
+Целева функция (моментна): $f^0(x,u)$ за $x \in X$, $u \in U(x)$ \bigskip
+
+Фазови уравнения:
+\beq x_{t+1}=f(x_t,u_t),\quad x_0 \text{ -- дадено} \label{eq:state}\eeq където $f(x,u)$ е векторна функция, приемаща стойности в $X$, за $x \in X$, $u \in U(x)$.\bigskip
+
+Интерпретация!
+\end{frame}
+
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Постановка на задачата с явни управления (\arabic{slidenum})}
+
+Търси се редица от допустими управления $\mathbf{u} = \{u_t\}$, $t=0,1,2,\ldots,$
+която чрез \eqref{eq:state} определя редица фазови променливи $\{ x_{t+1} \}$, $t=0,1,2,\ldots$, за които целевият функционал \beq j(x_0,\mathbf{u})=\sum_{t=0}^\infty
+\beta^t f^0(x_t,u_t)\label{eq:obj}\eeq достига максимум \beq
+v(x_0)=\sup_{\mathbf{u}} j(x_0,\mathbf{u}).  \label{eq:objMax}\eeq 
+
+Горната задача наричаме \emph{задача А}.
+\end{frame}
+
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Постановка на задачата с явни управления (\arabic{slidenum})}
+Числото $\beta \in (0,1)$ се нарича \emph{дисконтов фактор}. \bigskip
+
+Означаваме с $\textrm{FC}(x_0)$ множеството от всички допустими редици управления $\{ u_t\}_{t=0}^\infty$ за начални данни $x_0 \in X$, т.е. $ x_{t+1} $
+удовлетворява \eqref{eq:state} за $ u_t \in U(x_t)$, $t=0,1,2,\ldots,$
+и дадено $x_0$. \bigskip
+
+С $\{x^*_{t+1},u^*_t\},~t=0,1,2,\ldots$ означаваме оптималната редица от двойки фазови променливи и управления за задачата А, т.е. $\{u^*_t\} \in \textrm{FC}(x_0)$, и $$v(x_0)=j(x_0,\mathbf{u^*}),~\mathbf{u^*}=\{u^*_t\}.$$
+\end{frame}
+
+
+
+\begin{frame}\setcounter{slidenum}{1}
+\frametitle{Извеждане на необходими условия за оптималност (\arabic{slidenum})}
+Популярен в икономическата литература алгоритъм:\begin{enumerate}
+\item Конструира се Лагранжиан
+\[\mathcal{L}(x_1,x_2,\ldots,u_0,u_1,\ldots) =
+ \sum_{t=0}^{\infty}\beta^t \left[ f^0(x_t,u_t) + \lambda'_t \cdot
+[f(x_t,u_t)-x_{t+1}] \right],  \] където $\lambda_t=(\lambda^1_t,\ldots,\lambda^n_t)$, $t=0,1,2,\ldots,$ са множителите на Лагранж и с точка ($ \cdot $) е означено матричното умножение (в случая скаларното произведение): $$\lambda'_t \cdot [f(x_t,u_t)-x_{t+1}]
+= \sum_{i=1}^n \lambda_t^i [f^i(x_t,u_t)-x^i_{t+1}].$$
+\end{enumerate}
+\end{frame}
+
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Извеждане на необходими условия за оптималност (\arabic{slidenum})}
+\begin{enumerate} \setcounter{enumi}{1}
+\item Ако съответните обекти са диференцируеми, то формално се диференцира $\mathcal{L}$ по отношение на $x_t$ и $u_t$, резултатите се приравняват на нула и така се получават НУ за оптималност от I ред: \begin{equation}\begin{split}
+& \beta \left[ f^0_{x_t^k}(x_t,u_t)+\sum_{i=1}^n \lambda_t^i f^i_{x_t^k}(x_t,u_t)\right] = \lambda^k_{t-1},~ k=1,\ldots,n, \\
+& f^0_{u_t^j}(x_t,u_t)+ \sum_{i=1}^n \lambda_t^i f^i_{u_t^j}(x_t,u_t) = 0,~ j=1,\ldots,m.
+\end{split}
+\label{eq:FOCs}
+\end{equation}
+\item Уравнения \eqref{eq:state} и \eqref{eq:FOCs} се комбинират и се получава (кандидат-)решение $\{u_t\}_{t=0}^\infty$ или, по-точно, редица
+$\{x_{t+1},u_t\}_{t=0}^\infty$. (Често се намира стационарна точка на системата \eqref{eq:state} и \eqref{eq:FOCs} и се изследва линеаризация на системата около тази точка.)
+\end{enumerate}
+\end{frame}
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Извеждане на необходими условия за оптималност (\arabic{slidenum})}
+В матричен запис предходните условия се получават както следва:
+\[ \mathcal{L}_x = \beta^t f^0_x(x_t,u_t)+\beta^t f'_x(x_t,u_t)\cdot \lambda_t - \beta^{t-1}\lambda_{t-1} = 0 \Rightarrow \]
+\begin{equation}
+\beta ( f^0_x(x_t,u_t)+ f'_x(x_t,u_t)\cdot \lambda_t ) = \lambda_{t-1}.
+\label{eq:LagrX}
+\end{equation}  \bigskip
+\[ \mathcal{L}_u = \beta^t f^0_u (x_t,u_t)+ \beta^t f'_u(x_t,u_t)\cdot \lambda_t = 0 \Rightarrow \]
+\begin{equation}
+f^0_u (x_t,u_t)+ f'_u(x_t,u_t)\cdot \lambda_t = 0
+\label{eq:LagrU}
+\end{equation}
+\end{frame}
+
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Извеждане на необходими условия за оптималност (\arabic{slidenum})}
+\textbf{Какви са основанията за използване на описания алгоритъм?}\bigskip \bigskip
+
+Функцията-цена за задачата А удовлетворява аналог на познатото уравнение на Белман:
+\beq v(x) = \sup_{u \in U(x)}  \left[
+f^0(x,u)+\beta v(f(x,u)) \right]. \label{eq:Bellman}\eeq
+
+Нека супремумът в \eqref{eq:Bellman} се достига във вътрешна точка на множеството $ U(x) $. Да означим тази точка с $ u = \nu(x) $ и нека всички обекти по-нататък да са диференцируеми, така че съответните операции са коректни.
+
+\end{frame}
+
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Извеждане на необходими условия за оптималност (\arabic{slidenum})}
+Имаме \begin{equation}
+ v(x) = f^0(x,\nu(x)) + \beta v(f(x,\nu(x))) .
+\label{eq:Bellman1}
+\end{equation}
+
+Също така, условието за достигане на екстремум е \begin{equation}
+f^0_u(x,\nu(x)) + \beta f'_u(x,\nu(x)) \cdot v_x(f(x,\nu(x))) = 0.
+\label{eq:diffCntrl}
+\end{equation} 
+
+Като диференцираме \eqref{eq:Bellman1} по $ x $, получаваме
+\begin{equation*}
+\begin{split}
+ v_x(x) = & f^0_x(x,\nu(x)) +  \nu'_x(x) \cdot f^0_u(x,\nu(x)) + \\
+ & \beta \left[ f'_x(x,\nu(x)) + \nu'_x(x) \cdot f'_u(x,\nu(x))  \right]\cdot v_x(f(x,\nu(x)))\\
+ = & f^0_x(x,\nu(x)) + \beta  f'_x(x,\nu(x))\cdot v_x(f(x,\nu(x))) + \\
+ &  \underbrace{\nu'_x(x) \cdot f^0_u(x,\nu(x)) + \beta \nu'_x(x) \cdot f'_u(x,\nu(x)) \cdot v_x(f(x,\nu(x)))}_{=0 \text{ поради \eqref{eq:diffCntrl}}}.
+\end{split}
+\end{equation*}
+\end{frame}
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Извеждане на необходими условия за оптималност (\arabic{slidenum})}
+Така получаваме \begin{equation}
+v_x(x) = f^0_x(x,\nu(x)) + \beta  f'_x(x,\nu(x))\cdot v_x(f(x,\nu(x))).
+\label{eq:Bellman1dx1}
+\end{equation}
+Като вземем $ x=x^*_t $ и $ u^*_t = \nu(x^*_t) $, уравнения \eqref{eq:diffCntrl} и \eqref{eq:Bellman1dx1} добиват вида съответно
+\begin{equation}
+f^0_u(x^*_t,u^*_t) + \beta f'_u(x^*_t,u^*_t) \cdot v_x(x^*_{t+1}) = 0,
+\label{eq:diffCntrlA} 
+\end{equation}
+\begin{equation}
+v_x(x^*_t) = f^0_x(x^*_t,u^*_t) + \beta  f'_x(x^*_t,u^*_t)\cdot v_x(x^*_{t+1}).
+\label{eq:Bellman1dx1A}
+\end{equation}
+
+Ако положим $ \lambda_t := \beta v_x(x^*_{t+1}) $ в \eqref{eq:diffCntrlA} и \eqref{eq:Bellman1dx1A}, получаваме точно \eqref{eq:LagrX} и \eqref{eq:LagrU}.
+\end{frame}
+
+
+\begin{frame}\setcounter{slidenum}{1}
+\frametitle{Достатъчни условия за оптималност (\arabic{slidenum})}
+\begin{thm} Нека $\{\lambda_t\}$ и $\{x^*_{t+1},u^*_t\}$,
+$t=0,1,2,\ldots,$ се определят чрез \eqref{eq:state}
+и \eqref{eq:FOCs}. Ако \begin{enumerate}
+                          \item функциите $f^0(x,u)$ и $f(x,u)$
+                          са вдлъбнати по $(x,u)$;
+                          \item множителите на Лагранж $\lambda_t^1,\ldots,\lambda_t^n,
+                          ~t=0,1,2,\ldots$ са неотрицателни;
+                          \item фазовото пространство $X$ е подмножество на $\mathbb{R}^n_+$ и е в сила условието за трансверсалност $$\lim_{T\rightarrow \infty} \beta^T \lambda'_T \cdot
+                          x^*_{T+1}=0,$$
+                        \end{enumerate} то редицата
+                        $\{x^*_{t+1},u^*_t\}$ (при зададено $x_0$) е оптимална за задачата А.
+\label{th:sufficiency}\end{thm}
+\end{frame}
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Достатъчни условия за оптималност (\arabic{slidenum})}
+Доказателството на теоремата е сходно с това на теорема 4.15 от Stokey-Lucas. Напомняме, че \eqref{eq:FOCs}, записано в матричен вид, се задава с \eqref{eq:LagrX} и \eqref{eq:LagrU}.
+
+Разглеждаме \[ \mathcal{L}_T(x_t,u_t) = \sum_{t=0}^{T}\beta^t \left\{ f^0(x_t,u_t) + \lambda'_t \cdot [f(x_t,u_t)-x_{t+1}] \right\} .\]
+
+Имаме \begin{equation}
+\begin{split}
+& D := \mathcal{L}_T (x_t,u_t) - \mathcal{L}_T(x^*_t,u^*_t) = \sum_{t=0}^{T}\beta^t \lambda'_t \cdot (x^*_{t+1} - x_{t+1} )+  \\
+& \sum_{t=0}^{T}\beta^t [ f^0(x_t,u_t) + \lambda'_t \cdot f(x_t,u_t) 
+- f^0(x^*_t,u^*_t) - \lambda'_t \cdot f(x^*_t,u^*_t) ].
+\end{split}
+\label{eq:LagrDiff}
+\end{equation}
+\end{frame}
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Достатъчни условия за оптималност (\arabic{slidenum})}
+Тогава, предвид вдлъбнатостта, получаваме \begin{equation*}
+\begin{split}
+&\mathcal{L}_T (x_t,u_t) - \mathcal{L}_T(x^*_t,u^*_t) ~~(= D)~~ \leq \sum_{t=0}^{T}\beta^t \lambda'_t \cdot (x^*_{t+1} - x_{t+1} )+  \\
+&\sum_{t=0}^{T}\beta^t [ f^{0'}_x(x^*_t,u^*_t)\cdot(x_t-x_t^*) +f^{0'}_u(x^*_t,u^*_t)\cdot(u_t-u_t^*) +\\
+& \lambda'_t \cdot [f_x(x^*_t,u^*_t)\cdot(x_t-x_t^*) + f_u(x^*_t,u^*_t)\cdot (u_t-u_t^*) ]] = \\
+& \sum_{t=0}^{T}\beta^t \lambda'_t \cdot (x^*_{t+1} - x_{t+1} )+  \sum_{t=0}^{T}\beta^t \underbrace{[f^{0'}_x(x^*_t,u^*_t) + \lambda'_t \cdot f_x(x^*_t,u^*_t)]}_{=\frac{\lambda'_{t-1}}{\beta} \text{ поради }  \eqref{eq:LagrX} }\cdot(x_t-x_t^*)\\
+& + \sum_{t=0}^{T}\beta^t \underbrace{[f^{0'}_u(x^*_t,u^*_t) + \lambda'_t \cdot f_u(x^*_t,u^*_t)]}_{=\mathbf{0}' \text{ поради } \eqref{eq:LagrU}}\cdot(u_t-u_t^*).
+\end{split}
+\end{equation*}
+\end{frame}
+
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Достатъчни условия за оптималност (\arabic{slidenum})}
+Т.е. \begin{equation*}
+\begin{split}
+ D \leq &   \sum_{t=0}^{T}\beta^t \lambda'_t \cdot (x^*_{t+1} - x_{t+1} ) +  \sum_{t=0}^{T}\beta^t \frac{\lambda'_{t-1}}{\beta}\cdot\underbrace{(x_t-x_t^*)}_{\text{N.B.: } x_0 = x^*_0} = \\
+&  \sum_{t=0}^{T}\beta^t \lambda'_t \cdot (x^*_{t+1} - x_{t+1} ) +  \sum_{t = {\color{red}1}}^{T}\beta^{t-1} \frac{\lambda'_{t-1}}{\beta}\cdot(x_t-x_t^*)= \\
+&  \sum_{t=0}^{T}\beta^t \lambda'_t \cdot (x^*_{t+1} - x_{t+1} ) +  \sum_{t = {\color{red} 0}}^{{\color{red} T-1}}\beta^{{\color{red} t}} \frac{\lambda'_{{\color{red} t}}}{\beta}\cdot(x_{{\color{red} t+1}}-x_{{\color{red} t+1}}^*)= \\
+& \underbrace{\sum_{t=0}^{{\color{red} T-1}}\beta^t \lambda'_t \cdot (x^*_{t+1} - x_{t+1}) +  \sum_{t = 0}^{T-1}\beta^{t} \frac{\lambda'_{t}}{\beta}\cdot(x_{ t+1}-x_{t+1}^*)}_{=0} + \\
+& \beta^T \lambda'_T \cdot (x^*_{T+1} - x_{T+1})  \underbrace{\leq}_{\text{понеже }\lambda_t,x_t \geq \mathbf{0}} \beta^T \lambda'_T \cdot x^*_{T+1}.
+\end{split}
+\end{equation*}
+\end{frame}
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Достатъчни условия за оптималност (\arabic{slidenum})}
+Така имаме (при отчитане на условието за трансверсалност): \begin{equation*}
+ D \leq  \beta^T \lambda'_T \cdot x^*_{T+1} ~ \mathop{\longrightarrow}_{T \rightarrow \infty} ~0 ,
+\end{equation*}
+т.е. 
+\[  \mathcal{L}_T(x^*_t,u^*_t) - \mathcal{L}_T (x_t,u_t) \geq 0, \] което показва оптималността на редицата
+$\{x^*_{t+1},u^*_t\}$.
+\end{frame}
+
+\end{document}
+
+

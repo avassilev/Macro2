@@ -1,0 +1,210 @@
+% !TeX spellcheck = bg_BG
+\documentclass[leqno]{beamer}
+\mode<presentation>
+\usetheme{Warsaw}
+\useoutertheme{split}
+\usepackage{amsmath}
+\usepackage{amstext}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsbsy}
+\usepackage[T2A]{fontenc}
+\usepackage[cp1251]{inputenc}
+\usepackage[english,bulgarian]{babel}
+\usepackage[]{graphicx}
+\usepackage{xcolor}
+\newtheorem{thm}{Теорема}
+\newtheorem{prop}{Твърдение}
+\newtheorem{lem}{Лема}
+\newtheorem{cor}{Следствие}
+% \theoremstyle{remark} % наименованието е в италик (а не в курсив), тялото е стандартно (а не в италик)
+\theoremstyle{definition} % наименованието е в курсив, тялото е стандартно (а не в италик)
+\newtheorem{remark}{Забележка}
+\newtheorem{defin}{Дефиниция}
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\eeq}{\end{equation}}
+\newcommand{\bs}{\boldsymbol}
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\sign}{sign}
+\DeclareMathOperator*{\meas}{meas}
+\DeclareMathOperator*{\essinf}{essinf}
+\DeclareMathOperator*{\Ran}{Ran} \DeclareMathOperator*{\intr}{int}
+\DeclareMathOperator*{\grad}{grad}
+\DeclareMathOperator*{\dist}{dist}
+\title[]{Въведение в Dynare}
+\author[]{Андрей Василев \\ \href{mailto:avassilev@fmi.uni-sofia.bg}{avassilev@fmi.uni-sofia.bg} }
+\date{}
+
+
+\begin{document}
+
+\begin{frame}
+\begin{titlepage}
+
+\end{titlepage}
+\end{frame}
+
+\begin{frame}
+\frametitle{Основни въпроси}
+\begin{itemize}
+\item Какво е Dynare
+\item Какво представлява един модел от гледна точка на Dynare
+\item Основни видове изчисления, които могат да се правят с Dynare
+\item Структура на един .mod файл
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Какво е Dynare}
+\framesubtitle{}
+\begin{itemize}
+\item От страницата на Dynare (\url{http://www.dynare.org/}): \begin{quote}
+Dynare is a software platform for handling a wide class of economic models, in particular dynamic stochastic general equilibrium (DSGE) and overlapping generations (OLG) models. 
+\end{quote}
+\item Dynare дава възможности за разработване на различни симулации и оценяване на параметри на икономически модели.
+\item Най-честата употреба на Dynare е за решаване на модели с рационални очаквания.
+\item В Dynare един модел се описва с помощта на специфичен (мини-)език в .mod файл.
+\item Dynare използва Matlab или Octave като изчислителна платформа.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Какво представлява един модел от гледна точка на Dynare}
+\framesubtitle{}
+\begin{itemize}
+\item Система от (стохастични) диференчни уравнения:\[ E_t\{f(y_{t+1},y_t,y_{t-1},u_t)\}=0,\] където \[ \quad u_t=\sigma \epsilon_t,~E(\epsilon_t)=0,~E(\epsilon_t\epsilon'_t)=\Sigma_\epsilon. \]
+\item Такава система типично е сложна и трябва да я изследваме приближено (но как точно?).
+\item Повече подробности в документацията на Dynare...
+\item ...както и в тази полезна презентация: \url{http://www.dynare.org/events/paris-1005/first-second-order.pdf}
+\end{itemize}
+\end{frame}
+
+
+
+
+\newcounter{slidenum}\stepcounter{slidenum}
+\begin{frame}
+\frametitle{Основни видове изчисления с Dynare (\arabic{slidenum})}
+\framesubtitle{ }
+\textbf{Какво може да се прави:}
+\begin{enumerate}
+\item Пресмятане на стационарни състояния
+\item Стохастични симулации
+	\begin{itemize}
+	\item Какво е функция на импулсен отклик (импулсна реакция, IRF)?
+	\end{itemize}
+\item Детерминистични симулации
+	\begin{itemize}
+	\item Решение на детерминистичен (,,детерминизиран'') модел
+	\item Преход между стационарни състояния
+	\end{itemize}
+\item Оценяване на параметри
+\item Пресмятане на (някои видове) оптимални политики
+\end{enumerate} \bigskip
+
+Ние ще се концентрираме върху първите две!
+\end{frame}
+
+
+
+\stepcounter{slidenum}
+\begin{frame}
+\frametitle{Основни видове изчисления с Dynare (\arabic{slidenum})}
+\framesubtitle{ Стохастични симулации и условия на Blanchard-Kahn }
+\begin{itemize}
+\item При работа със стохастични симулации възниква въпросът дали можем да определим решението.
+\item В предходните лекции видяхме, че за различните варианти на разглеждания базисен модел може да имаме или да нямаме определеност на равновесието.
+\item За линейни уравнения с рационални очаквания това се проверява с т.нар. условия на Бланшар-Кан (Blanchard-Kahn).
+\item Dynare: There are {\color{red} X} eigenvalue(s) larger than 1 in modulus 
+for {\color{red} Y} forward-looking variable(s)
+\item forward-looking variable = non-predetermined variable = jump variable $ \approx $ променлива, която в момент $ t $ зависи от променливи в информационното множество, зададено от $ \Omega_{t+1} $.
+\end{itemize}
+\end{frame}
+
+
+
+\stepcounter{slidenum}
+\begin{frame}
+\frametitle{Основни видове изчисления с Dynare (\arabic{slidenum})}
+\framesubtitle{ Стохастични симулации и условия на Blanchard-Kahn }
+\begin{itemize}
+\item При X = Y имаме единствено решение (определеност). \newline
+При X > Y имаме избухващо решение. \newline
+При X < Y имаме безкрайно много решения (споменатата вече неопределеност). 
+\item Аналогия със наличието на сепаратриса в един модел на растеж от типа модел на Рамзи-Кас-Купманс.
+\item За повече информация: Olivier Jean Blanchard, Charles M. Kahn. ``The Solution of Linear Difference Models under Rational Expectations''. \textit{Econometrica}, Vol. 48, No. 5 (July 1980), 1305-1312.
+\item За наистина любознателните -- какво може да се направи, ако все пак сме в случая на неопределено равновесие: \url{http://www.imf.org/external/pubs/ft/wp/2013/wp13200.pdf}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}\setcounter{slidenum}{1}
+\frametitle{Структура на един .mod файл (\arabic{slidenum})}
+\framesubtitle{}
+Типично един .mod файл се състои от:
+\begin{itemize}
+\item преамбюл (декларации на променливи и параметри)
+\item описание на модела
+\item описание на шоковете (източниците на стохастика) в модела
+\item задаване на начални стойности и/ли стационарно състояние
+\item изчисления
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Структура на един .mod файл (\arabic{slidenum})}
+\framesubtitle{}
+\textbf{Преамбюл}\\
+var x,y,z;\\
+varexo e1, e2; \\
+parameters a,b;\\
+a=0.6;\\
+b=2;\bigskip
+
+\textbf{Модел}\\
+model;\\
+\textit{<уравнения>}\\
+end;\bigskip
+
+очаквания: $ E_t\{x_{t+1}\}  \longrightarrow$ x(+1)\\
+закъснения: $ x_{t-1} \longrightarrow$ x(-1)
+\end{frame}
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Структура на един .mod файл (\arabic{slidenum})}
+\framesubtitle{}
+\textbf{Шокове}\\
+shocks;\\
+var e1; stderr 1;\\
+var e2; stderr 0;\\
+end;\bigskip
+
+\textbf{Начални стойности, стационарно състояние}\\
+initval;\\
+x=5;\\
+y=x/2;\\
+end;\bigskip
+
+resid(1);\\
+steady;\\
+check;
+\end{frame}
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Структура на един .mod файл (\arabic{slidenum})}
+\framesubtitle{}
+\textbf{Изчисления}\\
+stoch\_simul(irf=30);\\
+stoch\_simul(irf=20, noprint);\\
+stoch\_simul(irf=20, noprint, nograph);
+\end{frame}
+
+
+\end{document}
+

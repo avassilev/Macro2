@@ -1,0 +1,400 @@
+% !TeX spellcheck = bg_BG
+\documentclass[leqno]{beamer}
+\mode<presentation>
+\usetheme{Warsaw}
+\useoutertheme{split}
+\usepackage{amsmath}
+\usepackage{amstext}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsbsy}
+\usepackage[T2A]{fontenc}
+\usepackage[cp1251]{inputenc}
+\usepackage[english,bulgarian]{babel}
+\usepackage[]{graphicx}
+\usepackage{xcolor}
+
+\newtheorem{thm}{Теорема}
+\newtheorem{prop}{Твърдение}
+\newtheorem{lem}{Лема}
+\newtheorem{cor}{Следствие}
+% \theoremstyle{remark} % наименованието е в италик (а не в курсив), тялото е стандартно (а не в италик)
+\theoremstyle{definition} % наименованието е в курсив, тялото е стандартно (а не в италик)
+\newtheorem{remark}{Забележка}
+\newtheorem{defin}{Дефиниция}
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\eeq}{\end{equation}}
+\newcommand{\bs}{\boldsymbol}
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\sign}{sign}
+\DeclareMathOperator*{\meas}{meas}
+\DeclareMathOperator*{\essinf}{essinf}
+\DeclareMathOperator*{\Ran}{Ran} \DeclareMathOperator*{\intr}{int}
+\DeclareMathOperator*{\grad}{grad}
+\DeclareMathOperator*{\dist}{dist}
+\DeclareMathOperator*{\const}{const}
+\title[]{Модели със застъпващи се поколения}
+\author[]{Андрей Василев \\ \href{mailto:avassilev@fmi.uni-sofia.bg}{avassilev@fmi.uni-sofia.bg} }
+\date{}
+
+
+\begin{document}
+
+\begin{frame}
+\begin{titlepage}
+
+\end{titlepage}
+\end{frame}
+
+
+
+
+\begin{frame}
+\frametitle{Основни въпроси}
+\begin{itemize}
+\item Уводни бележки
+\item Формулировка и решение на базисен модел със застъпващи се поколения
+\item Изследване на модела 
+\end{itemize}
+\end{frame}
+
+
+\newcounter{slidenum}\stepcounter{slidenum}
+\begin{frame}
+\frametitle{Уводни бележки  (\arabic{slidenum})}
+\framesubtitle{}
+\begin{itemize}
+\item Моделите със застъпващи се поколения (overlapping generations models, OLG models) традиционно се използват за изследване на въпроси, свързани с икономическия растеж и провеждането на дългосрочни политики (напр. връзка фискална политика-растеж, устойчивост на социално-осигурителни системи).
+\item Това е различно от разглежданите дотук класически монетарни и неокейнсиански модели, които най-често се използват за анализ и изследване на политики в по-къс хоризонт (напр. при изследвания на бизнес цикли).
+\item Изложението като цяло следва глава 2-B в David Romer, Advanced Macroeconomics ($ 4^{\text{th}} $ ed.), McGraw-Hill, 2012. 
+\end{itemize}
+\end{frame}
+
+
+
+\stepcounter{slidenum}
+\begin{frame}
+\frametitle{Уводни бележки  (\arabic{slidenum})}
+\framesubtitle{}
+Типични характеристики на моделите със застъпващи се поколения:
+\begin{itemize}
+\item Хетерогенност на агентите: ,,съжителство'' на групи агенти на различна възраст в рамките на един период;
+\item Краен хоризонт на живот, съответно на планиране;
+\item Обичайно един период е по-дълъг (като интерпретация и параметризация на модела) в сравнение с разглежданите дотук модели -- често дължината на периода е поне 5 години;
+\item В по-простите случаи моделите са детерминистични, но има и варианти на модели със стохастика;
+\item Индивидуалните задачи за планиране на различните агенти обикновено са по-прости в сравнение с досега разглежданите, но наличието на хетерогенност може да доведе до сложна динамика на макроикономическо ниво.
+\end{itemize}
+\end{frame}
+
+
+
+\setcounter{slidenum}{1}
+\begin{frame}
+\frametitle{Базисен модел със застъпващи се поколения  (\arabic{slidenum})}
+\framesubtitle{Общи положения}
+\begin{itemize}
+\item Работим в дискретно време $ t=0,1,2,\ldots $ и в детерминистична постановка.
+\item В даден период от време име две поколения, условно наричани ,,младо'' и ,,старо'' поколение. 
+\item Младото поколение работи (при нееластично предлагане на труд) и решава колко от дохода си да спести.
+\item Старото поколение се издържа със спестяванията си от предходния период, които формират и капитала в икономиката.
+\item В следващия период старото поколение излиза от модела, а младото поколение остарява и на негово място влиза ново младо поколение.
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Базисен модел със застъпващи се поколения  (\arabic{slidenum})}
+\framesubtitle{}
+\begin{itemize}
+\item В даден период $ t $ в модела влизат (,,раждат се'') $ L_t $ на брой агента. В сила е законът за изменение на населението \begin{equation}
+L_t =  (1+n)L_{t-1}.
+\label{eq:PopDyn}
+\end{equation} Т.е. във всеки период имаме $ L_t $ млади и $ L_t/(1+n) $ стари индивиди.
+\item В модела има много фирми, всяка от които използва (неутрална по Харод) двуфакторна производствена технология \[ Y_t = F(K_t,A_t L_t), \] където $ K_t $ е физическият капитал, $ A_t $ са технологиите, а $ L_t $ е трудът.
+\item Технологиите се развиват според закона \begin{equation}
+A_t = (1+g)A_{t-1}.
+\label{eq:ADyn}
+\end{equation}
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Базисен модел със застъпващи се поколения  (\arabic{slidenum})}
+\framesubtitle{}
+\begin{itemize}
+\item За такава технология е в сила $ F'_{K}(K_t,A_t L_t)>0 $, $ F'_{L}(K_t,A_t L_t)>0 $,  $ F''_{KK}(K_t,A_t L_t)<0 $, $ F''_{LL}(K_t,A_t L_t)<0 $.
+\item Производствената функция е положително хомогенна от първа степен \[ F(\lambda K_t, \lambda A_t L_t) = \lambda F(K_t,A_t L_t),~\forall \lambda>0, \] т.е. имаме постоянна възвращаемост от мащаба.
+\item Следствие от предходното е т.нар. \textit{формула на Ойлер}, която в случая има вида \[ F(K_t,A_t L_t) = F'_{K}(K_t,A_t L_t)K_t + F'_{L}(K_t,A_t L_t)A_t L_t.  \]
+\item В сила са и \textit{условията на Инада}: \[ \lim_{K \rightarrow 0} F'_{K}(K,AL) = +\infty,\quad \lim_{L \rightarrow 0} F'_{L}(K,AL) = +\infty ,\]
+
+\[ \lim_{K \rightarrow +\infty} F'_{K}(K,AL) = 0,\quad \lim_{L \rightarrow +\infty} F'_{L}(K,AL) = 0. \]
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Базисен модел със застъпващи се поколения  (\arabic{slidenum})}
+\framesubtitle{}
+\begin{itemize}
+\item Често пъти е удобно производствената функция да се запише в интензивна форма (производство за единица ефективен труд):
+\begin{equation}\begin{split}
+\frac{Y_t}{A_t L_t} & = \frac{1}{A_t L_t}F(K_t,A_t L_t)= F\left(\frac{K_t}{A_t L_t},1\right) \\
+&  =: f(k_t) \text{ за } k_t := \frac{K_t}{A_t L_t}.
+\end{split}
+\label{eq:PFintensive}
+\end{equation}
+\item Имаме \[ f'(k_t)=F'_{K}\left(\frac{K_t}{A_t L_t},1\right). \]
+\item Приема се, че в модела няма амортизация и натрупване на капитал.
+\item Фирмите работят в условия на съвършена конкуренция.
+\item Абстрахираме се от номиналната страна на икономиката и работим само в реално изражение.
+\end{itemize}
+\end{frame}
+
+
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Базисен модел със застъпващи се поколения  (\arabic{slidenum})}
+\framesubtitle{}
+\begin{itemize}
+\item Тогава задачата за максимизиране на печалбата на една фирма ще има вида \[ \begin{split}
+& \max_{K_t,L_t} \left\{F(K_t,A_t L_t) - W_t L_t - r_t K_t \right\} =\\
+& \max_{K_t,L_t} \left\{A_t L_t f(k_t) - W_t L_t - r_t K_t \right\}
+\end{split} \]
+\item Необходимо условие за оптималност по $ K_t $: \begin{equation}
+A_t L_t f'(k_t)\frac{1}{A_t L_t} - r_t =0 \quad\Longrightarrow\quad f'(k_t) = r_t . 
+\label{eq:NC_K}
+\end{equation} 
+\item Необходимо условие за оптималност по $ L_t $: \begin{equation}\begin{split}
+& A_t f(k_t) + A_t L_t f'(k_t)\frac{K_t}{A_t}\left(-\frac{1}{L^2_t}\right)-W_t =0 \quad\Longrightarrow\quad \\
+& f(k_t)-k_t f'(k_t) = w_t~ \text{ за } w_t:=\frac{W_t}{A_t}. 
+\end{split}
+\label{eq:NC_L}
+\end{equation} 
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Базисен модел със застъпващи се поколения  (\arabic{slidenum})}
+\framesubtitle{}
+\begin{itemize}
+\item Капиталът в началния момент е положителен и е разделен на равни части между старите индивиди.
+\item Един агент роден в период $ t $ има потребление $ C_{1,t} $ през първия период от живота си и потребление $ C_{2,t+1} $ през втория период.
+\item Функцията на полезност на такъв агент е \begin{equation}
+U_t = \frac{C_{1,t}^{1-\theta}}{1-\theta} + \frac{1}{1+\rho}\frac{C_{2,t+1}^{1-\theta}}{1-\theta} ,\quad \theta>0,\quad \rho>-1.
+\label{eq:Util}
+\end{equation}
+При $ \rho \in(-1,0) $ агентът цени повече потреблението през втория период, а при $ \rho > 0 $ -- през първия период.
+\item Един агент, роден в период $ t $, предлага нееластично единица труд, когато е млад, и съответно получава доход $ W_t = A_t w_t $. От този доход се спестява $A_t w_t  - C_{1,t} $, което се пренася в период $ t+1 $.
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Базисен модел със застъпващи се поколения  (\arabic{slidenum})}
+\framesubtitle{}
+\begin{itemize}
+\item Спестяванията $ A_t w_t  - C_{1,t} $ се трансформират в период $ t+1 $ в капитал, $ K_{t+1} $, за използването на който фирмите плащат лихвата $ r_{t+1} $.
+\item Старите индивиди съответно имат доход $ (1+r_{t+1})(A_t w_t  - C_{1,t}) $, който използват за потребление $ C_{2,t+1} $, т.е. \[ C_{2,t+1} = (1+r_{t+1})(A_t w_t - C_{1,t}), \] което се преобразува до бюджетното ограничение \begin{equation}
+C_{1,t} + \frac{1}{1+r_{t+1}}C_{2,t+1} = A_t w_t .
+\label{eq:BudConstr}
+\end{equation}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Базисен модел със застъпващи се поколения  (\arabic{slidenum})}
+\framesubtitle{}
+Максимизираме полезността \eqref{eq:Util} при бюджетното ограничение \eqref{eq:BudConstr}:
+\[ \mathcal{L} = \frac{C_{1,t}^{1-\theta}}{1-\theta} + \frac{1}{1+\rho}\frac{C_{2,t+1}^{1-\theta}}{1-\theta} + \lambda \left[ C_{1,t} + \frac{1}{1+r_{t+1}}C_{2,t+1} - A_t w_t \right], \]
+
+\[ \frac{\partial \mathcal{L}}{\partial C_{1,t}} = C_{1,t}^{-\theta}+\lambda=0  \quad\Longrightarrow\quad \lambda = -C_{1,t}^{-\theta}, \]
+
+\[ \frac{\partial \mathcal{L}}{\partial C_{2,t+1}} =  \frac{1}{1+\rho} C_{2,t+1}^{-\theta}+ \lambda \frac{1}{1+r_{t+1}} = 0 . \]
+
+Като комбинираме последните две уравнения получаваме вариант на уравнение на Ойлер: \begin{equation}
+\left(\frac{C_{2,t+1}}{C_{1,t}}\right)^{-\theta} = \frac{1+\rho}{1+r_{t+1}}.
+\label{eq:EulerEq}
+\end{equation}
+\end{frame}
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Базисен модел със застъпващи се поколения  (\arabic{slidenum})}
+\framesubtitle{}
+Уравнение \eqref{eq:EulerEq} може да бъде записано във вида \[ C_{2,t+1} = \left(\frac{1+r_{t+1}}{1+\rho}\right)^{\frac{1}{\theta}}C_{1,t}. \]
+
+Ако заместим последния израз в бюджетното ограничение \eqref{eq:BudConstr} получаваме \[ C_{1,t} + \frac{1}{1+r_{t+1}}\left(\frac{1+r_{t+1}}{1+\rho}\right)^{\frac{1}{\theta}}C_{1,t} = A_t w_t.  \] Оттук \begin{equation}
+C_{1,t} = \frac{(1+\rho)^{\frac{1}{\theta}}}{(1+\rho)^{\frac{1}{\theta}} + (1+r_{t+1})^{\frac{1-\theta}{\theta}}} A_t w_t,
+\label{eq:C1fAw}
+\end{equation}   т.е. потреблението в първия период може да бъде изразено като част (коефициент, зависещ от $ \rho $ и $ r $) от доходите от труд.
+\end{frame}
+
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Базисен модел със застъпващи се поколения  (\arabic{slidenum})}
+\framesubtitle{}
+Нека $ s(r) $ е делът на спестения доход от труд в общия трудов доход, като функция на лихвения процент. Тогава \[ 1-s(r) = \frac{(1+\rho)^{\frac{1}{\theta}}}{(1+\rho)^{\frac{1}{\theta}} + (1+r)^{\frac{1-\theta}{\theta}}}, \] откъдето \begin{equation}
+s(r) = \frac{(1+r)^{\frac{1-\theta}{\theta}}}{(1+\rho)^{\frac{1}{\theta}} + (1+r)^{\frac{1-\theta}{\theta}}}.
+\label{eq:s(r)}
+\end{equation}
+
+При това положение \eqref{eq:C1fAw} може да бъде записано като \begin{equation}
+C_{1,t} = (1-s(r_{t+1}))A_t w_t.
+\label{eq:C1fAw1}
+\end{equation}
+\end{frame}
+
+
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Базисен модел със застъпващи се поколения  (\arabic{slidenum})}
+\framesubtitle{}
+Делът на спестяванията $ s(r) $ може да бъде нарастваща или намаляваща функция на $ r $ в зависимост от параметъра $ \theta $. За да установим това въвеждаме означенията $ z(r) := (1+r)^{\frac{1-\theta}{\theta}}$ и $ \Phi := (1+\rho)^{\frac{1}{\theta}} =\const$. Тогава имаме \[ s(r) = \frac{z(r)}{\Phi + z(r)} \text{  и  } s'(r) = \underbrace{\frac{\Phi}{(\Phi + z(r))^2}}_{>0}z'(r), \] т.е. знакът на $ s'(r) $ е същия като знака на $ z'(r) $. За него имаме \[ z'(r) = \frac{1-\theta}{\theta}(1+r)^{\frac{1-\theta}{\theta}-1} = \frac{1-\theta}{\theta}(1+r)^{\frac{1-2\theta}{\theta}}.\] Знакът на $ z'(r) $ зависи от знака на $ 1-\theta$. Окончателно:\begin{itemize}
+\item За $ \theta \in (0,1) $ функцията $ s(r) $ е нарастваща.
+\item За $ \theta = 1 $ функцията $ s(r) $ е константа.
+\item За $ \theta > 1 $ функцията $ s(r) $ е намаляваща.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Базисен модел със застъпващи се поколения  (\arabic{slidenum})}
+\framesubtitle{}
+Понеже спестяванията на един млад индивид са $ s(r_{t+1})A_t w_t $ и общо младите индивиди са $ L_t $, то сумарните им спестявания са $ s(r_{t+1}) L_t A_t w_t $. Те са равни на общия капитал, който се пренася в период $ t+1 $: \[ K_{t+1} = s(r_{t+1}) L_t A_t w_t, \]
+откъдето, след разделяне на $ A_{t+1}L_{t+1} $, получаваме \[ k_{t+1} = \frac{1}{(1+g)(1+n)}s(r_{t+1})w_t. \]
+
+Заместваме \eqref{eq:NC_K} и \eqref{eq:NC_L} в последния израз и получаваме уравнение за динамиката на капитала на единица ефективен труд: \begin{equation}
+k_{t+1} = \frac{1}{(1+g)(1+n)}s(f'(k_{t+1}))(f(k_t)-k_t f'(k_t)).
+\label{eq:kDyn}
+\end{equation}
+\end{frame}
+
+
+
+\setcounter{slidenum}{1}
+\begin{frame}
+\frametitle{Изследване на модела (\arabic{slidenum})}
+\framesubtitle{}
+Уравнение \eqref{eq:kDyn} задава $ k_{t+1} $ като неявна функция на $ k_t $.
+
+Ако имаме стационарно решение на уравнението, означавано с $ k^* $, то такова решение се нарича \textit{траектория на балансиран растеж}. Терминът произлиза от това, че върху такава траектория ключови съотношения за икономиката, като $ Y/K $, се запазват постоянни. \bigskip
+
+В общия случай не може да се каже колко стационарни точки ще има уравнение \eqref{eq:kDyn}, както и дали те са устойчиви (вж. стр. 85-88 в Romer). Като цяло наличието на структура със застъпващи се поколения в един модел създава потенциал за сложна динамика и възникване на различни изродени случаи. \bigskip
+
+Поради това ще разгледаме частния случай на модел с логаритмична полезност ($ \theta = 1 $) и производствена функция от типа Коб-Дъглас.
+\end{frame}
+
+
+
+
+\stepcounter{slidenum}
+\begin{frame}
+\frametitle{Изследване на модела (\arabic{slidenum})}
+\framesubtitle{}
+При производствена функция на Коб-Дъглас имаме \[ f(k_t) = k_t^\alpha,\qquad f'(k_t) = \alpha k_t^{\alpha-1}, \] като приемаме, че $ \alpha \in (0,1) $.
+
+В случая $ \theta = 1 $ делът на спестяванията $ s(r) $ е константа и е равен на $ \frac{1}{2+\rho} $.
+
+Тогава уравнение \eqref{eq:kDyn} добива вида \[ k_{t+1} = \frac{1}{(1+g)(1+n)}\frac{1}{2+\rho}(k_t^\alpha-k_t \alpha k_t^{\alpha-1}), \]
+т.е.
+\begin{equation}
+k_{t+1} = \frac{1-\alpha}{(1+g)(1+n)(2+\rho)}k_t^\alpha.
+\label{eq:kDynCD}
+\end{equation}
+\end{frame}
+
+
+\stepcounter{slidenum}
+\begin{frame}
+\frametitle{Изследване на модела (\arabic{slidenum})}
+\framesubtitle{$ k_{t+1} $ като функция на $ k_t $ за $ \rho=0.1 $ (синьо), $ \rho=1 $ (зелено) и $ \rho=2 $ (червено)}
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.95\linewidth]{OLGCD}
+\end{center}
+\end{figure}
+\end{frame}
+
+
+
+\stepcounter{slidenum}
+\begin{frame}
+\frametitle{Изследване на модела (\arabic{slidenum})}
+\framesubtitle{}
+Стационарната стойност $ k^* $ на \eqref{eq:kDynCD} е \begin{equation}
+k^* = \left(\frac{1-\alpha}{(1+g)(1+n)(2+\rho)}\right)^{\frac{1}{1-\alpha}}.
+\label{eq:kstar}
+\end{equation}
+
+Понеже $ y^* = (k^*)^\alpha $, получаваме \[ y^* = \left(\frac{1-\alpha}{(1+g)(1+n)(2+\rho)}\right)^{\frac{\alpha}{1-\alpha}}. \] \bigskip
+
+\textit{Устойчива ли е така намерената стационарна точка $ k^* $?}
+\end{frame}
+
+
+
+\stepcounter{slidenum}
+\begin{frame}
+\frametitle{Изследване на модела (\arabic{slidenum})}
+\framesubtitle{}
+\begin{thm}[Elaydi (2005), Theorem 1.13] Нека $ x^* $ е стационарна точка на скаларното диференчно уравнение \[ x_{t+1} = f(x_t), \] където $ f $ е непрекъснато диференцируема в $ x^* $. Тогава: \begin{itemize}
+\item[(i)] Ако $ |f'(x^*)|< 1 $, то $ x^* $ е асимптотично устойчива.
+\item[(ii)] Ако $ |f'(x^*)|> 1 $, то $ x^* $ е неустойчива.
+\end{itemize}
+\end{thm}\bigskip
+
+За повече подробности: Saber Elaydi, An Introduction to Difference Equations ($ 3^{\text{rd}} $ ed.), Springer, 2005.
+\end{frame}
+
+
+\stepcounter{slidenum}
+\begin{frame}
+\frametitle{Изследване на модела (\arabic{slidenum})}
+\framesubtitle{}
+В нашия случай имаме \[ f(x) = \frac{1-\alpha}{(1+g)(1+n)(2+\rho)}x^\alpha \] и тогава \[ f'(x) = \alpha \frac{1-\alpha}{(1+g)(1+n)(2+\rho)}x^{\alpha-1}. \]
+
+Като заместим в последния израз $ x $ с израза за $ k^* $ от \eqref{eq:kstar} и опростим, получаваме \[ f'(k^*) = \alpha \] и, понеже $ 0<\alpha<1 $, според теоремата стационарната точка $ k^* $ е асимптотично устойчива.
+
+Може да се покаже, че това свойство е глобално (вж. стр. 82-83 в Romer за графична илюстрация и обяснения.)
+\end{frame}
+
+
+\stepcounter{slidenum}
+\begin{frame}
+\frametitle{Изследване на модела (\arabic{slidenum})}
+\framesubtitle{}
+Можем да получим и оценка за скоростта на сходимост към равновесието. При приближение от първи ред за уравнение \eqref{eq:kDynCD} в околност на $ k^* $ получаваме \[ k_{t+1} \approx k^* + \underbrace{f'(k^*)}_{\alpha}(k_t-k^*) \] т.е. \[ k_{t+1} - k^* \approx \alpha (k_t-k^*). \]
+
+Тогава за начално $ k_0 $ ще имаме \[ k_{t+1} - k^* \approx \alpha^{t+1} (k_0-k^*), \] което показва колко бързо затихва стартовото отклонение на капитала на единица ефективен труд от равновесната му стойност. От тази формула също така се вижда, че сходимостта към траекторията на устойчив растеж е монотонна (без осцилации).
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Обобщение}
+\framesubtitle{}
+\begin{itemize}
+\item Моделите със застъпващи се поколения дават алтернативен начин за моделиране на макроикономически явления, при който в общия случай може да има разнообразна динамика.
+\item Това се постига като запазваме идеята за микроикономически основи (оптимизиращо поведение на отделния агент), но при краен хоризонт на планиране във времето, за сметка на въвеждане на вид хетерогенност (в модела има едновременно старо и младо поколение).
+\item Представеният базисен вариант е вид модел на икономически растеж, но такава структура може да се използва и за анализ на икономически политики.
+\end{itemize}
+\end{frame}
+
+
+
+
+\end{document}
+
+
+
