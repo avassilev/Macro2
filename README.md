@@ -1,6 +1,6 @@
 ## Учебни материaли за курса Макроикономика-2, ФМИ, СУ "Св. Климент Охридски"  |  Teaching materials for the course Macroeconomics-2, FMI, Sofia University (in Bulgarian)
 
-Страница на курса (към момента неактивна): http://avassilev.github.io/Macro2
+Страница на курса: http://avassilev.github.io/Macro2
 
 Горната страница е препоръчителното място, откъдето да се осведомите за курса и да свалите учебните материали.
 
