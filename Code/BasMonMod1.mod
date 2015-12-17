@@ -22,7 +22,7 @@ c = c(+1) - 1/sigma*(r - rho);            // Eq. (2)
 y = a + (1-alppha)*n;                     // Eq. (4)
 omega = a - alppha*n + ln(1-alppha);      // Eq. (5)
 c = y;                                    // Eq. (6)
-a = rho_a*a(-1) - eps_a;                  // AR(1) process for log-technology
+a = rho_a*a(-1) + eps_a;                  // AR(1) process for log-technology
 end;
 
 shocks;
