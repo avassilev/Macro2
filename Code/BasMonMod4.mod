@@ -19,7 +19,7 @@ sigma = 0.5;
 varphi = 1;  
 rho_a = 0.9;
 rho_i = 0.9;
-phi_pi = 0.5;   // Try changing this to a value between 0 and 1
+phi_pi = 1.1;   // Try changing this to a value between 0 and 1
 eta = 4;
 
 

@@ -12,7 +12,7 @@ parameters alppha betta rho sigma varphi rho_a;
 alppha=0.33; 
 betta=0.99;  
 rho=-ln(betta);  
-sigma=1.0;                                // Try changing this to 1.5 or 1.0 instead of 0.5
+sigma=0.5;                                // Try changing this to 1.5 or 1.0 instead of 0.5
 varphi=1;  
 rho_a = 0.9;
 
