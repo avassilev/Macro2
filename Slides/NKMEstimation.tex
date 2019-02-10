@@ -1,0 +1,498 @@
+% !TeX spellcheck = bg_BG
+\documentclass[leqno]{beamer}
+\mode<presentation>
+\usetheme{Warsaw}
+\useoutertheme{split}
+\usepackage{amsmath}
+\usepackage{amstext}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsbsy}
+\usepackage[T2A]{fontenc}
+\usepackage[cp1251]{inputenc}
+\usepackage[english,bulgarian]{babel}
+\usepackage[]{graphicx}
+\usepackage{xcolor}
+\newtheorem{thm}{Теорема}
+\newtheorem{prop}{Твърдение}
+\newtheorem{lem}{Лема}
+\newtheorem{cor}{Следствие}
+% \theoremstyle{remark} % наименованието е в италик (а не в курсив), тялото е стандартно (а не в италик)
+\theoremstyle{definition} % наименованието е в курсив, тялото е стандартно (а не в италик)
+\newtheorem{remark}{Забележка}
+\newtheorem{defin}{Дефиниция}
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\eeq}{\end{equation}}
+\newcommand{\bs}{\boldsymbol}
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\sign}{sign}
+\DeclareMathOperator*{\meas}{meas}
+\DeclareMathOperator*{\essinf}{essinf}
+\DeclareMathOperator*{\Ran}{Ran} \DeclareMathOperator*{\intr}{int}
+\DeclareMathOperator*{\grad}{grad}
+\DeclareMathOperator*{\dist}{dist}
+\title[]{Оценяване на варианти на неокейнсиански модели}
+\author[]{Андрей Василев \\ \href{mailto:avassilev@fmi.uni-sofia.bg}{avassilev@fmi.uni-sofia.bg} }
+\date{}
+
+
+\begin{document}
+
+\begin{frame}
+\begin{titlepage}
+
+\end{titlepage}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Основни въпроси}
+\begin{itemize}
+\item Модели с ненаблюдаеми компоненти
+\item Елементи на бейсовото оценяване
+\item Оценяване на модели с ненаблюдаеми компоненти в Dynare
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}[fragile]
+\frametitle{Модели с ненаблюдаеми компоненти}
+\begin{itemize}\itemsep1em
+\item Уравнение на наблюденията:
+\[ y_t = {Z}_t {\alpha}_t + {\varepsilon}_t, \]
+където:
+\begin{itemize}\itemsep1em
+	\item $ {y}_t $ е $ p $-мерен вектор с наблюдения
+	\item $ {\alpha}_t $ е $ m $-мерен вектор на фазови променливи (състояния)
+	\item $ {Z}_t $ е $ p \times m $ матрица с коефициенти
+	\item $ {\varepsilon}_t \sim iid~ N({0},{H}_t)$ е $ p $-мерен вектор с шокове
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Модели с ненаблюдаеми компоненти}
+\begin{itemize}\itemsep1em
+	\item Фазово уравнение (уравнение на състоянията):
+	\[ {\alpha}_{t+1} = {T}_t {\alpha}_t + {R}_t {\eta}_t , \]
+	където:
+	\begin{itemize}\itemsep1em
+		\item $ {T}_t $ е $ m \times m $ преходна матрица
+		\item шокът $ {\eta}_t \sim iid~ N({0},{Q}_t)$ е $ r $-мерен ($ r\leq m $)
+		\item матрицата  $ {R}_t $ с размерност $ m\times r $ се нарича селектираща матрица
+	\end{itemize}
+	\item Ако няма специална информация за началните състояния, стандартно се приема, че
+	\[ {\alpha}_1 \sim N({a_1},{P_1}) \]
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Модели с ненаблюдаеми компоненти}
+\framesubtitle{}
+\begin{itemize}\itemsep1em
+	\item Нека означим наблюденията $ {y}_1, \ldots,{y}_t $ с $ {Y}_t $, като цялата извадка е р големина $ n $
+	\item Ако матриците $ {Z}_t,~{H}_t,~{T}_t $ и $ {Q}_t $, и разпределението на $ {\alpha}_1 $ са известни, то:
+	\begin{itemize}\itemsep1em
+		\item оценяването на състоянията $ {\alpha}_t $ чрез $ {Y}_t $ се нарича \emph{филтриране}
+		\item оценяването на състоянията $ {\alpha}_t $ чрез пълната извадка $ {Y}_n $ се нарича \emph{изглаждане}
+		\item когато $ {Y}_t $ се използва, за да опишем $ {\alpha}_s,~s>t $, имаме \emph{прогнозиране}
+	\end{itemize}
+	\item Съществуват рекурсивни алгоритми като филтъра на Калман, които реализират горните операции
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Модели с ненаблюдаеми компоненти}
+\framesubtitle{}
+\begin{itemize}\itemsep1em
+	\item От практическа гледна точка е много малко вероятно матриците в модела да са известни
+	\item Техните коефициенти всъщност трябва да бъдат оценени
+	\item В хода на прилагането на филтъра на Калман се получава функция на правдоподобие за модела, което позволява да се използват методи като този на максималното правдоподобие
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Филтър на Калман}
+\framesubtitle{}
+\begin{itemize}\itemsep1em
+	\item Дефинираме
+	\[\def\arraystretch{2.0} \begin{array}{l}
+	{a}_{t|t} = E({\alpha_t}|{Y}_t)\\ 
+	{P}_{t|t} = Var ({\alpha_t}|{Y}_t)\ \\
+	{a}_{t+1} = E({\alpha_{t+1}}|{Y}_t)\\ 
+	{P}_{t+1} = Var ({\alpha_{t+1}}|{Y}_t)\\
+	v_t = y_t-Z_t a_t
+	\end{array}  \]
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Kalman filtering in the multivariate case}
+\framesubtitle{}
+\begin{itemize}\itemsep1em
+	\item Филтърът на Калман се задава от следните рекурсивни връзки:
+	\begin{equation}\label{eq:Kalman}\def\arraystretch{2.0}
+	\begin{array}{l}
+	a_{t|t} = {a}_{t} + P_t Z'_t F^{-1}_t v_t, \quad F_t = Var(v_t|Y_{t-1})=Z_t P_t Z'_t + H_t\\
+	P_{t|t} = P_t-P_t Z'_t F^{-1}_t Z_t P_t\\
+	a_{t+1} = T_t a_t + K_t v_t, \quad K_t=T_tP_tZ'_t F^{-1}_t\\
+	P_{t+1} = T_t P_t (T_t-K_t Z_t)' + R_tQ_tR'_t
+	\end{array}
+	\end{equation}
+\end{itemize}
+\end{frame}
+
+%\begin{frame}[fragile]
+%\frametitle{Kalman filtering in the multivariate case}
+%\framesubtitle{}
+%\begin{itemize}\itemsep1em
+%	\item This can be written equivalently (and more transparently) as
+%	\begin{equation*}\def\arraystretch{2.0}
+%	\begin{array}{l}
+%	{a}_{t|t} = {a}_{t} + P_t Z'_t F^{-1}_t v_t, \text{ for } F_t = Z_t P_t Z'_t + H_t\\
+%	P_{t|t} = P_t-P_t Z'_t F^{-1}_t Z_t P_t\\
+%	a_{t+1} = T_t a_{t|t} \\
+%	P_{t+1} = T_t P_{t|t}T'_t  + R_tQ_tR'_t
+%	\end{array}
+%	\end{equation*}
+%	\item This shows how the filtered estimates are used to produce the one-step-ahead predictions
+%\end{itemize}
+%\end{frame}
+%
+%\begin{frame}[fragile]
+%\frametitle{Multivariate smoothing}
+%\framesubtitle{}
+%\begin{itemize}\itemsep1em
+%	\item We use the following notation
+%	\[ \def\arraystretch{2.0} \begin{array}{l}
+%	\hat{\alpha}_t = E(\alpha_t|Y_n) \\ 
+%	V_t = Var (\alpha_t|Y_n)\\ 
+%	L_t = T_t - K_t Z_t
+%	\end{array}  \]
+%	\item Note that in what follows certain outputs of the Kalman filter are used
+%\end{itemize}
+%\end{frame}
+%
+%\begin{frame}[fragile]
+%\frametitle{Multivariate smoothing}
+%\framesubtitle{}
+%\begin{itemize}\itemsep1em
+%	\item The state smoothing recursions are given by
+%	\begin{equation}\label{eq:smoother}\def\arraystretch{2.0}
+%	\begin{array}{l}
+%	r_{t-1} = Z'_t F^{-1}_t v_t +L'_t r_t\\
+%	N_{t-1} = Z'_t F^{-1}_t Z_t + L'_t N_t L_t\\
+%	\hat{\alpha}_t = a_t + P_t r_{t-1}\\
+%	V_t = P_t - P_t N_{t-1}P_t
+%	\end{array}
+%	\end{equation} 
+%	for {\color{red}$ t=n,\ldots,1 $}
+%	\item The initialisation $ r_n=0 $ and $ N_n=0 $ is used
+%\end{itemize}
+%\end{frame}
+%
+%\begin{frame}[fragile]
+%\frametitle{Multivariate smoothing}
+%\framesubtitle{Notes}
+%\begin{itemize}\itemsep1em
+%	\item Since the operations are performed by first running the Kalman filter (forward pass) and then running the smoother (backward pass), the two recursive procedures taken together are referred to as the \emph{Kalman filter and smoother}
+%	\item The above procedures are the ``textbook'' versions but there exist various modifications that are better suited to particular applications and are more computationally efficient
+%\end{itemize}
+%\end{frame}
+
+%\begin{frame}[fragile]
+%\frametitle{Maximum likelihood estimation}
+%\framesubtitle{}
+%\begin{itemize}\itemsep1em
+%	\item There are variations in the likelihood formulation depending on whether the initial states distribution is assumed to be known or a diffuse prior is used.
+%	\item In the case of a known initial distribution $ N(a_1,P_1) $ the likelihood can be written as \[ L(Y_n) = p(y_1,\ldots,y_n) = p(y_1)\prod_{t=2}^{n}p(y_t|Y_{t-1}) \]
+%	\item The log-likelihood is \[ \ln L(Y_n) = \sum_{t=1}^{n}\ln p(y_t|Y_{t-1}) \text{ where } p(y_1|Y_0):=p(Y_1). \]
+%\end{itemize}
+%\end{frame}
+%
+%\begin{frame}[fragile]
+%\frametitle{Maximum likelihood estimation}
+%\framesubtitle{}
+%\begin{itemize}\itemsep1em
+%	\item For the normal Gaussian model, we obtain
+%	\[ \ln L(Y_n) = -\dfrac{np}{2}\ln 2\pi - \sum_{t=1}^{n} (\ln |F_t| + v'_t F^{-1}v_t). \]
+%	\item Since the objects in the preceding equation are computed in the course of applying the Kalman filter, it follows that the likelihood can be constructed as a by-product of the Kalman recursions.
+%	\item The objects forming the likelihood actually depend on a vector of unknown parameters $ \psi $, therefore we can write $ \ln L(Y_n|\psi) $
+%	\item The likelihood is then maximised by using appropriate numerical methods.
+%\end{itemize}
+%\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Бейсово оценяване}
+\framesubtitle{Основни положения}
+\begin{itemize}\itemsep1em
+	\item Численото максимизиране на функция на правдоподобие може да срещне трудности:
+	\begin{itemize}\itemsep1em
+		\item Много локални максимуми или области с почти постоянни стойности
+		\item Чувствителност към началните условия на използвания метод за оптимизация
+		\item Нелогични или теоретично неиздържани оценки на параметрите
+	\end{itemize}
+	\item Тези проблеми понякога могат да бъдат преодолени с използването на бейсови методи
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Бейсово оценяване}
+\begin{itemize}\itemsep1em
+	\item По-точно, бейсовите методи могат да са полезни при:
+	\begin{itemize}\itemsep1em
+		\item Малка извадка
+		\item Необходимост дадени параметри да бъдат ограничени 
+		\item Налична допълнителна теоретична или емпирична информация
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Бейсово оценяване}
+\framesubtitle{}
+\begin{itemize}\itemsep1em
+	\item Традиционният подход в статистиката приема параметрите на един модел за фиксирани, но неизвестни, а данните се приемат за случайни величини
+	\item Бейсовият подход третира параметрите като случайни величини и провежда анализа за фиксиран набор от данни
+	\item По този начин се отчита несигурността по отношение на параметрите
+	\item Формално се работи с разпределението на параметрите $ \psi $ на модела, при зададени наблюдения $ Y_n $.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Бейсово оценяване}
+\framesubtitle{}
+\begin{itemize}\itemsep1em
+	\item Ако пълният модел се формализира чрез съвместното разпределение на параметрите и данните, $ p(\psi,Y_n) $, можем да използваме формулата на Бейс и да запишем условната плътност $ p(\psi|Y_n) $ във вида:
+	\begin{equation}\label{eq:Bayes1}
+	p(\psi|Y_n) = \dfrac{p(\psi)p(Y_n|\psi)}{p(Y_n)}
+	\end{equation}
+	\item Плътността $ p(\psi) $ се нарича \emph{априорна плътност} 
+	\item Условната плътност $ p(Y_n|\psi) $ е всъщност \emph{функцията на правдоподобие}
+	\item Условната плътност $ p(\psi|Y_n) $, от която се интересуваме, се нарича \emph{апостериорна плътност}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Бейсово оценяване}
+\framesubtitle{}
+\begin{itemize}\itemsep1em
+	\item Понеже маргиналната плътност $ p(Y_n) $ е просто нормираща константа за фиксирани данни, често тя се изпуска и се работи с т.нар. ядро на апостериорната плътност $ p(\psi)p(Y_n|\psi) $, като \eqref{eq:Bayes1} се записва във вида:
+	\begin{equation}\label{eq:Bayes2}
+	p(\psi|Y_n) \propto p(\psi)p(Y_n|\psi)
+	\end{equation}
+	\item Априорната плътност $ p(\psi) $ отчита информация за параметрите, която не е включена в наблюденията (,,какво знаем, преди да сме взели данните'') -- теоретични съображения, еспертни оценки, субективни преценки, резултати от предходни изследвания
+	\item Функцията на правдоподобие се конструира по стандартен начин, като отчита вероятната форма на процеса, генериращ данните, доколкото е възможно
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Бейсово оценяване}
+\framesubtitle{}
+\begin{itemize}\itemsep1em
+	\item Така апостериорната плътност комбинира информация от данните и такава, която не идва от наблюденията, което може да се интерпретира като: \begin{enumerate}\itemsep1em
+		\item актуализиране на априорната информация с информация от данните
+		\item допълване на информацията от наличния набор от наблюдения с информация от допълнителни източници
+	\end{enumerate}
+	\item С помощта на апостериорната плътност могат да се правят аналози на редица стандартни статистически процедури като конструиране на точкови оценки, доверителни интервали, проверка на хипотези и пр.
+	\item Най-често апостериорните плътности не могат да се пресметнат аналитично и се приближават с помощта на подходящи симулации 
+\end{itemize}
+\end{frame}
+
+%\begin{frame}[fragile]
+%\frametitle{Implementation of the Bayesian approach in a state space framework}
+%\framesubtitle{}
+%\begin{itemize}\itemsep1em
+%	\item Typical applications of the Bayesian approach to a UCM restrict the scope of analysis and perform posterior analysis of suitable functions of the states or parameters 
+%	\item For example, we may be interested in the posterior mean of a function $ x(\cdot) $ of the stacked state vector $ \alpha $ (i.e. including $ \alpha_1 $ to $ \alpha_n $) given the data: $ \bar{x} = E(x(\alpha)|Y_n) $
+%	\item This is done by evaluating (numerically) the integral
+%	\[ \bar{x} = \int x(\alpha) p(\psi,\alpha|Y_n)\, d\psi d\alpha = \int x(\alpha) {\color{blue}p(\psi|Y_n)} p(\alpha|\psi,Y_n)\, d\psi d\alpha \]
+%\end{itemize}
+%\end{frame}
+%
+%\begin{frame}[fragile]
+%\frametitle{Implementation of the Bayesian approach in a state space framework}
+%\framesubtitle{}
+%\begin{itemize}\itemsep1em
+%	\item Alternatively, we may be interested in the posterior mean $ \bar{\nu} $ of a function $ \nu (\cdot) $ of the parameter vector $ \psi $
+%	\item This can be obtained by numerically evaluating the integral
+%	\[ \def\arraystretch{1.7} \begin{array}{lll}
+%\bar{\nu}	& = & E(\nu(\psi)|Y_n) \\ 
+%	& = & \int\nu (\psi)p(\psi | Y_n)\, d\psi \\ 
+%	& = & K \int\nu (\psi)p(\psi) p(Y_n|\psi)\, d\psi ,
+%	\end{array}  \] where $ K $ is a normalising constant
+%\end{itemize}
+%\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Оценяване в Dynare}
+\framesubtitle{Общи положения}
+\begin{itemize}\itemsep1em
+	\item Декларира се кои са наблюдаемите променливи 
+	\item Задават се априорните плътности, ако се ползва бейсов метод
+	\begin{itemize}\itemsep1em
+		\item Ако се работи в класическа схема, тогава се задават начални условия за оптимизатора
+	\end{itemize}
+	\item Задава се командата за оценяване със съответните параметри
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Задаване на наблюденията}
+\framesubtitle{}
+\textbf{Наблюдения}\\
+varobs y infl u; \\
+\bigskip
+
+\begin{itemize}\itemsep1em
+	\item Те трябва да бъдат ендогенни за модела променливи
+	\item В модела трябва да има поне толкова шокове, колкото и наблюдаеми променливи
+	\item Разрешава се само един блок с декларации на наблюдаеми променливи за всеки .mod файл
+	\item Данните могат да са записани в .m, .mat, .csv или .xlsx/xls формат
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Априорни плътности}
+\framesubtitle{}
+\begin{itemize}\itemsep1em
+	\item Задават се в блок \textit{estimated\_params} 
+	\item В този блок може да се дава и информация за целите на стандартно оценяване с максимално правдоподобие
+	\item Декларират се дисперсии на шоковете, корелации между шокове и свойства на параметри,които вече са били декларирани в блока \textit{parameters}
+	\item Има налични различни разпределения, напр. нормално, равномерно, бета, гама, и обратно гама разпределение, както и възможности някои разпределения да се параметризират по различен начин
+\end{itemize}\bigskip
+
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Априорни плътности}
+\framesubtitle{}
+\textbf{Оценявани параметри}\\
+estimated\_params;
+\\
+stderr e1, inv\_gamma\_pdf,  0.005  , inf;
+\\
+c1       , normal\_pdf    ,  0.7    , 0.03;
+\\
+end;\\
+\bigskip
+
+\begin{itemize}\itemsep1em
+	\item След като се укаже типът на разпределението се задават средната и стандартното отклонение
+	\item Ако искаме да пропуснем някой параметър, това се указва с празна позиция, отделена със запетаи, напр. \\ \medskip
+	corr eps\_1, eps\_2, 0.5,  ,  , beta\_pdf, 0, 0.3, -1, 1;
+\end{itemize}
+\end{frame}
+
+%\begin{frame}[fragile]
+%\frametitle{The estimation command}
+%\framesubtitle{}
+%\begin{itemize}\itemsep1em
+%	\item The estimation command in Dynare is extremely flexible and allows fine-grained control over the estimation process
+%	\item It accepts over a 100 options (!) specifying the estimation details
+%	\item Fortunately, only a handful are sufficient to get started
+%\end{itemize}\bigskip
+%\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Оценяване}
+\framesubtitle{}
+\textbf{Оценяване}\\
+estimation(datafile = estdata,mh\_replic=2000, mh\_nblocks=2, filtered\_vars, smoother, diffuse\_filter) yp z; \\
+\bigskip
+
+\begin{itemize}\itemsep1em
+	\item Използва файл \textit{estdata} (в случая .m файл)
+	\item Пуснати са две вериги със симулации, всяка с по 2000 итерации
+	\item Да се оценят филтрирани и изгладени стойности
+	\item Опцията diffuse filter се използва при нестационарни наблюдения
+	\item Да се визуализират резултати за променливите \textit{yp} и \textit{z}
+\end{itemize}
+\end{frame}
+
+%\begin{frame}[fragile]
+%\frametitle{Convergence diagnostics}
+%\framesubtitle{}
+%\begin{itemize}\itemsep1em
+%	\item Dynare produces several diagnostic plots to assess the convergence of the Markov Chain Monte Carlo simulations to the stationary distributions
+%	\begin{itemize}\itemsep1em
+%		\item The plots are produced when each chain is set to run for over 2000 iterations
+%	\end{itemize}
+%	\item Univariate plots (Brooks and Gelman (1998)) show red and blue lines that are derived quantities from the simulated parameter vectors
+%	\item These lines will be close to one another and roughly constant when the chains have converged
+%	\item The multivariate convergence diagnostics are interpreted similarly, except that they report an aggregate measure of convergence instead of individual measures for each parameter
+%\end{itemize}
+%\end{frame}
+%
+%\begin{frame}[fragile]
+%\frametitle{Maximum likelihood estimation}
+%\framesubtitle{}
+%\begin{itemize}\itemsep1em
+%	\item When the estimated\_params block does not contain prior shape specifications, maximum likelihood estimation is performed:\\ \bigskip
+%	estimated\_params;
+%\\
+%	stderr ey, 0.05, 1.0e-2, inf;
+%\\
+%	end;\\
+%	\item In this case the first number provided is the initial value for the solver
+%	\item Dynare provides the option of constraining the parameter values to a certain range (the second and third parameters above)
+%	\item The estimation command should be modified accordingly, e.g. options related to Bayesian simulation should not be invoked under maximum likelihood
+%\end{itemize}
+%\end{frame}
+%
+%\begin{frame}[fragile]
+%\frametitle{Accessing output}
+%\framesubtitle{}
+%\begin{itemize}\itemsep1em
+%	\item Most of the estimation output is available in a variable called \textit{oo\_}
+%	\item The variable \textit{oo\_} is a structure with various fields depending on the options of the estimation command
+%	\item For example, in the case of Bayesian estimation, the vector of means of a smoothed variable called \textit{yp} can be retrieved through\\
+%	\textit{oo\_.SmoothedVariables.Mean.yp}
+%	\item Similarly, the vector of medians of the filtered variable \textit{z} is available through \\
+%	\textit{oo\_.FilteredVariables.Median.z}
+%\end{itemize}
+%\end{frame}
+%
+%\begin{frame}[fragile]
+%\frametitle{Accessing output}
+%\framesubtitle{}
+%\begin{itemize}\itemsep1em
+%	\item The vector of estimated parameters can be retrieved from \textit{M\_.params}
+%	\item The variance matrix of the shocks is available as \textit{M\_.Sigma\_e} 
+%	\item Depending on the details of the estimation procedure, these will contain the mode (e.g. maximum likelihood) or the posterior mean (Bayesian estimation, Metropolis-Hastings algorithm) of the parameters
+%\end{itemize}
+%\end{frame}
+%
+%\begin{frame}[fragile]
+%\frametitle{Saving output}
+%\framesubtitle{}
+%\begin{itemize}\itemsep1em
+%	\item The required parts of the output can be saved by using the functions \textit{writecsv} from base Octave or \textit{writexls} from the \textit{io} package in Octave
+%	\item If you need to export to Excel, load the \textit{io} package by using the command \\
+%	\textit{pkg load io}
+%	\item Then use something like\\
+%	\textit{xlswrite ("EstOutput.xls", oo\_.SmoothedVariables.Mean.trend\_y)}\\
+%	or\\
+%	\textit{csvwrite ("EstOutput.csv", oo\_.SmoothedVariables.Mean.trend\_y)}
+%	\item The \textit{io} package offers other options as well (JSON, writing to databases)
+%\end{itemize}
+%\end{frame}
+
+%\newcounter{slidenum}\stepcounter{slidenum}
+%\begin{frame}
+%\frametitle{ (\arabic{slidenum})}
+%\framesubtitle{}
+%\end{frame}
+
+
+\end{document}
+
+
+
