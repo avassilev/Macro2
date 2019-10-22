@@ -52,7 +52,6 @@
 \begin{frame}
 \frametitle{Основни въпроси}
 \begin{itemize}
-\item Пример: решаване на задача във вариационна формулировка
 \item Постановка на задачата с явни управления
 \item Извеждане на необходими условия за оптималност
 \item Достатъчни условия за оптималност
@@ -61,32 +60,7 @@
 
 
 
-\begin{frame}\stepcounter{slidenum}
-\frametitle{Пример: Извеждане на НУ за задача във вариационна формулировка (\arabic{slidenum})}
-Задача:
-\[ \max_{\{c_t\}} \sum_{t=0}^{\infty}\beta^t \ln c_t  \]
-\[ k_{t+1} = (1-\delta)k_t + y_t - c_t,\quad k_0>0 \text{ -- дадено} \] \[ y_t=A k_t^\alpha , \quad 0<\underline{\epsilon} \leq c_t \leq \overline{\epsilon}, \quad \alpha,\beta \in (0,1), \quad A>0\]
 
-НУ: 
-\[ \sum_{t=0}^{\infty}\beta^t \underbrace{\ln ((1-\delta)k_t + A k_t^\alpha - k_{t+1})}_{= F(x_t,x_{t+1})}. \]
-
-{\color{red}Уравнение на Ойлер: \[ F_y(x_t,x_{t+1})+\beta F_x(x_{t+1},x_{t+2})=0 \]}
-\end{frame}
-
-
-
-\begin{frame}\stepcounter{slidenum}
-\frametitle{Пример: Извеждане на НУ за задача във вариационна формулировка (\arabic{slidenum})}
-При прилагане на уравнението на Ойлер:
-\[ \frac{-1}{(1-\delta)k_t +A k_t^\alpha -k_{t+1}} + \beta \frac{(1-\delta) + \alpha A k_{t+1}^{\alpha -1}}{(1-\delta)k_{t+1} +A k_{t+1}^\alpha -k_{t+2}} = 0 \]
-
-Последното има вида 
-\[ G(x_{t+2},x_{t+1},x_t)=0, \]
-т.е. нелинейно диференчно уравнение от II ред.
-
-\pause \bigskip
-Въпрос: Можете ли да намерите решението на това уравнение за $ \beta = 0.95,~A=1,~ \delta = 0.05,~ \alpha = 0.5 $ и $ k_0 = 2 $? \pause Ако не, какво още е необходимо?
-\end{frame}
 
 
 \begin{frame}\setcounter{slidenum}{1}
@@ -253,7 +227,7 @@ $t=0,1,2,\ldots,$ се определят чрез \eqref{eq:state}
 
 \begin{frame}\stepcounter{slidenum}
 \frametitle{Достатъчни условия за оптималност (\arabic{slidenum})}
-Доказателството на теоремата е сходно с това на теорема 4.15 от Stokey-Lucas. Напомняме, че \eqref{eq:FOCs}, записано в матричен вид, се задава с \eqref{eq:LagrX} и \eqref{eq:LagrU}.
+Доказателството на теоремата е сходно с извеждането на уравнения на Ойлер за задача във вариационна формулировка. Напомняме, че \eqref{eq:FOCs}, записано в матричен вид, се задава с \eqref{eq:LagrX} и \eqref{eq:LagrU}.
 
 Разглеждаме \[ \mathcal{L}_T(x_t,u_t) = \sum_{t=0}^{T}\beta^t \left\{ f^0(x_t,u_t) + \lambda'_t \cdot [f(x_t,u_t)-x_{t+1}] \right\} .\]
 

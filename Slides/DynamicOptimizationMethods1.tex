@@ -36,7 +36,7 @@
 \DeclareMathOperator*{\Ran}{Ran} \DeclareMathOperator*{\intr}{int}
 \DeclareMathOperator*{\grad}{grad}
 \DeclareMathOperator*{\dist}{dist}
-\title[]{Уравнения на Ойлер}
+\title[]{Детерминистични динамични оптимизационни задачи във вариационна формулировка}
 \author[]{Андрей Василев \\ \href{mailto:avassilev@fmi.uni-sofia.bg}{avassilev@fmi.uni-sofia.bg} }
 \date{}
 
@@ -49,6 +49,16 @@
 \end{titlepage}
 \end{frame}
 
+\begin{frame}
+	\frametitle{Основни въпроси}
+	\begin{itemize}
+		\item Постановка на задачата 
+		\item Функция-цена и резултати
+		\item Уравнения на Ойлер
+	\end{itemize}
+\end{frame}
+
+\section{Уравнения на Ойлер}
 \begin{frame}[fragile]
 \frametitle{Постановка на задачата}
 \framesubtitle{}
@@ -119,6 +129,33 @@ x_0 \in X \text{ -- дадено}
 \begin{thm}[SL, Теорема 4.15]
 Нека $ X \subset \mathbb{R}_+^l $ и $ F $ удовлетворява допускания 4.3--4.5, 4.7 и 4.9. Тогава редицата $ \{x^*_{t+1}\}_{t=0}^\infty $, за която $ x^*_{t+1} \in \Gamma (x^*_t) $, $ t=0,1,\ldots $, е решение на задачата \eqref{eq:SP} за зададено $ x_0 $, ако тя удовлетворява условията \eqref{eq:SL2} и \eqref{eq:SL3}.
 \end{thm}
+\end{frame}
+
+\begin{frame}\stepcounter{slidenum}
+	\frametitle{Пример: Извеждане на НУ за задача във вариационна формулировка (\arabic{slidenum})}
+	Задача:
+	\[ \max_{\{c_t\}} \sum_{t=0}^{\infty}\beta^t \ln c_t  \]
+	\[ k_{t+1} = (1-\delta)k_t + y_t - c_t,\quad k_0>0 \text{ -- дадено} \] \[ y_t=A k_t^\alpha , \quad 0<\underline{\epsilon} \leq c_t \leq \overline{\epsilon}, \quad \alpha,\beta \in (0,1), \quad A>0\]
+	
+	НУ: 
+	\[ \sum_{t=0}^{\infty}\beta^t \underbrace{\ln ((1-\delta)k_t + A k_t^\alpha - k_{t+1})}_{= F(x_t,x_{t+1})}. \]
+	
+	{\color{red}Уравнение на Ойлер: \[ F_y(x_t,x_{t+1})+\beta F_x(x_{t+1},x_{t+2})=0 \]}
+\end{frame}
+
+
+
+\begin{frame}\stepcounter{slidenum}
+	\frametitle{Пример: Извеждане на НУ за задача във вариационна формулировка (\arabic{slidenum})}
+	При прилагане на уравнението на Ойлер:
+	\[ \frac{-1}{(1-\delta)k_t +A k_t^\alpha -k_{t+1}} + \beta \frac{(1-\delta) + \alpha A k_{t+1}^{\alpha -1}}{(1-\delta)k_{t+1} +A k_{t+1}^\alpha -k_{t+2}} = 0 \]
+	
+	Последното има вида 
+	\[ G(x_{t+2},x_{t+1},x_t)=0, \]
+	т.е. нелинейно диференчно уравнение от II ред.
+	
+	\pause \bigskip
+	Въпрос: Можете ли да намерите решението на това уравнение за $ \beta = 0.95,~A=1,~ \delta = 0.05,~ \alpha = 0.5 $ и $ k_0 = 2 $? \pause Ако не, какво още е необходимо?
 \end{frame}
 
 \end{document}
