@@ -53,17 +53,172 @@
 	\frametitle{Основни въпроси}
 	\begin{itemize}
 		\item Постановка на задачата 
-		\item Функция-цена и резултати
+		\item Принцип за оптималност и уравнение на Белман 
 		\item Уравнения на Ойлер
 	\end{itemize}
 \end{frame}
 
-\section{Уравнения на Ойлер}
+%\section{Постановка}
 \begin{frame}[fragile]
-\frametitle{Постановка на задачата}
-\framesubtitle{}
-Разглеждаме познатата задача
+	\frametitle{Постановка}
+	\framesubtitle{Общи положения}
+	\begin{itemize}\itemsep1em
+		\item Оптимизационна задача със специална структура на целевата функция:
+		\begin{itemize}\itemsep1em
+			\item адитивност
+			\item дисконтиране
+			\item безкраен хоризонт
+		\end{itemize}
+		\item Ограничения, които свързват допустимите стойности между различните периоди
+		\item Зададено начално условие
+	\end{itemize}
+\end{frame}
+
+
+
+
+\begin{frame}[fragile]
+	\frametitle{Постановка}
+	\framesubtitle{Формулировка}
+Разглеждаме задачата
 \begin{equation}\label{eq:SP}\tag{SP}
+\begin{array}{l}
+\sup_{ \{x_{t+1}\}_{t=0}^\infty }
+\sum_{t=0}^{\infty}\beta^t F(x_t,x_{t+1}) \\ 
+{}\\
+\text{s.t. } x_{t+1}\in \Gamma (x_t),~t=0,1,2,\ldots, \\ {}\\
+x_0 \in X \text{ -- дадено}
+\end{array} 
+\end{equation}
+
+\begin{itemize}
+	\item $ x_t \in X $, където $ X \subset \mathbb{R}^n $ е множеството от допустими стойности
+	\item $ \beta \in (0,1) $ -- дисконтов фактор (множител)
+	\item $ \Gamma (x) \subset X $ -- множество от допустими стойности за следващия период за дадено $ x $
+	\item Обичайно за $ F $ и $ \Gamma $ се правят подходящи допускания
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]
+	\frametitle{Пример}
+	\framesubtitle{Модел на икономически растеж за едносекторна икономика}
+\begin{itemize}\itemsep1em
+	\item $ f(k_t) $ -- производствена функция, където с $ k_t $ е означен физическият капитал 
+	\item Уравнение за натрупване на капитала:
+	\[ k_{t+1} = (1-\delta)k_t + i_t, \]
+	където $ \delta \in (0,1) $ е нормата на амортизация, $ i_t $ са инвестициите, а $ k_0 > 0$ е даден
+	\item БВП тъждество:
+	\[ y_t = c_t + i_t, \]
+	$ c_t $ -- потребление
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]
+	\frametitle{Пример}
+	\framesubtitle{Модел на икономически растеж за едносекторна икономика}
+	\begin{itemize}\itemsep1em
+		\item $ U(c_t) $ -- функция на полезност
+		\item Целеви функционал:
+		\begin{equation}\label{eq:U}
+		\sum_{t=0}^{\infty}\beta^t U(c_t)
+		\end{equation}
+		\item Еквивалентен запис на уравнението за натрупване на капитала:
+		\begin{equation}\label{eq:K}
+		 k_{t+1} = (1-\delta)k_t + f(k_t) - c(t),\quad k_0>0
+		\end{equation}
+		\item Ограничения $ k_t, c_t \geq 0 $, откъдето 
+		\begin{equation}\label{eq:C}
+		c_t \in [0,(1-\delta)k_t + f(k_t)]
+		\end{equation}
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]
+	\frametitle{Пример}
+	\framesubtitle{Модел на икономически растеж за едносекторна икономика}
+	\begin{itemize}
+		\item Задачата е да се максимизира \eqref{eq:U} по $ \{c_t\}_{t=0}^\infty $ при ограничения \eqref{eq:K} и \eqref{eq:C}
+		\item Можем да се освободим от $ c_t $ и да запишем задачата в еквивалентен вид като
+		\[ \max_{ \{k_{t+1}\}_{t=0}^{\infty} } \sum_{t=0}^{\infty}\beta^t U((1-\delta)k_t + f(k_t) - k_{t+1}) \]
+		s.t. \[ k_{t+1} \in [0, (1-\delta)k_t + f(k_t)] \] при дадено $ k_0>0 $
+		\item При този запис имаме $ F(x_t,x_{t+1}) :=  U((1-\delta)k_t + f(k_t) - k_{t+1})$ и $ \Gamma (x) := [0, (1-\delta)k_t + f(k_t)] $	
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]
+	\frametitle{Основни допускания}
+	\framesubtitle{}
+	Нека означим с 
+	\[ \Pi (x_0) = \{ \{x_t\}_{t=0}^\infty \vert x_{t+1} \in \Gamma(x_t),~ t\geq 0 \} \] множеството на всички допустими траектории (планове), започващи от $ x_0 $.\medskip
+	
+	За да бъде добре дефинирана задачата \eqref{eq:SP} е необходимо да се направят определени допускания:
+	\begin{itemize}\itemsep1em
+		\item[Д1] $ \Gamma(x) \neq \emptyset,~\forall x \in X $
+		\item[Д2] $ \exists \lim_{n\rightarrow \infty}\sum_{t=0}^{n}\beta^t F(x_t,x_{t+1}),~~\forall x_0 \in X,~ \underline{x}\in \Pi (x_0) $
+	\end{itemize}\medskip
+
+\textbf{Забележка:}	Изобщо съществуването на границата в Д2 не изключва случая, когато тя е  $ \pm \infty $. Поради това
+общата постановка на \eqref{eq:SP} е със $ \sup $ вместо $ \max $. 
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Дефиниция на функция-цена}
+\framesubtitle{}
+\begin{itemize}\itemsep1em
+	\item Нека дефинираме $ u_n:\Pi(x_0)\rightarrow \mathbb{R} $ като 
+	\[ u_n(\underline{x}) = \sum_{t=0}^{n}\beta^t F(x_t,x_{t+1}) \]
+	и
+	\[ u(\underline{x}) = \lim\limits_{n\rightarrow \infty} u_n(\underline{x}) \]
+	\item Ако допускания Д1 и Д2 са в сила, можем да дефинираме функцията $ v^* $ като
+	\[ v^*(x_0) = \sup_{\underline{x}\in \Pi (x_0)}u(\underline{x}) \]
+	\item Тази функция се нарича \emph{функция-цена}.
+\end{itemize}
+
+
+\begin{frame}[fragile]
+\frametitle{Уравнение на Белман}
+\framesubtitle{}
+\begin{itemize}\itemsep1em
+	\item $  $
+	\item 
+	\item 
+\end{itemize}
+\end{frame}
+
+
+
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{frame}[fragile]\setcounter{slidenum}{1}
+\frametitle{Уравнения на Ойлер (\arabic{slidenum})}
+\framesubtitle{Постановка на задачата}
+Разглеждаме познатата задача
+\begin{equation}\tag{SP}
 \begin{array}{l}
 \sup_{ \{x_{t+1}\}_{t=0}^\infty }
 \sum_{t=0}^{\infty}\beta^t F(x_t,x_{t+1}) \\ 
@@ -80,9 +235,9 @@ x_0 \in X \text{ -- дадено}
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]
-\frametitle{Интуиция за извеждане на НУ за оптималност}
-\framesubtitle{}
+\begin{frame}[fragile]\stepcounter{slidenum}
+\frametitle{Уравнения на Ойлер (\arabic{slidenum})}
+\framesubtitle{Интуиция за извеждане на НУ за оптималност}
 \begin{itemize}\itemsep1em
 \item Нека, за дадено $ x_0 $, имаме редица $ \{x^*_{t+1}\}_{t=0}^\infty $, която е решение на \eqref{eq:SP}.
 \item Тогава за всяко $ t $ тази редица трябва да бъде решение и на задачата 
@@ -96,9 +251,9 @@ x_0 \in X \text{ -- дадено}
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]
-\frametitle{Формулировка на НУ за оптималност}
-\framesubtitle{}
+\begin{frame}[fragile]\stepcounter{slidenum}
+\frametitle{Уравнения на Ойлер (\arabic{slidenum})}
+\framesubtitle{Формулировка на НУ за оптималност}
 \begin{itemize}\itemsep1em
 \item Нека $ F_x $ и $ F_y $ означават $ l $-мерните вектори от частни производни съответно по първите и по вторите $ l $ аргумента
 \item Ако $ x^*_{t+1} $ е във вътрешността на $ \Gamma(x^*_t) $ за всяко $ t $, тогава условията за решение на задача \eqref{eq:SL1} са
@@ -109,9 +264,9 @@ x_0 \in X \text{ -- дадено}
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]
-\frametitle{Допълнителни условия за намиране на оптимално решение}
-\framesubtitle{}
+\begin{frame}[fragile]\stepcounter{slidenum}
+\frametitle{Уравнения на Ойлер (\arabic{slidenum})}
+\framesubtitle{Допълнителни условия за намиране на оптимално решение}
 \begin{itemize}\itemsep1em
 \item  Щом \eqref{eq:SL2} са система от $ l $ диференчни уравнения от втори ред, тогава ни трябват $ 2l $ условия, за да намерим решение
 \item Векторът от начални условия $ x_0 $ задава $ l $ такива условия
@@ -123,15 +278,15 @@ x_0 \in X \text{ -- дадено}
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]
-\frametitle{Достатъчни условия за оптималност}
-\framesubtitle{}
+\begin{frame}[fragile]\stepcounter{slidenum}
+\frametitle{Уравнения на Ойлер (\arabic{slidenum})}
+\framesubtitle{Достатъчни условия за оптималност}
 \begin{thm}[SL, Теорема 4.15]
 Нека $ X \subset \mathbb{R}_+^l $ и $ F $ удовлетворява допускания 4.3--4.5, 4.7 и 4.9. Тогава редицата $ \{x^*_{t+1}\}_{t=0}^\infty $, за която $ x^*_{t+1} \in \Gamma (x^*_t) $, $ t=0,1,\ldots $, е решение на задачата \eqref{eq:SP} за зададено $ x_0 $, ако тя удовлетворява условията \eqref{eq:SL2} и \eqref{eq:SL3}.
 \end{thm}
 \end{frame}
 
-\begin{frame}\stepcounter{slidenum}
+\begin{frame}\setcounter{slidenum}{1}
 	\frametitle{Пример: Извеждане на НУ за задача във вариационна формулировка (\arabic{slidenum})}
 	Задача:
 	\[ \max_{\{c_t\}} \sum_{t=0}^{\infty}\beta^t \ln c_t  \]
@@ -153,9 +308,7 @@ x_0 \in X \text{ -- дадено}
 	Последното има вида 
 	\[ G(x_{t+2},x_{t+1},x_t)=0, \]
 	т.е. нелинейно диференчно уравнение от II ред.
-	
-	\pause \bigskip
-	Въпрос: Можете ли да намерите решението на това уравнение за $ \beta = 0.95,~A=1,~ \delta = 0.05,~ \alpha = 0.5 $ и $ k_0 = 2 $? \pause Ако не, какво още е необходимо?
+
 \end{frame}
 
 \end{document}
