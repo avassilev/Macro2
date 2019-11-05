@@ -14,7 +14,7 @@
 %\usepackage{pstricks}
 \usepackage[T2A]{fontenc}
 \usepackage[cp1251]{inputenc}
-\usepackage[english,bulgarian]{babel}
+\usepackage[bulgarian]{babel}
 \usepackage[]{graphicx}
 \usepackage{xcolor}
 \newtheorem{thm}{Теорема}
@@ -176,41 +176,119 @@ x_0 \in X \text{ -- дадено}
 	\[ u(\underline{x}) = \lim\limits_{n\rightarrow \infty} u_n(\underline{x}) \]
 	\item Ако допускания Д1 и Д2 са в сила, можем да дефинираме функцията $ v^* $ като
 	\[ v^*(x_0) = \sup_{\underline{x}\in \Pi (x_0)}u(\underline{x}) \]
-	\item Тази функция се нарича \emph{функция-цена}.
+	\item Тази функция се нарича \emph{функция-цена}
 \end{itemize}
+\textbf{Забележка:} Английският термин е \emph{value function}, но по-популярният термин на български е ,,функция-цена''.
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Уравнение на Белман}
+\framesubtitle{}
+\begin{itemize}\itemsep1em
+	\item Разглеждаме следното уравнение:
+	\begin{equation}\label{eq:FE}\tag{FE}
+	v(x) = \sup_{y \in \Gamma (x)}[F(x,y) + \beta v(y)],~\forall x \in X
+	\end{equation}
+	\item Уравнението \eqref{eq:FE} е функционално: функцията $ v(\cdot) $ е неизвестна
+	\item Уравнението \eqref{eq:FE} се нарича \emph{уравнение на Белман}
+	\item Уравнението на Белман представлява интерес, защото решенията му са свързани с решенията на задачата \eqref{eq:SP}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Уравнение на Белман}
+\framesubtitle{Принцип за оптималност}
+\begin{itemize}\itemsep1em
+	\item Общата идея е, че решение $ v $ на \eqref{eq:FE}, оценено в точката $ x_0 $, дава точно супремума на целевия функционал в \eqref{eq:SP}
+	\item Очакваме също така, че за една редица $ \{x_{t+1}\}_{t=0}^\infty $ супремумът за \eqref{eq:SP} се достига точно тогава, когато редицата удовлетворява 
+	\begin{equation}\label{eq:OptSeq}
+	v(x_t) = F(x_t,x_{t+1}) + \beta v(x_{t+1}), \quad t=0,1,2,\ldots
+	\end{equation}
+	\item Тези идеи (които засега са хипотези) са известни като \emph{принцип за оптималност (на Белман)}
+\end{itemize}
+\end{frame}
 
 
 \begin{frame}[fragile]
 \frametitle{Уравнение на Белман}
 \framesubtitle{}
 \begin{itemize}\itemsep1em
-	\item $  $
-	\item 
-	\item 
+\item Ако функцията-цена удовлетворява уравнението на Белман (както се надяваме), то тя по същество участва в рекурсивна връзка:
+\begin{itemize}\itemsep1em
+\item Функцията-цена в точка $ x $ може да се получи чрез решаването на максимизационна задача за избор на следваща точка $ y $ при критерий сумата от текущата стойност на целевата функция ($ F $) и дисконтираната ,,остатъчна'' стойност на целевия функционал за точката $ y $
+\end{itemize} 
+\item Ако знаехме функцията-цена, бихме могли да използваме \eqref{eq:FE}, за да итерираме по оптималната траектория. Това е идеята на уравнение \eqref{eq:OptSeq}.
+\item Така с помощта на уравнението на Белман задачата за намиране на цялата оптимална редица за \eqref{eq:SP} може да се сведе до серия от оптимизационни задачи за намиране на отделните елементи на тази редица
 \end{itemize}
 \end{frame}
 
 
 
+
+\begin{frame}[fragile]
+\frametitle{Основни резултати за връзките между \eqref{eq:SP} и \eqref{eq:FE} }
+\framesubtitle{}
+
+Следващият резултат показва, че функцията-цена е решение на уравнението на Белман:
+
+\begin{thm}[SL, Th. 4.2]
+Нека $ X,~\Gamma,~F $ и $ \beta $ удовлетворяват допускания Д1 и Д2. Тогава функцията $ v^* $ е решение на \eqref{eq:FE}.
+\end{thm}\pause
+
+\begin{itemize}\itemsep1em
+\item Функцията-цена не е непременно единственото решение на уравнението на Белман
+\item Това подсказва, че е необходимо да се търсят допълнителни критерии за изолиране на функцията-цена от множеството на решенията на \eqref{eq:FE}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Основни резултати за връзките между \eqref{eq:SP} и \eqref{eq:FE} }
+\framesubtitle{}
+
+Оказва се, че ако едно решение на уравнението на Белман в допълнение удовлетворява специално условие за ограниченост, то това решение е именно функцията-цена:
+
+\begin{thm}[SL, Th. 4.3]
+Нека $ X,~\Gamma,~F $ и $ \beta $ удовлетворяват допускания Д1 и Д2. Ако функцията $ v $ е решение на \eqref{eq:FE} и удовлетворява условието
+\begin{equation}\label{eq:TransCond_1}
+\lim_{n\rightarrow \infty} \beta^n v(x_n) = 0, \quad \forall (x_0,x_1,\ldots) \in \Pi(x_0),~\forall x_0 \in X,
+\end{equation}
+то $ v=v^* $.
+\end{thm}\pause
+
+\begin{itemize}\itemsep1em
+\item Условието \eqref{eq:TransCond_1} трябва да бъде изпълнено за произволна допустима редица
+\item \textbf{Интерпретация:} за всяка допустима редица дисконтираната остатъчна стойност трябва да се анулира в граница 
+\end{itemize}
 \end{frame}
 
 
+\begin{frame}[fragile]
+\frametitle{Основни резултати за връзките между \eqref{eq:SP} и \eqref{eq:FE} }
+\framesubtitle{}
+Установените дотук резултати характеризират оптималната стойност на целевия функционал, но не казват как да конструираме допустим план, с който да постигнем тази оптимална стойност (т.е. оптимален план). Следващият резултат показва, че оптималният план е решение на \eqref{eq:OptSeq} при $ v=v^* $:
+
+\begin{thm}[SL, Th. 4.4]
+Нека $ X,~\Gamma,~F $ и $ \beta $ удовлетворяват допускания Д1 и Д2. Нека $ \underline{x}^* \in \Pi (x_0) $ е допустим план, за който се достига супремумът в \eqref{eq:SP} за начално условие $ x_0 $. Тогава имаме
+	\begin{equation}\label{eq:OptSeqAgain}
+	v^*(x^*_t) = F(x^*_t,x^*_{t+1}) + \beta v^*(x^*_{t+1}),\quad t=0,1,2,\ldots
+	\end{equation}
+\end{thm}
+\end{frame}
 
 
+\begin{frame}[fragile]
+\frametitle{Основни резултати за връзките между \eqref{eq:SP} и \eqref{eq:FE} }
+\framesubtitle{}
+Аналогично на това, че не всяко решение на \eqref{eq:FE} ни дава функцията-цена, може да има редици, които удовлетворяват \eqref{eq:OptSeqAgain}, без да са оптимални. За да намерим оптимална редица, отново ни трябва допълнително условие за ограниченост:
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+\begin{thm}[SL, Th. 4.5]
+Нека $ X,~\Gamma,~F $ и $ \beta $ удовлетворяват допускания Д1 и Д2. Нека $ \underline{x}^* \in \Pi (x_0) $ е допустим план, който удовлетворява \eqref{eq:OptSeqAgain} и нека в допълнение е в сила
+\begin{equation}\label{eq:TransCond_2}
+\limsup_{t\rightarrow \infty}\beta^t v^*(x^*_t) \leq 0.
+\end{equation}
+Тогава за $ \underline{x}^* $ се достига супремумът в \eqref{eq:SP}.
+\end{thm}
+\end{frame}
 
 
 
