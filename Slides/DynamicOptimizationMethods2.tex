@@ -158,7 +158,7 @@ f^0_u (x_t,u_t)+ f'_u(x_t,u_t)\cdot \lambda_t = 0
 \beq v(x) = \sup_{u \in U(x)}  \left[
 f^0(x,u)+\beta v(f(x,u)) \right]. \label{eq:Bellman}\eeq
 
-Нека супремумът в \eqref{eq:Bellman} се достига във вътрешна точка на множеството $ U(x) $. Да означим тази точка с $ u = \nu(x) $ и нека всички обекти по-нататък да са диференцируеми, така че съответните операции са коректни.
+Нека супремумът в \eqref{eq:Bellman} се достига във вътрешна точка на множеството $ U(x) $. Да означим тази точка с $ u = \mu(x) $ и нека всички обекти по-нататък да са диференцируеми, така че съответните операции са коректни.
 
 \end{frame}
 
@@ -167,22 +167,22 @@ f^0(x,u)+\beta v(f(x,u)) \right]. \label{eq:Bellman}\eeq
 \begin{frame}\stepcounter{slidenum}
 \frametitle{Извеждане на необходими условия за оптималност (\arabic{slidenum})}
 Имаме \begin{equation}
- v(x) = f^0(x,\nu(x)) + \beta v(f(x,\nu(x))) .
+ v(x) = f^0(x,\mu(x)) + \beta v(f(x,\mu(x))) .
 \label{eq:Bellman1}
 \end{equation}
 
 Също така, условието за достигане на екстремум е \begin{equation}
-f^0_u(x,\nu(x)) + \beta f'_u(x,\nu(x)) \cdot v_x(f(x,\nu(x))) = 0.
+f^0_u(x,\mu(x)) + \beta f'_u(x,\mu(x)) \cdot v_x(f(x,\mu(x))) = 0.
 \label{eq:diffCntrl}
 \end{equation} 
 
 Като диференцираме \eqref{eq:Bellman1} по $ x $, получаваме
 \begin{equation*}
 \begin{split}
- v_x(x) = & f^0_x(x,\nu(x)) +  \nu'_x(x) \cdot f^0_u(x,\nu(x)) + \\
- & \beta \left[ f'_x(x,\nu(x)) + \nu'_x(x) \cdot f'_u(x,\nu(x))  \right]\cdot v_x(f(x,\nu(x)))\\
- = & f^0_x(x,\nu(x)) + \beta  f'_x(x,\nu(x))\cdot v_x(f(x,\nu(x))) + \\
- &  \underbrace{\nu'_x(x) \cdot f^0_u(x,\nu(x)) + \beta \nu'_x(x) \cdot f'_u(x,\nu(x)) \cdot v_x(f(x,\nu(x)))}_{=0 \text{ поради \eqref{eq:diffCntrl}}}.
+ v_x(x) = & f^0_x(x,\mu(x)) +  \mu'_x(x) \cdot f^0_u(x,\mu(x)) + \\
+ & \beta \left[ f'_x(x,\mu(x)) + \mu'_x(x) \cdot f'_u(x,\mu(x))  \right]\cdot v_x(f(x,\mu(x)))\\
+ = & f^0_x(x,\mu(x)) + \beta  f'_x(x,\mu(x))\cdot v_x(f(x,\mu(x))) + \\
+ &  \underbrace{\mu'_x(x) \cdot f^0_u(x,\mu(x)) + \beta \mu'_x(x) \cdot f'_u(x,\mu(x)) \cdot v_x(f(x,\mu(x)))}_{=0 \text{ поради \eqref{eq:diffCntrl}}}.
 \end{split}
 \end{equation*}
 \end{frame}
@@ -191,10 +191,10 @@ f^0_u(x,\nu(x)) + \beta f'_u(x,\nu(x)) \cdot v_x(f(x,\nu(x))) = 0.
 \begin{frame}\stepcounter{slidenum}
 \frametitle{Извеждане на необходими условия за оптималност (\arabic{slidenum})}
 Така получаваме \begin{equation}
-v_x(x) = f^0_x(x,\nu(x)) + \beta  f'_x(x,\nu(x))\cdot v_x(f(x,\nu(x))).
+v_x(x) = f^0_x(x,\mu(x)) + \beta  f'_x(x,\mu(x))\cdot v_x(f(x,\mu(x))).
 \label{eq:Bellman1dx1}
 \end{equation}
-Като вземем $ x=x^*_t $ и $ u^*_t = \nu(x^*_t) $, уравнения \eqref{eq:diffCntrl} и \eqref{eq:Bellman1dx1} добиват вида съответно
+Като вземем $ x=x^*_t $ и $ u^*_t = \mu(x^*_t) $, уравнения \eqref{eq:diffCntrl} и \eqref{eq:Bellman1dx1} добиват вида съответно
 \begin{equation}
 f^0_u(x^*_t,u^*_t) + \beta f'_u(x^*_t,u^*_t) \cdot v_x(x^*_{t+1}) = 0,
 \label{eq:diffCntrlA} 
@@ -205,6 +205,50 @@ v_x(x^*_t) = f^0_x(x^*_t,u^*_t) + \beta  f'_x(x^*_t,u^*_t)\cdot v_x(x^*_{t+1}).
 \end{equation}
 
 Ако положим $ \lambda_t := \beta v_x(x^*_{t+1}) $ в \eqref{eq:diffCntrlA} и \eqref{eq:Bellman1dx1A}, получаваме точно \eqref{eq:LagrX} и \eqref{eq:LagrU}.
+\end{frame}
+
+
+\begin{frame}\setcounter{slidenum}{1}
+	\frametitle{Пример (\arabic{slidenum})}
+	
+Разглеждаме вариант на едносекторния модел на икономически растеж, където  полезността на представителния потребител, зададена с
+\[ \sum_{t=0}^{\infty} \beta^t \dfrac{c_t^{\gamma}}{\gamma},\quad \beta,\gamma \in (0,1), \] 
+трябва да се максимизира по потреблението $ \{c_t\}_{t=0}^{\infty} $.
+
+Уравнението за динамиката на капитала е 
+\[ k_{t+1} = (1-\delta)k_t + y_t - c_t, \quad k_0>0 \text{ -- дадено}. \]
+
+Коефициентът на амортизация е $ \delta \in (0,1) $, а производството $ y_t $ се задава от производствената функция
+\[ f(k_t) = A k_t^\alpha, \quad A > 0,~\alpha \in (0,1). \]
+
+\end{frame}
+
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Пример (\arabic{slidenum})}
+
+Лагранжиан: 
+\[\mathcal{L} = \sum_{t=0}^{\infty} \beta^t \left[ \dfrac{c_t^{\gamma}}{\gamma} + \lambda_t \left((1-\delta)k_t + A k_t^\alpha - c_t - k_{t+1}\right) \right] \]
+
+НУ:
+\[ \dfrac{\partial \mathcal{L}}{\partial c_t} = \beta^t c_t^{\gamma-1} - \beta^t \lambda_t = 0 \quad \Longrightarrow \quad \lambda_t = c_t^{\gamma - 1} \]
+
+\begin{equation*}
+	\begin{split}
+		\dfrac{\partial \mathcal{L}}{\partial k_t} = & \beta^t \lambda_t (1-\delta) + \beta^t \lambda_t A \alpha k_t^{\alpha-1} - \beta^{t-1}\lambda_{t-1} = 0 \quad \Longrightarrow \quad \\
+		& \beta \lambda_t \left[ (1-\delta) + \alpha \dfrac{f(k_t)}{k_t} \right] = \lambda_{t-1}
+	\end{split}
+\end{equation*}
+\end{frame}
+
+\begin{frame}\stepcounter{slidenum}
+\frametitle{Пример (\arabic{slidenum})}
+След комбиниране на двете уравнения от необходимите условия, получаваме
+\[ \beta \left[ (1-\delta) + \alpha \dfrac{f(k_t)}{k_t} \right] = \left( \dfrac{c_t}{c_{t-1}}\right)^{1-\gamma} \]
+
+\medskip
+
+Интерпретация: от какво зависи темпът на изменение на потреблението?
 \end{frame}
 
 
@@ -223,7 +267,6 @@ $t=0,1,2,\ldots,$ се определят чрез \eqref{eq:state}
                         $\{x^*_{t+1},u^*_t\}$ (при зададено $x_0$) е оптимална за задачата А.
 \label{th:sufficiency}\end{thm}
 \end{frame}
-
 
 \begin{frame}\stepcounter{slidenum}
 \frametitle{Достатъчни условия за оптималност (\arabic{slidenum})}
@@ -264,8 +307,8 @@ $t=0,1,2,\ldots,$ се определят чрез \eqref{eq:state}
  D \leq &   \sum_{t=0}^{T}\beta^t \lambda'_t \cdot (x^*_{t+1} - x_{t+1} ) +  \sum_{t=0}^{T}\beta^t \frac{\lambda'_{t-1}}{\beta}\cdot\underbrace{(x_t-x_t^*)}_{\text{N.B.: } x_0 = x^*_0} = \\
 &  \sum_{t=0}^{T}\beta^t \lambda'_t \cdot (x^*_{t+1} - x_{t+1} ) +  \sum_{t = {\color{red}1}}^{T}\beta^{t-1} \frac{\lambda'_{t-1}}{\beta}\cdot(x_t-x_t^*)= \\
 &  \sum_{t=0}^{T}\beta^t \lambda'_t \cdot (x^*_{t+1} - x_{t+1} ) +  \sum_{t = {\color{red} 0}}^{{\color{red} T-1}}\beta^{{\color{red} t}} \frac{\lambda'_{{\color{red} t}}}{\beta}\cdot(x_{{\color{red} t+1}}-x_{{\color{red} t+1}}^*)= \\
-& \underbrace{\sum_{t=0}^{{\color{red} T-1}}\beta^t \lambda'_t \cdot (x^*_{t+1} - x_{t+1}) +  \sum_{t = 0}^{T-1}\beta^{t} \frac{\lambda'_{t}}{\beta}\cdot(x_{ t+1}-x_{t+1}^*)}_{=0} + \\
-& \beta^T \lambda'_T \cdot (x^*_{T+1} - x_{T+1})  \underbrace{\leq}_{\text{понеже }\lambda_t,x_t \geq \mathbf{0}} \beta^T \lambda'_T \cdot x^*_{T+1}.
+& \underbrace{\sum_{t=0}^{{\color{red} T-1}}\beta^t \lambda'_t \cdot (x^*_{t+1} - x_{t+1}) +  \sum_{t = 0}^{T-1}\beta^{t} \frac{\lambda'_{t}}{\beta}\cdot(x_{ t+1}-x_{t+1}^*)}_{<0 \text{ т.к. } 1/\beta > 1} + \\
+& \beta^T \lambda'_T \cdot (x^*_{T+1} - x_{T+1})  \underbrace{\leq}_{\text{т.к. }\lambda_t,x_t \geq \mathbf{0}} \beta^T \lambda'_T \cdot x^*_{T+1}.
 \end{split}
 \end{equation*}
 \end{frame}
@@ -280,6 +323,9 @@ $t=0,1,2,\ldots,$ се определят чрез \eqref{eq:state}
 \[  \mathcal{L}_T(x^*_t,u^*_t) - \mathcal{L}_T (x_t,u_t) \geq 0, \] което показва оптималността на редицата
 $\{x^*_{t+1},u^*_t\}$.
 \end{frame}
+
+
+
 
 \end{document}
 
