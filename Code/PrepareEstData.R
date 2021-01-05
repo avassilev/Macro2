@@ -12,7 +12,7 @@ library(lubridate)
 
 gdp <- get_fred_series("GDPC1") #  Billions of Chained 2012 Dollars, Seasonally Adjusted
 core_cpi <- get_fred_series("CPILFESL") # Consumer Price Index for All Urban Consumers: All Items Less Food & Energy
-                                         # Index 1982-1984=100, Seasonally Adjusted 
+                                        # Index 1982-1984=100, Seasonally Adjusted 
 
 save(gdp,core_cpi, file = "FREDdata.RData")
 
