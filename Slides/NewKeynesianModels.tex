@@ -37,7 +37,7 @@
 \date{}
 
 
-\begin{document}
+\begin{document} \newcounter{problemnum}\stepcounter{problemnum}
 
 \begin{frame}
 \begin{titlepage}
@@ -222,7 +222,7 @@ m_t-p_t = y_t-\eta i_t.
 \end{equation}
 
 За стационарно състояние с нулева инфлация имаме $P^*_t = P_{t+k}$, $P^*_t/P_{t-1}=1$ и $\Pi_{t-1,t+k}=1$, откъдето $ Y_{t+k|t}=Y $ и $  \text{MC}_{t+k|t}= \text{MC} $. Освен това в стационарното състояние $ Q_{t,t+k} = \beta^k $. Тогава от \eqref{eq:CalvoOptFOC1} следва $\text{MC} = 1/\mathcal{M}$.\pause\newline
-\textbf{Задача:} Проверете последното твърдение.
+\textbf{Задача \arabic{problemnum}:} Проверете последното твърдение.
 \end{frame}
 
 
@@ -273,7 +273,8 @@ p^*_t - p_{t-1} = (1-\beta\theta)\sum_{k=0}^{\infty}(\beta \theta)^k E_t \left\{
 \label{eq:CalvoFOCLLin}
 \end{equation}
 
-\textbf{Задача:} Покажете, че \eqref{eq:CalvoFOCLLin} може да се запише като \[ p^*_t  = \mu + (1-\beta\theta)\sum_{k=0}^{\infty}(\beta \theta)^k E_t \left\{ \text{mc}_{t+k|t} + p_{t+k}  \right\}. \]
+\stepcounter{problemnum}
+\textbf{Задача \arabic{problemnum}:} Покажете, че \eqref{eq:CalvoFOCLLin} може да се запише като \[ p^*_t  = \mu + (1-\beta\theta)\sum_{k=0}^{\infty}(\beta \theta)^k E_t \left\{ \text{mc}_{t+k|t} + p_{t+k}  \right\}. \]
 
 Понеже за $ \mathcal{M} \approx 1 $ имаме $ \mu \approx \mathcal{M} - 1 $ (нетна надбавка), последният израз се интерпретира като формиране на цената чрез надбавка над претеглените очаквани номинални пределни разходи.
 \end{frame}
@@ -309,8 +310,8 @@ P_t & = \left[\int_{S(t)}P_{t-1}(i)^{1-\varepsilon}\,di + \int_{[0,1]\setminus S
 При лог-линеаризиране на \eqref{eq:AggrInfl} в околност на стационарно състояние с нулева инфлация, т.е. $ \Pi_t = \Pi = 1 $ и $ P^*_t = P^* = P_t = P $, имаме \begin{equation}
 \pi_t = (1-\theta)(p^*_t-p_{t-1}) .
 \label{eq:AggrInflLLin}
-\end{equation} \pause
-\textbf{Задача:} Изведете уравнение \eqref{eq:AggrInflLLin}.
+\end{equation} 
+\stepcounter{problemnum}\textbf{Задача \arabic{problemnum}:} Изведете уравнение \eqref{eq:AggrInflLLin}.
 \end{frame}
 
 
@@ -461,7 +462,7 @@ y_t = a_t + (1-\alpha)n_t.
 \end{split}
 \end{equation*}където $ \Theta := \frac{1-\alpha}{1-\alpha + \alpha \varepsilon} \leq 1 $.\bigskip
 
-\textbf{Задача:} Покажете, че първият и вторият ред на горното равенство са еквивалентни. \bigskip
+\stepcounter{problemnum}\textbf{Задача \arabic{problemnum}:} Покажете, че първият и вторият ред на горното равенство са еквивалентни. \bigskip
 
 Горното равенство може да бъде записано като \begin{equation}
 p^*_t-p_{t-1} = \beta\theta E_t\{p^*_{t+1}-p_t\} + (1-\beta\theta)\Theta \widehat{\text{mc}}_t + \pi_t.
@@ -499,7 +500,7 @@ p^*_t-p_{t-1} = \beta\theta E_t\{p^*_{t+1}-p_t\} + (1-\beta\theta)\Theta \wideha
 
 Ако цените са гъвкави, реалните пределни разходи са постоянни: $ \text{mc} = -\mu $.\bigskip
 
-\textbf{Задача:} Убедете се в това, като използвате \eqref{eq:CalvoOptFOC1}.
+\stepcounter{problemnum}\textbf{Задача \arabic{problemnum}:} Убедете се в това, като използвате \eqref{eq:CalvoOptFOC1}.
 \end{frame}
 
 

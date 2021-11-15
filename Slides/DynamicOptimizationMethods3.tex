@@ -32,7 +32,7 @@
 \DeclareMathOperator*{\Ran}{Ran} \DeclareMathOperator*{\intr}{int}
 \DeclareMathOperator*{\grad}{grad}
 \DeclareMathOperator*{\dist}{dist}
-\title[]{Методи за динамично оптимизиране за задачи със стохастичен елемент. Задачи за оптимално разпределение и линейни приближения}
+\title[]{Методи за динамично оптимизиране за задачи със стохастичен елемент. Задачи за оптимално разпределение}
 \author[]{Андрей Василев \\ \href{mailto:avassilev@fmi.uni-sofia.bg}{avassilev@fmi.uni-sofia.bg} }
 \date{}
 
@@ -50,12 +50,12 @@
 \begin{itemize}
 \item Извеждане на необходими условия за оптималност за стохастични задачи
 \item Оптимално разпределение при непрекъснат агрегатор
-\item Линейни приближения
 
 \end{itemize}
 \end{frame}
 
 \newcounter{slidenum}\stepcounter{slidenum}
+\newcounter{problemnum}\stepcounter{problemnum}
 
 
 \begin{frame}\setcounter{slidenum}{1}
@@ -219,7 +219,7 @@ $ C_t $ -- потребление, $ A_t $ -- активи, $ Y_t $ -- доход, $ r $ -- лихвен про
 
 След заместване на $ \lambda_t = C_t^{-\sigma} $ в последния израз:
 \[ C_t^{-\sigma} = \beta (1+r)E_t \left\{C_{t+1}^{-\sigma}\right\} \] \pause
-\textbf{Задача:} Решете Пример I, ако фазовото уравнение е записано според конвенцията $A_{t}=(1+r)A_{t-1} + Y_t - C_t$.
+\textbf{Задача \arabic{problemnum}:} Решете Пример I, ако фазовото уравнение е записано според конвенцията $A_{t}=(1+r)A_{t-1} + Y_t - C_t$.
 \end{frame}
 
 
@@ -263,19 +263,24 @@ $ C_t $ -- потребление, $ N_t $ -- количество труд (отработени часове), $ B_t $ 
 
 Окончателно получаваме \[ \frac{W_t}{P_t} = -\frac{U_{n,t}}{U_{c,t}}, \quad Q_t = \beta E_t \left\{ \frac{U_{c,t+1}}{U_{c,t}}\frac{P_t}{P_{t+1}} \right\} \text{ за } t=0,1,2,\ldots \]
 
-\textbf{Задача:} Как изглеждат горните необходими условия, ако функцията на полезност има вида $ U(C_t,N_t)=\frac{C_t^{1-\sigma}}{1-\sigma}-\frac{N_t^{1+\varphi}}{1+\varphi},~\sigma>0,~\varphi \geq 1 $?
+\stepcounter{problemnum}
+\textbf{Задача \arabic{problemnum}:} Как изглеждат горните необходими условия, ако функцията на полезност има вида $ U(C_t,N_t)=\frac{C_t^{1-\sigma}}{1-\sigma}-\frac{N_t^{1+\varphi}}{1+\varphi},~\sigma>0,~\varphi \geq 1 $?
 \end{frame}
 
 
 
-\begin{frame}
-\frametitle{Задача: решения за спестяване и миграция}
+\begin{frame}\stepcounter{problemnum}
+\frametitle{Задача \arabic{problemnum}: решения за спестяване и миграция}
 \framesubtitle{}
 \[ \max_{\{C_t\},\{Z_t\}} E_0 \sum_{t=0}^{\infty}\beta^t \ln C_t  \]
 \[ A_{t+1}=(1+r)A_t+w(X_t)-P_t C_t -\xi Z_t^2,\quad w(X_t) = \bar{w}(X_t)+\epsilon_t \]
 \[ X_{t+1}  = X_t+Z_t \]
 
-Означенията са както преди, като в допълнение $ X_t $ е положението на икономическия агент в пространството (в случая реалната права), $ w(\cdot) $ е заплатата, зависеща от положението в пространството, $ \bar{w}(\cdot) $ е гладка функция, а променливата $ Z_t $ управлява скоростта на преместване в пространството.
+Означенията са както преди, като в допълнение $ X_t $ е положението на икономическия агент в пространството (в случая реалната права), $ w(\cdot) $ е заплатата, зависеща от положението в пространството, $ \bar{w}(\cdot) $ е гладка функция, а променливата $ Z_t $ управлява скоростта на преместване в пространството. 
+
+\medskip
+
+Изведете необходимите условия за оптималност за тази задача.
 \end{frame}
 
 
@@ -331,54 +336,6 @@ P^{1-\theta} = PC.  \end{equation*}
 \end{frame}
 
 
-\begin{frame}\setcounter{slidenum}{1}
-\frametitle{Линейни приближения (\arabic{slidenum})}
-\framesubtitle{Общи положения}
-\begin{itemize}
-\item За решаването на един динамичен макроикономически модел е удобно да се разглежда приближение на уравненията от модела.
-\item Обикновено ни интересува поведението на системата в околност на някакво равновесие (стационарно състояние) и приближението се прави около него.
-\item Най-често приближенията са линейни: трансформираме оригиналното, нелинейно уравнение в линейно по някакъв начин.
-\end{itemize}
-\end{frame}
-
-
-\begin{frame}\stepcounter{slidenum}
-\frametitle{Линейни приближения (\arabic{slidenum})}
-\framesubtitle{Варианти за линейни приближения}
-\begin{itemize}
-\item Логаритмуване (за променливи с положителни стойности):
-\[ \frac{W_t}{P_t} = C_t^\sigma N_t^\varphi \quad\Longrightarrow\quad w_t - p_t = \sigma c_t + \varphi n_t, \] където $ w_t := \ln W_t $, $ p_t := \ln P_t $ и т.н. 
-\item Директно приближение по формулата на Тейлър
-\item Лог-линеаризация (ще я разгледаме отделно)
-\end{itemize}
-\end{frame}
-
-
-
-
-\setcounter{slidenum}{1}\begin{frame} \frametitle{Лог-линеаризация
-(\arabic{slidenum})}\framesubtitle{Общи положения}
-Нека имаме $x_t \neq 0$ и $\bar{x}$ е дадена стойност на $x_t$ (най-често стационарна стойност).
-
-\textbf{Логаритмично отклонение (лог-отклонение)} на $x_t$ от $\bar{x}$: $$\hat{x}_t := \ln \left(\frac{x_t}{\bar{x}}\right).$$
-
-Предвид $$\ln (1+z)\approx \ln (1+z_0)+ \frac{1}{1+z_0}(z-z_0),$$ за $z_0=0$ получаваме $\ln (1+z) \approx z$ и съответно $$\ln \left(\frac{x_t}{\bar{x}}\right) = \ln \left(1+\frac{x_t-\bar{x}}{\bar{x}}\right)\approx \frac{x_t-\bar{x}}{\bar{x}}. $$
-\end{frame}
-
-\stepcounter{slidenum}\begin{frame} \frametitle{Лог-линеаризация
-(\arabic{slidenum})}\framesubtitle{Общи положения}
-Нека $y_t=f(x_t,z_t)$, където $f$ е диференцируема. \bigskip
-
-Тогава $$\hat{y}_t = \frac{f_x(\bar{x},\bar{z})\bar{x}}{f(\bar{x},\bar{z})}\hat{x}_t + \frac{f_z(\bar{x},\bar{z})\bar{z}}{f(\bar{x},\bar{z})}\hat{z}_t$$
-
-Имаме:
-\begin{enumerate}
-  \item $y_t=x_t z_t \quad \Rightarrow \quad \hat{y}_t = \hat{x}_t + \hat{z}_t .$
-  \item $y_t=x_t / z_t \quad \Rightarrow \quad \hat{y}_t = \hat{x}_t - \hat{z}_t .$
-  \item $y_t=x_t + z_t \quad \Rightarrow \quad \hat{y}_t = \frac{\bar{x}}{\bar{y}}\hat{x}_t + \frac{\bar{z}}{\bar{y}}\hat{z}_t .$
-  \item $g(x_t,y_t)=0 \quad \Rightarrow \quad \hat{y}_t = - \frac{g_x(\bar{x},\bar{y})\bar{x}}{g_y(\bar{x},\bar{y})\bar{y}}\hat{x}_t $
-\end{enumerate}
-\end{frame}
 
 
 \end{document}

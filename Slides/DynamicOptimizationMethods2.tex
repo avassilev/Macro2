@@ -36,12 +36,13 @@
 \DeclareMathOperator*{\Ran}{Ran} \DeclareMathOperator*{\intr}{int}
 \DeclareMathOperator*{\grad}{grad}
 \DeclareMathOperator*{\dist}{dist}
-\title[]{Детерминистични динамични оптимизационни задачи с явни управления}
+\title[]{Детерминистични динамични оптимизационни задачи с явни управления. Линейни приближения}
 \author[]{Андрей Василев \\ \href{mailto:avassilev@fmi.uni-sofia.bg}{avassilev@fmi.uni-sofia.bg} }
 \date{}
 
 
 \begin{document}\newcounter{slidenum}
+\newcounter{problemnum}\stepcounter{problemnum}
 
 \begin{frame}
 \begin{titlepage}
@@ -55,6 +56,7 @@
 \item Постановка на задачата с явни управления
 \item Извеждане на необходими условия за оптималност
 \item Достатъчни условия за оптималност
+\item Линейни приближения
 \end{itemize}
 \end{frame}
 
@@ -110,8 +112,8 @@ v(x_0)=\sup_{\mathbf{u}} j(x_0,\mathbf{u}).  \label{eq:objMax}\eeq
 Популярен в икономическата литература алгоритъм:\begin{enumerate}
 \item Конструира се Лагранжиан
 \[\mathcal{L}(x_1,x_2,\ldots,u_0,u_1,\ldots) =
- \sum_{t=0}^{\infty}\beta^t \left[ f^0(x_t,u_t) + \lambda'_t \cdot
-[f(x_t,u_t)-x_{t+1}] \right],  \] където $\lambda_t=(\lambda^1_t,\ldots,\lambda^n_t)$, $t=0,1,2,\ldots,$ са множителите на Лагранж и с точка ($ \cdot $) е означено матричното умножение (в случая скаларното произведение): $$\lambda'_t \cdot [f(x_t,u_t)-x_{t+1}]
+ \sum_{t=0}^{\infty}\beta^t \left[ f^0(x_t,u_t) + \lambda^{\top}_t \!\cdot\!
+[f(x_t,u_t) \!-\! x_{t+1}] \right],  \] където $\lambda_t=(\lambda^1_t,\ldots,\lambda^n_t)$, $t=0,1,2,\ldots,$ са множителите на Лагранж и с точка ($ \cdot $) е означено матричното умножение (в случая скаларното произведение): $$\lambda^{\top}_t \cdot [f(x_t,u_t)-x_{t+1}]
 = \sum_{i=1}^n \lambda_t^i [f^i(x_t,u_t)-x^i_{t+1}].$$
 \end{enumerate}
 \end{frame}
@@ -136,14 +138,14 @@ $\{x_{t+1},u_t\}_{t=0}^\infty$. (Често се намира стационарна точка на системата 
 \begin{frame}\stepcounter{slidenum}
 \frametitle{Извеждане на необходими условия за оптималност (\arabic{slidenum})}
 В матричен запис предходните условия се получават както следва:
-\[ \mathcal{L}_x = \beta^t f^0_x(x_t,u_t)+\beta^t f'_x(x_t,u_t)\cdot \lambda_t - \beta^{t-1}\lambda_{t-1} = 0 \Rightarrow \]
+\[ \mathcal{L}_x = \beta^t f^0_x(x_t,u_t)+\beta^t f^{\top}_x(x_t,u_t)\cdot \lambda_t - \beta^{t-1}\lambda_{t-1} = 0 \Rightarrow \]
 \begin{equation}
-\beta ( f^0_x(x_t,u_t)+ f'_x(x_t,u_t)\cdot \lambda_t ) = \lambda_{t-1}.
+\beta ( f^0_x(x_t,u_t)+ f^{\top}_x(x_t,u_t)\cdot \lambda_t ) = \lambda_{t-1}.
 \label{eq:LagrX}
 \end{equation}  \bigskip
-\[ \mathcal{L}_u = \beta^t f^0_u (x_t,u_t)+ \beta^t f'_u(x_t,u_t)\cdot \lambda_t = 0 \Rightarrow \]
+\[ \mathcal{L}_u = \beta^t f^0_u (x_t,u_t)+ \beta^t f^{\top}_u(x_t,u_t)\cdot \lambda_t = 0 \Rightarrow \]
 \begin{equation}
-f^0_u (x_t,u_t)+ f'_u(x_t,u_t)\cdot \lambda_t = 0
+f^0_u (x_t,u_t)+ f^{\top}_u(x_t,u_t)\cdot \lambda_t = 0
 \label{eq:LagrU}
 \end{equation}
 \end{frame}
@@ -172,17 +174,17 @@ f^0(x,u)+\beta v(f(x,u)) \right]. \label{eq:Bellman}\eeq
 \end{equation}
 
 Също така, условието за достигане на екстремум е \begin{equation}
-f^0_u(x,\mu(x)) + \beta f'_u(x,\mu(x)) \cdot v_x(f(x,\mu(x))) = 0.
+f^0_u(x,\mu(x)) + \beta f^{\top}_u(x,\mu(x)) \cdot v_x(f(x,\mu(x))) = 0.
 \label{eq:diffCntrl}
 \end{equation} 
 
 Като диференцираме \eqref{eq:Bellman1} по $ x $, получаваме
 \begin{equation*}
 \begin{split}
- v_x(x) = & f^0_x(x,\mu(x)) +  \mu'_x(x) \cdot f^0_u(x,\mu(x)) + \\
- & \beta \left[ f'_x(x,\mu(x)) + \mu'_x(x) \cdot f'_u(x,\mu(x))  \right]\cdot v_x(f(x,\mu(x)))\\
- = & f^0_x(x,\mu(x)) + \beta  f'_x(x,\mu(x))\cdot v_x(f(x,\mu(x))) + \\
- &  \underbrace{\mu'_x(x) \cdot f^0_u(x,\mu(x)) + \beta \mu'_x(x) \cdot f'_u(x,\mu(x)) \cdot v_x(f(x,\mu(x)))}_{=0 \text{ поради \eqref{eq:diffCntrl}}}.
+ v_x(x) = & f^0_x(x,\mu(x)) +  \mu^{\top}_x(x) \cdot f^0_u(x,\mu(x)) + \\
+ & \beta \left[ f^{\top}_x(x,\mu(x)) + \mu^{\top}_x(x) \cdot f^{\top}_u(x,\mu(x))  \right]\cdot v_x(f(x,\mu(x)))\\
+ = & f^0_x(x,\mu(x)) + \beta  f^{\top}_x(x,\mu(x))\cdot v_x(f(x,\mu(x))) + \\
+ &  \underbrace{\mu^{\top}_x(x) \cdot f^0_u(x,\mu(x)) + \beta \mu^{\top}_x(x) \cdot f^{\top}_u(x,\mu(x)) \cdot v_x(f(x,\mu(x)))}_{=0 \text{ поради \eqref{eq:diffCntrl}}}.
 \end{split}
 \end{equation*}
 \end{frame}
@@ -191,16 +193,16 @@ f^0_u(x,\mu(x)) + \beta f'_u(x,\mu(x)) \cdot v_x(f(x,\mu(x))) = 0.
 \begin{frame}\stepcounter{slidenum}
 \frametitle{Извеждане на необходими условия за оптималност (\arabic{slidenum})}
 Така получаваме \begin{equation}
-v_x(x) = f^0_x(x,\mu(x)) + \beta  f'_x(x,\mu(x))\cdot v_x(f(x,\mu(x))).
+v_x(x) = f^0_x(x,\mu(x)) + \beta  f^{\top}_x(x,\mu(x))\cdot v_x(f(x,\mu(x))).
 \label{eq:Bellman1dx1}
 \end{equation}
 Като вземем $ x=x^*_t $ и $ u^*_t = \mu(x^*_t) $, уравнения \eqref{eq:diffCntrl} и \eqref{eq:Bellman1dx1} добиват вида съответно
 \begin{equation}
-f^0_u(x^*_t,u^*_t) + \beta f'_u(x^*_t,u^*_t) \cdot v_x(x^*_{t+1}) = 0,
+f^0_u(x^*_t,u^*_t) + \beta f^{\top}_u(x^*_t,u^*_t) \cdot v_x(x^*_{t+1}) = 0,
 \label{eq:diffCntrlA} 
 \end{equation}
 \begin{equation}
-v_x(x^*_t) = f^0_x(x^*_t,u^*_t) + \beta  f'_x(x^*_t,u^*_t)\cdot v_x(x^*_{t+1}).
+v_x(x^*_t) = f^0_x(x^*_t,u^*_t) + \beta  f^{\top}_x(x^*_t,u^*_t)\cdot v_x(x^*_{t+1}).
 \label{eq:Bellman1dx1A}
 \end{equation}
 
@@ -261,7 +263,7 @@ $t=0,1,2,\ldots,$ се определят чрез \eqref{eq:state}
                           са вдлъбнати по $(x,u)$;
                           \item множителите на Лагранж $\lambda_t^1,\ldots,\lambda_t^n,
                           ~t=0,1,2,\ldots$ са неотрицателни;
-                          \item фазовото пространство $X$ е подмножество на $\mathbb{R}^n_+$ и е в сила условието за трансверсалност $$\lim_{T\rightarrow \infty} \beta^T \lambda'_T \cdot
+                          \item фазовото пространство $X$ е подмножество на $\mathbb{R}^n_+$ и е в сила условието за трансверсалност $$\lim_{T\rightarrow \infty} \beta^T \lambda^{\top}_T \cdot
                           x^*_{T+1}=0,$$
                         \end{enumerate} то редицата
                         $\{x^*_{t+1},u^*_t\}$ (при зададено $x_0$) е оптимална за задачата А.
@@ -272,13 +274,13 @@ $t=0,1,2,\ldots,$ се определят чрез \eqref{eq:state}
 \frametitle{Достатъчни условия за оптималност (\arabic{slidenum})}
 Доказателството на теоремата е сходно с извеждането на уравнения на Ойлер за задача във вариационна формулировка. Напомняме, че \eqref{eq:FOCs}, записано в матричен вид, се задава с \eqref{eq:LagrX} и \eqref{eq:LagrU}.
 
-Разглеждаме \[ \mathcal{L}_T(x_t,u_t) = \sum_{t=0}^{T}\beta^t \left\{ f^0(x_t,u_t) + \lambda'_t \cdot [f(x_t,u_t)-x_{t+1}] \right\} .\]
+Разглеждаме \[ \mathcal{L}_T(x_t,u_t) = \sum_{t=0}^{T}\beta^t \left\{ f^0(x_t,u_t) + \lambda^{\top}_t \cdot [f(x_t,u_t)-x_{t+1}] \right\} .\]
 
 Имаме \begin{equation}
 \begin{split}
-& D := \mathcal{L}_T (x_t,u_t) - \mathcal{L}_T(x^*_t,u^*_t) = \sum_{t=0}^{T}\beta^t \lambda'_t \cdot (x^*_{t+1} - x_{t+1} )+  \\
-& \sum_{t=0}^{T}\beta^t [ f^0(x_t,u_t) + \lambda'_t \cdot f(x_t,u_t) 
-- f^0(x^*_t,u^*_t) - \lambda'_t \cdot f(x^*_t,u^*_t) ].
+& D := \mathcal{L}_T (x_t,u_t) - \mathcal{L}_T(x^*_t,u^*_t) = \sum_{t=0}^{T}\beta^t \lambda^{\top}_t \cdot (x^*_{t+1} - x_{t+1} )+  \\
+& \sum_{t=0}^{T}\beta^t [ f^0(x_t,u_t) + \lambda^{\top}_t \cdot f(x_t,u_t) 
+- f^0(x^*_t,u^*_t) - \lambda^{\top}_t \cdot f(x^*_t,u^*_t) ].
 \end{split}
 \label{eq:LagrDiff}
 \end{equation}
@@ -289,11 +291,11 @@ $t=0,1,2,\ldots,$ се определят чрез \eqref{eq:state}
 \frametitle{Достатъчни условия за оптималност (\arabic{slidenum})}
 Тогава, предвид вдлъбнатостта, получаваме \begin{equation*}
 \begin{split}
-&\mathcal{L}_T (x_t,u_t) - \mathcal{L}_T(x^*_t,u^*_t) ~~(= D)~~ \leq \sum_{t=0}^{T}\beta^t \lambda'_t \cdot (x^*_{t+1} - x_{t+1} )+  \\
-&\sum_{t=0}^{T}\beta^t [ f^{0'}_x(x^*_t,u^*_t)\cdot(x_t-x_t^*) +f^{0'}_u(x^*_t,u^*_t)\cdot(u_t-u_t^*) +\\
-& \lambda'_t \cdot [f_x(x^*_t,u^*_t)\cdot(x_t-x_t^*) + f_u(x^*_t,u^*_t)\cdot (u_t-u_t^*) ]] = \\
-& \sum_{t=0}^{T}\beta^t \lambda'_t \cdot (x^*_{t+1} - x_{t+1} )+  \sum_{t=0}^{T}\beta^t \underbrace{[f^{0'}_x(x^*_t,u^*_t) + \lambda'_t \cdot f_x(x^*_t,u^*_t)]}_{=\frac{\lambda'_{t-1}}{\beta} \text{ поради }  \eqref{eq:LagrX} }\cdot(x_t-x_t^*)\\
-& + \sum_{t=0}^{T}\beta^t \underbrace{[f^{0'}_u(x^*_t,u^*_t) + \lambda'_t \cdot f_u(x^*_t,u^*_t)]}_{=\mathbf{0}' \text{ поради } \eqref{eq:LagrU}}\cdot(u_t-u_t^*).
+&\mathcal{L}_T (x_t,u_t) - \mathcal{L}_T(x^*_t,u^*_t) ~~(= D)~~ \leq \sum_{t=0}^{T}\beta^t \lambda^{\top}_t \cdot (x^*_{t+1} - x_{t+1} )+  \\
+&\sum_{t=0}^{T}\beta^t [ f^{0\top}_x(x^*_t,u^*_t)\cdot(x_t-x_t^*) +f^{0\top}_u(x^*_t,u^*_t)\cdot(u_t-u_t^*) +\\
+& \lambda^{\top}_t \cdot [f_x(x^*_t,u^*_t)\cdot(x_t-x_t^*) + f_u(x^*_t,u^*_t)\cdot (u_t-u_t^*) ]] = \\
+& \sum_{t=0}^{T}\beta^t \lambda^{\top}_t \!\cdot\! (x^*_{t+1} \! - \! x_{t+1} )+  \sum_{t=0}^{T}\beta^t \underbrace{[f^{0\top}_x(x^*_t,u^*_t) + \lambda^{\top}_t \cdot f_x(x^*_t,u^*_t)]}_{=\frac{\lambda^{\top}_{t-1}}{\beta} \text{ поради }  \eqref{eq:LagrX} }\cdot(x_t \! - \! x_t^*)\\
+& + \sum_{t=0}^{T}\beta^t \underbrace{[f^{0 \top}_u(x^*_t,u^*_t) + \lambda^{\top}_t \cdot f_u(x^*_t,u^*_t)]}_{=\mathbf{0}^{\top} \text{ поради } \eqref{eq:LagrU}}\cdot(u_t-u_t^*).
 \end{split}
 \end{equation*}
 \end{frame}
@@ -304,11 +306,11 @@ $t=0,1,2,\ldots,$ се определят чрез \eqref{eq:state}
 \frametitle{Достатъчни условия за оптималност (\arabic{slidenum})}
 Т.е. \begin{equation*}
 \begin{split}
- D \leq &   \sum_{t=0}^{T}\beta^t \lambda'_t \cdot (x^*_{t+1} - x_{t+1} ) +  \sum_{t=0}^{T}\beta^t \frac{\lambda'_{t-1}}{\beta}\cdot\underbrace{(x_t-x_t^*)}_{\text{N.B.: } x_0 = x^*_0} = \\
-&  \sum_{t=0}^{T}\beta^t \lambda'_t \cdot (x^*_{t+1} - x_{t+1} ) +  \sum_{t = {\color{red}1}}^{T}\beta^{t-1} \frac{\lambda'_{t-1}}{\beta}\cdot(x_t-x_t^*)= \\
-&  \sum_{t=0}^{T}\beta^t \lambda'_t \cdot (x^*_{t+1} - x_{t+1} ) +  \sum_{t = {\color{red} 0}}^{{\color{red} T-1}}\beta^{{\color{red} t}} \frac{\lambda'_{{\color{red} t}}}{\beta}\cdot(x_{{\color{red} t+1}}-x_{{\color{red} t+1}}^*)= \\
-& \underbrace{\sum_{t=0}^{{\color{red} T-1}}\beta^t \lambda'_t \cdot (x^*_{t+1} - x_{t+1}) +  \sum_{t = 0}^{T-1}\beta^{t} \frac{\lambda'_{t}}{\beta}\cdot(x_{ t+1}-x_{t+1}^*)}_{<0 \text{ т.к. } 1/\beta > 1} + \\
-& \beta^T \lambda'_T \cdot (x^*_{T+1} - x_{T+1})  \underbrace{\leq}_{\text{т.к. }\lambda_t,x_t \geq \mathbf{0}} \beta^T \lambda'_T \cdot x^*_{T+1}.
+ D \leq &   \sum_{t=0}^{T}\beta^t \lambda^{\top}_t \cdot (x^*_{t+1} - x_{t+1} ) +  \sum_{t=0}^{T}\beta^t \frac{\lambda^{\top}_{t-1}}{\beta}\cdot\underbrace{(x_t-x_t^*)}_{\text{N.B.: } x_0 = x^*_0} = \\
+&  \sum_{t=0}^{T}\beta^t \lambda^{\top}_t \cdot (x^*_{t+1} - x_{t+1} ) +  \sum_{t = {\color{red}1}}^{T}\beta^{t-1} \frac{\lambda^{\top}_{t-1}}{\beta}\cdot(x_t-x_t^*)= \\
+&  \sum_{t=0}^{T}\beta^t \lambda^{\top}_t \cdot (x^*_{t+1} - x_{t+1} ) +  \sum_{t = {\color{red} 0}}^{{\color{red} T-1}}\beta^{{\color{red} t}} \frac{\lambda^{\top}_{{\color{red} t}}}{\beta}\cdot(x_{{\color{red} t+1}}-x_{{\color{red} t+1}}^*)= \\
+& \underbrace{\sum_{t=0}^{{\color{red} T-1}}\beta^t \lambda^{\top}_t \cdot (x^*_{t+1} - x_{t+1}) +  \sum_{t = 0}^{T-1}\beta^{t} \frac{\lambda^{\top}_{t}}{\beta}\cdot(x_{ t+1}-x_{t+1}^*)}_{<0 \text{ т.к. } 1/\beta > 1} + \\
+& \beta^T \lambda^{\top}_T \cdot (x^*_{T+1} - x_{T+1})  \underbrace{\leq}_{\text{т.к. }\lambda_t,x_t \geq \mathbf{0}} \beta^T \lambda^{\top}_T \cdot x^*_{T+1}.
 \end{split}
 \end{equation*}
 \end{frame}
@@ -317,7 +319,7 @@ $t=0,1,2,\ldots,$ се определят чрез \eqref{eq:state}
 \begin{frame}\stepcounter{slidenum}
 \frametitle{Достатъчни условия за оптималност (\arabic{slidenum})}
 Така имаме (при отчитане на условието за трансверсалност): \begin{equation*}
- D \leq  \beta^T \lambda'_T \cdot x^*_{T+1} ~ \mathop{\longrightarrow}_{T \rightarrow \infty} ~0 ,
+ D \leq  \beta^T \lambda^{\top}_T \cdot x^*_{T+1} ~ \mathop{\longrightarrow}_{T \rightarrow \infty} ~0 ,
 \end{equation*}
 т.е. 
 \[  \mathcal{L}_T(x^*_t,u^*_t) - \mathcal{L}_T (x_t,u_t) \geq 0, \] което показва оптималността на редицата
@@ -326,7 +328,272 @@ $\{x^*_{t+1},u^*_t\}$.
 
 
 
+\begin{frame}\setcounter{slidenum}{1}
+	\frametitle{Линейни приближения (\arabic{slidenum})}
+	\framesubtitle{Общи положения}
+	\begin{itemize}
+		\item За решаването на един динамичен макроикономически модел е удобно да се разглежда приближение на уравненията от модела.
+		\item Обикновено ни интересува поведението на системата в околност на някакво равновесие (стационарно състояние) и приближението се прави около него.
+		\item Най-често приближенията са линейни: трансформираме оригиналното, нелинейно уравнение в линейно по някакъв начин.
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}\stepcounter{slidenum}
+	\frametitle{Линейни приближения (\arabic{slidenum})}
+	\framesubtitle{Варианти за линейни приближения}
+	\begin{itemize}
+		\item Логаритмуване (за променливи с положителни стойности):
+		\[ \frac{W_t}{P_t} = C_t^\sigma N_t^\varphi \quad\Longrightarrow\quad w_t - p_t = \sigma c_t + \varphi n_t, \] където $ w_t := \ln W_t $, $ p_t := \ln P_t $ и т.н. 
+		\item Директно приближение по формулата на Тейлър
+		\item Лог-линеаризация (ще я разгледаме отделно)
+	\end{itemize}
+\end{frame}
+
+
+
+
+\setcounter{slidenum}{1}\begin{frame} \frametitle{Лог-линеаризация
+		(\arabic{slidenum})}\framesubtitle{Общи положения}
+	Нека имаме $x_t \neq 0$ и $\bar{x}$ е дадена стойност на $x_t$ (най-често стационарна стойност).
+	
+	\textbf{Логаритмично отклонение (лог-отклонение)} на $x_t$ от $\bar{x}$: $$\hat{x}_t := \ln \left(\frac{x_t}{\bar{x}}\right).$$
+	
+	Предвид $$\ln (1+z)\approx \ln (1+z_0)+ \frac{1}{1+z_0}(z-z_0),$$ за $z_0=0$ получаваме $\ln (1+z) \approx z$ и съответно $$\ln \left(\frac{x_t}{\bar{x}}\right) = \ln \left(1+\frac{x_t-\bar{x}}{\bar{x}}\right)\approx \frac{x_t-\bar{x}}{\bar{x}}. $$
+\end{frame}
+
+\stepcounter{slidenum}\begin{frame} \frametitle{Лог-линеаризация
+		(\arabic{slidenum})}\framesubtitle{Общи положения}
+	Нека $y_t=f(x_t,z_t)$, където $f$ е диференцируема. \bigskip
+	
+	Тогава $$\hat{y}_t = \frac{f_x(\bar{x},\bar{z})\bar{x}}{f(\bar{x},\bar{z})}\hat{x}_t + \frac{f_z(\bar{x},\bar{z})\bar{z}}{f(\bar{x},\bar{z})}\hat{z}_t$$
+	
+	Имаме следните частни случаи:
+	\begin{enumerate}
+		\item $y_t=x_t z_t \quad \Rightarrow \quad \hat{y}_t = \hat{x}_t + \hat{z}_t .$
+		\item $y_t=x_t / z_t \quad \Rightarrow \quad \hat{y}_t = \hat{x}_t - \hat{z}_t .$
+		\item $y_t=x_t + z_t \quad \Rightarrow \quad \hat{y}_t = \frac{\bar{x}}{\bar{y}}\hat{x}_t + \frac{\bar{z}}{\bar{y}}\hat{z}_t .$
+		\item $g(x_t,y_t)=0 \quad \Rightarrow \quad \hat{y}_t = - \frac{g_x(\bar{x},\bar{y})\bar{x}}{g_y(\bar{x},\bar{y})\bar{y}}\hat{x}_t $
+	\end{enumerate}
+
+\bigskip
+
+\textbf{Задача \arabic{problemnum}:} Изведете формули 1-4 чрез прилагане на общата формула.
+
+\end{frame}
+
+
+\begin{frame}\stepcounter{slidenum}\setcounter{slidenum}{1}
+	\frametitle{Едносекторен модел на икономически растеж -- продължение  (\arabic{slidenum})}
+	\framesubtitle{}
+	Формулировка:
+	\[ f(k_t) = A k_t^\alpha, \quad A > 0,~\alpha \in (0,1). \]
+	
+	\[ k_{t+1} = (1-\delta)k_t + f(k_t) - c_t, \quad \delta \in (0,1), \quad k_0>0 \text{ -- дадено}. \]
+	
+	\[ \beta \left[ (1-\delta) + \alpha \dfrac{f(k_{t+1})}{k_{t+1}} \right] = \left( \dfrac{c_{t+1}}{c_{t}}\right)^{1-\gamma} \]
+	
+	\medskip
+	
+	\textbf{Забележка:} Индексът за време е преместен с една стъпка напред в последното уравнение.
+
+\end{frame}
+
+
+\begin{frame}\stepcounter{slidenum}
+	\frametitle{Едносекторен модел на икономически растеж -- продължение  (\arabic{slidenum})}
+	\framesubtitle{Стационарно състояние}
+Стационарно състояние: $k_t = \bar{k}$, $ c_t = \bar{c} $ за всяко $ t=0,1,\ldots $
+
+\medskip
+
+Имаме
+\[ \beta \left[ 1-\delta + \alpha A \frac{\bar{k}^\alpha}{\bar{k}} \right] = \left[ \frac{\bar{c}}{\bar{c}}\right]^{1-\gamma} \quad \Rightarrow \]	
+
+\[ \alpha A\bar{k}^{\alpha-1} = \dfrac{1}{\beta} - 1 +\delta. \]
+
+Дефинираме $ \rho := \frac{1}{\beta}-1 (>0) $. Тогава 
+
+\[ \bar{k} = \left[ \dfrac{\rho + \delta }{\alpha A} \right]^{\frac{1}{\alpha - 1}} = \left[ \frac{\alpha A}{\rho + \delta } \right]^{\frac{1}{1-\alpha}}. \]
+\end{frame}
+
+
+\begin{frame}\stepcounter{slidenum}
+	\frametitle{Едносекторен модел на икономически растеж -- продължение  (\arabic{slidenum})}
+	\framesubtitle{Стационарно състояние}
+	Стационарната стойност на потреблението пресмятаме от 
+	\[ \bar{k} = (1-\delta)\bar{k} + A \bar{k}^\alpha - \bar{c} \quad \Rightarrow \]
+	\[ \bar{c} = f(\bar{k}) - \delta \bar{k} = A \bar{k}^\alpha - \delta \bar{k}. \]
+	
+	\medskip
+	
+	Величината $ \delta \bar{k} $ представлява инвестициите в стационарното състояние.
+	
+\end{frame}
+
+\begin{frame}\stepcounter{slidenum}
+	\frametitle{Едносекторен модел на икономически растеж -- продължение  (\arabic{slidenum})}
+	\framesubtitle{Качествен анализ}
+	Ако потреблението нараства, имаме
+	\[ c_{t+1} > c_t \quad \Rightarrow \left[\beta \left[ (1-\delta) + \alpha \dfrac{f(k_{t+1})}{k_{t+1}} \right]\right]^{\frac{1}{1-\gamma}} > 1 \quad \Rightarrow \]
+
+	\[ \beta [1+f'(k_{t+1})-\delta] > 1 \quad \Rightarrow \]
+	
+	\[ f'(k_{t+1}) > \frac{1}{\beta} - 1 + \delta = \rho + \delta  = f'(\bar{k}) \quad \Rightarrow \]
+	
+	\[ k_{t+1} < \bar{k} \]
+	
+	\medskip
+	
+	\textbf{Интерпретация}: Потреблението нараства, когато капиталът е под равновесната си стойност, понеже е оптимално да пренасочим потребление днес към инвестиции.
+\end{frame}
+
+
+\begin{frame}\stepcounter{slidenum}
+	\frametitle{Едносекторен модел на икономически растеж -- продължение  (\arabic{slidenum})}
+	\framesubtitle{Качествен анализ}
+	Аналогично имаме 
+	\[ k_{t+1} > k_t \quad \Rightarrow -\delta k_t + f(k_t) - c_t > 0  \quad \Rightarrow \]
+	\[ f(k_t) - \delta k_t > c_t. \]
+	
+		\medskip
+	
+	\textbf{Интерпретация}: Капиталът нараства, когато има останало производство, след като сме използвали част от него за потребление и амортизация.
+	
+\end{frame}
+
+\begin{frame}\stepcounter{slidenum}
+	\frametitle{Едносекторен модел на икономически растеж -- продължение  (\arabic{slidenum})}
+	\framesubtitle{Графична илюстрация на качественото поведение на системата}
+	\begin{figure}
+
+		\begin{center}
+
+			\includegraphics[width=0.95\linewidth]{phaseportrait}
+
+		\end{center}
+
+	\end{figure}
+	
+\end{frame}
+
+
+\begin{frame}\stepcounter{slidenum}
+	\frametitle{Едносекторен модел на икономически растеж -- продължение  (\arabic{slidenum})}
+	\framesubtitle{Лог-линеаризация}
+    Обикновено моделът се изследва в линеаризиран вид в околност на стационарното състояние.
+    
+    \bigskip
+    
+    След лог-линеаризация получаваме уравненията 
+    \[ \hat{c}_{t+1} - \dfrac{\beta f''(\bar{k})\bar{k}}{\mathcal{R}(\bar{c})}\hat{k}_{t+1} = \hat{c}_t, \]
+    
+    \[ \hat{k}_{t+1} = \dfrac{1}{\beta}\hat{k}_t - \dfrac{\bar{c}}{\bar{k}} \hat{c}_t.\]
+    
+    \bigskip
+    
+    За функция на полезност $ U(c) $ величината $ \mathcal{R}(c) $ се дефинира като \[ \mathcal{R}(c) := - \dfrac{U''(c)c}{U'(c)} \geq 0. \] 
+	
+\end{frame}
+
+\begin{frame}\stepcounter{slidenum}\stepcounter{problemnum}
+	\frametitle{Едносекторен модел на икономически растеж -- продължение  (\arabic{slidenum})}
+	\framesubtitle{Лог-линеаризация}
+Величината $ \mathcal{R}(c) $ представлява измерител на локалната вдлъбнатост на функцията на полезност и се нарича мярка на Ароу-Прат за относително избягване на риска.
+
+\bigskip
+
+\textbf{Задача \arabic{problemnum}: } Проверете, че за функцията $ U(c) = c^\gamma/\gamma $ имаме $ \mathcal{R}(c) = 1-\gamma $.
+
+\bigskip
+
+\stepcounter{problemnum}
+\textbf{Задача \arabic{problemnum}: } Покажете, че лог-линеаризацията на \[ \beta \left[ (1-\delta) + \alpha \dfrac{f(k_{t+1})}{k_{t+1}} \right] = \left( \dfrac{c_{t+1}}{c_{t}}\right)^{1-\gamma} \] води до уравнението 
+\[ \hat{c}_{t+1} - \dfrac{\beta f''(\bar{k})\bar{k}}{\mathcal{R}(\bar{c})}\hat{k}_{t+1} = \hat{c}_t. \]
+\end{frame}
+
+
+\begin{frame}\stepcounter{slidenum}
+	\frametitle{Едносекторен модел на икономически растеж -- продължение  (\arabic{slidenum})}
+	\framesubtitle{}
+   В матричен вид лог-линеаризираният модел може да бъде записан като 
+   \[ \left( \begin{array}{c}
+   \hat{c}_{t+1} 	\\
+   \hat{k}_{t+1} 	
+   \end{array} \right) = \left( \begin{array}{cc}
+    1-\frac{\beta f''(\bar{k})\bar{c}}{\mathcal{R}(\bar{c})} & - \frac{f''(\bar{k})\bar{k}}{\mathcal{R}(\bar{c})}	\\
+    -\frac{\bar{c}}{\bar{k}} & 	\frac{1}{\beta}
+\end{array} \right) \left( \begin{array}{c}
+\hat{c}_{t} 	\\
+\hat{k}_{t} 	
+\end{array} \right). \]
+
+\bigskip
+
+Поведението на решението зависи от характеристичните корени на матрицата \[ A := \left( \begin{array}{cc}
+	1-\frac{\beta f''(\bar{k})\bar{c}}{\mathcal{R}(\bar{c})} & - \frac{f''(\bar{k})\bar{k}}{\mathcal{R}(\bar{c})}	\\
+	-\frac{\bar{c}}{\bar{k}} & 	\frac{1}{\beta}
+\end{array} \right). \]
+	
+\end{frame}
+
+
+\begin{frame}\stepcounter{slidenum}
+	\frametitle{Едносекторен модел на икономически растеж -- продължение  (\arabic{slidenum})}
+	\framesubtitle{Тип на решенията}
+	Може да се покаже, че:
+	  \begin{itemize}
+	  	\item Характеристичните корени $ \lambda_1,\lambda_2 $ на матрицата $ A $ са реални и положителни. 
+	  	\item Имаме $ \lambda_1 > 1 $ и $ 0 < \lambda_2 < 1 $.
+	  \end{itemize}
+	
+	\bigskip
+
+Това означава, че лог-линеаризираната система е от тип ,,седло''.
+	
+\end{frame}
+
+\begin{frame}\stepcounter{slidenum}
+	\frametitle{Едносекторен модел на икономически растеж -- продължение  (\arabic{slidenum})}
+	\framesubtitle{}
+	Решението на системата може да бъде записано във вида 
+	
+	\[ \left( \begin{array}{c}
+		\hat{c}_{t} 	\\
+		\hat{k}_{t} 	
+	\end{array} \right) = Q \left( \begin{array}{cc}
+	\lambda_1^t & 0 \\
+	0 & \lambda_2^t
+\end{array}\right) Q^{-1} \left( \begin{array}{c}
+\hat{c}_{0} 	\\
+\hat{k}_{0} 	
+\end{array} \right),\]
+където $ Q $ е матрицата от собствените вектори, съответстващи на $ \lambda_1,\lambda_2 $.
+
+Това решение може да бъде записано по-подробно като 
+\[ \left( \begin{array}{c}
+	\hat{c}_{t} 	\\
+	\hat{k}_{t} 	
+\end{array} \right) = \left( \begin{array}{cc}
+q_{11}\lambda_1^t & q_{12}\lambda_2^t \\
+q_{21}\lambda_1^t & q_{22}\lambda_2^t
+\end{array}\right) 
+\left( \begin{array}{c}
+	q_{22}\hat{c}_0 - q_{12}\hat{k}_0  \\
+	-q_{21}\hat{c}_0 + q_{11}\hat{k}_0
+\end{array}\right) \frac{1}{\text{det}(Q)}. \]
+
+Избухването на решението може да бъде предотвратено, ако изберем \[ \hat{c}_0 = \dfrac{q_{12}}{q_{22}}\hat{k}_0. \]
+
+\bigskip
+
+\textbf{Интерпретация!}
+	
+\end{frame}
+
+
 
 \end{document}
+
 
 

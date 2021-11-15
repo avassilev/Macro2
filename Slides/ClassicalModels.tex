@@ -37,7 +37,7 @@
 \date{}
 
 
-\begin{document}
+\begin{document} \newcounter{problemnum}\stepcounter{problemnum}
 
 \begin{frame}
 \begin{titlepage}
@@ -170,7 +170,7 @@ y_t=a_t+(1-\alpha)n_t
 \framesubtitle{Фирми (\arabic{slidenum})}
 Имаме \[ \frac{d}{d N_t}\left\{ P_t A_t N_t^{1-\alpha} - W_t N_t \right\} = (1-\alpha) P_t A_t N_t^{-\alpha}-W_t = 0, \] \[ \frac{W_t}{P_t} = (1-\alpha)A_t N_t^{-\alpha} .\]
 
-\textbf{Задача:} Напишете общите разходи на фирмата $ \text{TC}(Y_t) $ (те са функция от производството!). Покажете, че пределните разходи $ \text{MC} $ са равни на $ \frac{W_t}{(1-\alpha)A_t N_t^{-\alpha}} $. \bigskip
+\textbf{Задача \arabic{problemnum}:} Напишете общите разходи на фирмата $ \text{TC}(Y_t) $ (те са функция от производството!). Покажете, че пределните разходи $ \text{MC} $ са равни на $ \frac{W_t}{(1-\alpha)A_t N_t^{-\alpha}} $. \bigskip
 
 След лог-линеаризация получаваме \begin{equation}
 w_t-p_t = a_t -\alpha n_t + \ln (1-\alpha).
@@ -199,7 +199,8 @@ y_t=\psi_{ya}a_t+\vartheta_y,
 \label{eq:yfuna}
 \end{equation} където $ \psi_{na}:=\frac{1-\sigma}{\sigma (1-\alpha) + \varphi + \alpha} $, $ \vartheta_n := \frac{\ln (1-\alpha)}{\sigma (1-\alpha) + \varphi + \alpha} $, $ \psi_{ya}:=\frac{1+\varphi}{\sigma (1-\alpha) + \varphi + \alpha} $ и $ \vartheta_y := (1-\alpha)\vartheta_n $.\bigskip
 
-\textbf{Задача:} Изведете \eqref{eq:nfuna} и \eqref{eq:yfuna}.
+\stepcounter{problemnum}
+\textbf{Задача \arabic{problemnum}:} Изведете \eqref{eq:nfuna} и \eqref{eq:yfuna}.
 \end{frame}
 
 
@@ -225,7 +226,8 @@ r_t  & = \rho + \sigma E_t\{\Delta y_{t+1}\}\\
 където
 $ \psi_{\omega a} := \frac{\sigma +\varphi}{\sigma (1-\alpha) + \varphi + \alpha} $ и $ \vartheta_{\omega} := \frac{(\sigma (1-\alpha)+\varphi)\ln (1-\alpha)}{\sigma (1-\alpha) + \varphi + \alpha} $.\bigskip
 
-\textbf{Задача:} Изведете \eqref{eq:realint} и \eqref{eq:realwage}.
+\stepcounter{problemnum}
+\textbf{Задача \arabic{problemnum}:} Изведете \eqref{eq:realint} и \eqref{eq:realwage}.
 \end{frame}
 
 
@@ -279,7 +281,8 @@ i_t = E_t\{\pi_{t+1}\} + r_t
 \begin{itemize}
 \item Приемаме, че $ i_t $ се задава с екзогенен стационарен случаен процес и $ i_t $ има средна $ \rho $.\bigskip
 
-\textbf{Задача:} Проверете, че това допускане позволява да имаме стационарно състояние с нулева инфлация и нулев растеж на реалните величини.\bigskip
+\stepcounter{problemnum}
+\textbf{Задача \arabic{problemnum}:} Проверете, че това допускане позволява да имаме стационарно състояние с нулева инфлация и нулев растеж на реалните величини.\bigskip
 
 Частен случай на това е да имаме постоянен номинален лихвен процент $ i_t = i =\rho $.
 \item Тогава можем да запишем \[ E_t \{\pi_{t+1}\} = i_t-r_t. \]
@@ -336,7 +339,8 @@ i_t = E_t\{\pi_{t+1}\} + r_t
 \label{eq:solinflaggr}
 \end{equation}
 
-\textbf{Задача:} Изведете уравнение \eqref{eq:solinflaggr}.
+\stepcounter{problemnum}
+\textbf{Задача \arabic{problemnum}:} Изведете уравнение \eqref{eq:solinflaggr}.
 \item Горното уравнение има единствено стационарно решение в този случай.
 \item Инфлацията и оттам ценовото равнище еднозначно се определят от реалния лихвен процент и чрез него от технологията $ a_t $ заради \eqref{eq:realint}.
 \item Колкото по-голямо е $ \phi_\pi $, толкова по-малка е реакцията на инфлацията спрямо реалните променливи. 
@@ -514,12 +518,12 @@ C_t = A_t N_t^{1-\alpha}
 \end{frame}
 
 
-\begin{frame}\stepcounter{slidenum}
+\begin{frame}\stepcounter{slidenum}\stepcounter{problemnum}
 \frametitle{Модели с пари във функцията на полезност}
 \framesubtitle{Оптимална парична политика (\arabic{slidenum})}
 Лагранжиан: \[ L = U(C_t,\mathcal{M}_t,N_t) + \lambda [A_t N_t^{1-\alpha} - C_t] \]
 
-Необходимите условия след освобождаване от множителя на Лагранж приемат вида (проверете!):
+Необходимите условия след освобождаване от множителя на Лагранж приемат вида (\textbf{Задача \arabic{problemnum}:} проверете!):
 \begin{equation}
 -\frac{U_{n,t}}{U_{c,n}}=(1-\alpha)A_t N_t^{-\alpha}
 \label{eq:socplannerNCcn}
