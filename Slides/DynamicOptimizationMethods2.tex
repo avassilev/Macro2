@@ -276,14 +276,14 @@ $t=0,1,2,\ldots,$ се определят чрез \eqref{eq:state}
 
 Разглеждаме \[ \mathcal{L}_T(x_t,u_t) = \sum_{t=0}^{T}\beta^t \left\{ f^0(x_t,u_t) + \lambda^{\top}_t \cdot [f(x_t,u_t)-x_{t+1}] \right\} .\]
 
-Имаме \begin{equation}
+Имаме \begin{equation*}
 \begin{split}
 & D := \mathcal{L}_T (x_t,u_t) - \mathcal{L}_T(x^*_t,u^*_t) = \sum_{t=0}^{T}\beta^t \lambda^{\top}_t \cdot (x^*_{t+1} - x_{t+1} )+  \\
 & \sum_{t=0}^{T}\beta^t [ f^0(x_t,u_t) + \lambda^{\top}_t \cdot f(x_t,u_t) 
 - f^0(x^*_t,u^*_t) - \lambda^{\top}_t \cdot f(x^*_t,u^*_t) ].
 \end{split}
-\label{eq:LagrDiff}
-\end{equation}
+\end{equation*}
+
 \end{frame}
 
 
@@ -343,25 +343,59 @@ $\{x^*_{t+1},u^*_t\}$.
 	\frametitle{Линейни приближения (\arabic{slidenum})}
 	\framesubtitle{Варианти за линейни приближения}
 	\begin{itemize}
-		\item Логаритмуване (за променливи с положителни стойности):
-		\[ \frac{W_t}{P_t} = C_t^\sigma N_t^\varphi \quad\Longrightarrow\quad w_t - p_t = \sigma c_t + \varphi n_t, \] където $ w_t := \ln W_t $, $ p_t := \ln P_t $ и т.н. 
-		\item Директно приближение по формулата на Тейлър
-		\item Лог-линеаризация (ще я разгледаме отделно)
+		\item Приближение от първи ред по формулата на Тейлър
+		\item Логаритмуване (за променливи с положителни стойности)
+		\item Лог-линеаризация 
 	\end{itemize}
 \end{frame}
 
+\begin{frame}[fragile]\setcounter{slidenum}{1}
+	\frametitle{Приближение по формулата на Тейлър (\arabic{slidenum})}
+	\begin{itemize}\itemsep1em
+		\item Приближението от първи ред на $f(X_1,\ldots,X_n)$ около точка $(\bar{X}_1,\ldots,\bar{X}_n)$ се задава с	
+		\[ f(X_1,\ldots,X_n) \approx f(\bar{X}_1,\ldots,\bar{X}_n) + \sum_{i=1}^{n}\frac{\partial}{\partial X_i}f(\bar{X}_1,\ldots,\bar{X}_n) (X_i-\bar{X}_i)  \]
+		\item Типично точката $(\bar{X}_1,\ldots,\bar{X}_n)$ е стационарно състояние на динамична система, която разглеждаме
+		\item Понякога за променлива $X_i > 0 $ е удобно да се положи $x_i := \ln X_i$ и съответно $X_i = e^{x_i}$, като тогава се работи с променливата $x_i$
+		\begin{itemize}
+			\item Този подход създава удобства при интерпретацията, доколкото $x_i-\bar{x}_i$ има смисъл на процентно отклонение от стационарното състояние
+		\end{itemize}
+	\end{itemize}
+\end{frame}
 
+\begin{frame}[fragile]\stepcounter{slidenum}
+	\frametitle{Приближение по формулата на Тейлър (\arabic{slidenum})}
+	\begin{itemize}\itemsep1em
+		\item Директното използване на формулата на Тейлър дава повече гъвкавост $\longrightarrow$ може да се работи с логаритмична трансформация или с оригиналната стойност на променливата в зависимост от това дали ни интересува процентно или абсолютно отклонение от референтната стойност (стационарното състояние)
+	\end{itemize}
+	
+
+\end{frame}
+
+
+\begin{frame}[fragile]
+	\frametitle{Логаритмуване}
+	\begin{itemize}\itemsep1em
+		\item За изрази с мултипликативна структура и положителни променливи е удобно да се прилага директно логаритмуване 
+		\item Пример:
+		\[ \frac{W_t}{P_t} = C_t^\sigma N_t^\varphi \quad\Longrightarrow\quad w_t - p_t = \sigma c_t + \varphi n_t, \] където $ w_t := \ln W_t $, $ p_t := \ln P_t $ и т.н. 
+	\end{itemize}	
+	
+	\textbf{Задача \arabic{problemnum}:} Проверете, че за връзката $\prod_{i=1}^{n}X_i^{\alpha_i} = \prod_{j=1}^{m}Y_j^{\beta_j}$, при $X_i,Y_j >0$, прилагането на приближение от първи ред по формулата на Тейлър по отношение на логаритмуваните променливи, $x_i$ и $y_j$, води до същия резултат като директното логаритмуване.
+\end{frame}
 
 
 \setcounter{slidenum}{1}\begin{frame} \frametitle{Лог-линеаризация
 		(\arabic{slidenum})}\framesubtitle{Общи положения}
-	Нека имаме $x_t \neq 0$ и $\bar{x}$ е дадена стойност на $x_t$ (най-често стационарна стойност).
+	Този подход също може да се разглежда като следствие от приближението с формулата на Тейлър. 
+	
+	Нека имаме $x_t > 0$ и $\bar{x}$ е дадена стойност на $x_t$ (най-често стационарна стойност).
 	
 	\textbf{Логаритмично отклонение (лог-отклонение)} на $x_t$ от $\bar{x}$: $$\hat{x}_t := \ln \left(\frac{x_t}{\bar{x}}\right).$$
 	
 	Предвид $$\ln (1+z)\approx \ln (1+z_0)+ \frac{1}{1+z_0}(z-z_0),$$ за $z_0=0$ получаваме $\ln (1+z) \approx z$ и съответно $$\ln \left(\frac{x_t}{\bar{x}}\right) = \ln \left(1+\frac{x_t-\bar{x}}{\bar{x}}\right)\approx \frac{x_t-\bar{x}}{\bar{x}}. $$
 \end{frame}
 
+\stepcounter{problemnum}
 \stepcounter{slidenum}\begin{frame} \frametitle{Лог-линеаризация
 		(\arabic{slidenum})}\framesubtitle{Общи положения}
 	Нека $y_t=f(x_t,z_t)$, където $f$ е диференцируема. \bigskip
