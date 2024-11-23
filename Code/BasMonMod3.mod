@@ -50,7 +50,7 @@ p=3; // Try changing this value to see if it will affect the steady state
 m = y + p - eta*i; 
 end;
 
-resid(1);
+resid;
 steady;
 check;
 

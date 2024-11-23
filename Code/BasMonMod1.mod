@@ -38,7 +38,7 @@ c = y;
 omega = sigma*c + varphi*n;
 end;
 
-resid(1);
+resid;
 steady;
 check;
 

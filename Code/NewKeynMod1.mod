@@ -67,7 +67,7 @@ i_ann = 4*i;
 r_ann = 4*r;
 end;
 
-resid(1);
+resid;
 steady;
 check;
 

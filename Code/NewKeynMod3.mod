@@ -66,7 +66,7 @@ r_ann = 4*r;
 dm_ann = 4*dm;
 end;
 
-resid(1);
+resid;
 steady;
 check;
 

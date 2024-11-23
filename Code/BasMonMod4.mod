@@ -58,7 +58,7 @@ m = y + p - eta*i;
 i_a = 0;
 end;
 
-resid(1);
+resid;
 steady;
 check;
 

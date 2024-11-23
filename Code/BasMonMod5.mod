@@ -57,7 +57,7 @@ i = 1/eta*(y - (m - p));
 u = (eta*r-y)/(1+eta);
 end;
 
-resid(1);
+resid;
 steady;
 check;
 

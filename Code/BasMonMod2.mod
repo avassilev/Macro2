@@ -58,10 +58,10 @@ r1 = rho;
 omega1 = psi_omegaa*a + vartheta_omega;
 end;
 
-resid(1);
+resid;
 steady;
 check;
 
 stoch_simul(irf=20, noprint, nograph);
 
-diffs = [n_eps_a-n1_eps_a, y_eps_a-y1_eps_a, r_eps_a-r1_eps_a, omega_eps_a-omega1_eps_a]
+diffs = [oo_.irfs.n_eps_a - oo_.irfs.n1_eps_a; oo_.irfs.y_eps_a - oo_.irfs.y1_eps_a; oo_.irfs.r_eps_a - oo_.irfs.r1_eps_a; oo_.irfs.omega_eps_a - oo_.irfs.omega1_eps_a]
