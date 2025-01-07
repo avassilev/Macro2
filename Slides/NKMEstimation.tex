@@ -390,16 +390,6 @@ end;\\
 \end{itemize}
 \end{frame}
 
-%\begin{frame}[fragile]
-%\frametitle{The estimation command}
-%\framesubtitle{}
-%\begin{itemize}\itemsep1em
-%	\item The estimation command in Dynare is extremely flexible and allows fine-grained control over the estimation process
-%	\item It accepts over a 100 options (!) specifying the estimation details
-%	\item Fortunately, only a handful are sufficient to get started
-%\end{itemize}\bigskip
-%\end{frame}
-
 
 \begin{frame}[fragile]
 \frametitle{Оценяване}
@@ -417,80 +407,47 @@ estimation(datafile = estdata,mh\_replic=2000, mh\_nblocks=2, filtered\_vars, sm
 \end{itemize}
 \end{frame}
 
-%\begin{frame}[fragile]
-%\frametitle{Convergence diagnostics}
-%\framesubtitle{}
-%\begin{itemize}\itemsep1em
-%	\item Dynare produces several diagnostic plots to assess the convergence of the Markov Chain Monte Carlo simulations to the stationary distributions
-%	\begin{itemize}\itemsep1em
-%		\item The plots are produced when each chain is set to run for over 2000 iterations
-%	\end{itemize}
-%	\item Univariate plots (Brooks and Gelman (1998)) show red and blue lines that are derived quantities from the simulated parameter vectors
-%	\item These lines will be close to one another and roughly constant when the chains have converged
-%	\item The multivariate convergence diagnostics are interpreted similarly, except that they report an aggregate measure of convergence instead of individual measures for each parameter
-%\end{itemize}
-%\end{frame}
-%
-%\begin{frame}[fragile]
-%\frametitle{Maximum likelihood estimation}
-%\framesubtitle{}
-%\begin{itemize}\itemsep1em
-%	\item When the estimated\_params block does not contain prior shape specifications, maximum likelihood estimation is performed:\\ \bigskip
-%	estimated\_params;
-%\\
-%	stderr ey, 0.05, 1.0e-2, inf;
-%\\
-%	end;\\
-%	\item In this case the first number provided is the initial value for the solver
-%	\item Dynare provides the option of constraining the parameter values to a certain range (the second and third parameters above)
-%	\item The estimation command should be modified accordingly, e.g. options related to Bayesian simulation should not be invoked under maximum likelihood
-%\end{itemize}
-%\end{frame}
-%
-%\begin{frame}[fragile]
-%\frametitle{Accessing output}
-%\framesubtitle{}
-%\begin{itemize}\itemsep1em
-%	\item Most of the estimation output is available in a variable called \textit{oo\_}
-%	\item The variable \textit{oo\_} is a structure with various fields depending on the options of the estimation command
-%	\item For example, in the case of Bayesian estimation, the vector of means of a smoothed variable called \textit{yp} can be retrieved through\\
-%	\textit{oo\_.SmoothedVariables.Mean.yp}
-%	\item Similarly, the vector of medians of the filtered variable \textit{z} is available through \\
-%	\textit{oo\_.FilteredVariables.Median.z}
-%\end{itemize}
-%\end{frame}
-%
-%\begin{frame}[fragile]
-%\frametitle{Accessing output}
-%\framesubtitle{}
-%\begin{itemize}\itemsep1em
-%	\item The vector of estimated parameters can be retrieved from \textit{M\_.params}
-%	\item The variance matrix of the shocks is available as \textit{M\_.Sigma\_e} 
-%	\item Depending on the details of the estimation procedure, these will contain the mode (e.g. maximum likelihood) or the posterior mean (Bayesian estimation, Metropolis-Hastings algorithm) of the parameters
-%\end{itemize}
-%\end{frame}
-%
-%\begin{frame}[fragile]
-%\frametitle{Saving output}
-%\framesubtitle{}
-%\begin{itemize}\itemsep1em
-%	\item The required parts of the output can be saved by using the functions \textit{writecsv} from base Octave or \textit{writexls} from the \textit{io} package in Octave
-%	\item If you need to export to Excel, load the \textit{io} package by using the command \\
-%	\textit{pkg load io}
-%	\item Then use something like\\
-%	\textit{xlswrite ("EstOutput.xls", oo\_.SmoothedVariables.Mean.trend\_y)}\\
-%	or\\
-%	\textit{csvwrite ("EstOutput.csv", oo\_.SmoothedVariables.Mean.trend\_y)}
-%	\item The \textit{io} package offers other options as well (JSON, writing to databases)
-%\end{itemize}
-%\end{frame}
 
-%\newcounter{slidenum}\stepcounter{slidenum}
-%\begin{frame}
-%\frametitle{ (\arabic{slidenum})}
-%\framesubtitle{}
-%\end{frame}
+\begin{frame}[fragile]
+	\frametitle{Примерен модел 1}
+	\framesubtitle{Модел с локално-линеен тренд}
+	\textbf{Формулировка}\\
+	\begin{equation*}
+		\begin{split}
+		 y_t & =  \tau_t + \zeta_t \\
+		 \tau_t & =  \tau_{t-1} +\beta_{t-1} + v_{1,t}  \\
+		 \beta_t & =  \beta_{t-1} + v_{2,t}  \\
+		 \zeta_t & =  c_1 \zeta_{t-1} + v_{3,t} \\ 
+		 \pi_t & =  (1-c_2)c_3 + c_2 \pi_{t-1} + c_4 \zeta_t + v_{4,t} 
+		\end{split}
+	\end{equation*}
+	
+	\textbf{Означения}\\
+	$y_t$ -- БВП (логаритмуван), $\tau_t$ -- тренд, $\zeta_t$ -- цикличен компонент, $\pi_t$ -- инфлация, $v_{i,t}$ -- шокове \bigskip
+	
+	Типично $c_1 \in (0,1)$. Също така  $c_2 \in (0,1)$, а $c_3$ се интерпретира като дългосрочна (равновесна) инфлация.
+\end{frame}
 
+
+\begin{frame}[fragile]
+	\frametitle{Примерен модел 2}
+	\framesubtitle{Модел с локално-линеен тренд и очаквана инфлация}
+	\textbf{Формулировка}\\
+	\begin{equation*}
+		\begin{split}
+			y_t & =  \tau_t + \zeta_t \\
+			\tau_t & =  \tau_{t-1} +\beta_{t-1} + v_{1,t}  \\
+			\beta_t & =  \beta_{t-1} + v_{2,t}  \\
+			\zeta_t & =  c_1 \zeta_{t-1} + v_{3,t} \\ 
+			\pi_t & =  (1-c_2) E_t \{\pi_{t+1}\} + c_2 \pi_{t-1} + c_4 \zeta_t + v_{4,t} 
+		\end{split}
+	\end{equation*}
+	
+	\textbf{Означения}\\
+	$y_t$ -- БВП (логаритмуван), $\tau_t$ -- тренд, $\zeta_t$ -- цикличен компонент, $\pi_t$ -- инфлация, $v_{i,t}$ -- шокове \bigskip
+	
+	Отново $c_1 \in (0,1)$ и $c_2 \in (0,1)$.
+\end{frame}
 
 \end{document}
 
