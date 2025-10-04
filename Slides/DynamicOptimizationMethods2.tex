@@ -307,9 +307,8 @@ $t=0,1,2,\ldots,$ се определят чрез \eqref{eq:state}
 Т.е. \begin{equation*}
 \begin{split}
  D \leq &   \sum_{t=0}^{T}\beta^t \lambda^{\top}_t \cdot (x^*_{t+1} - x_{t+1} ) +  \sum_{t=0}^{T}\beta^t \frac{\lambda^{\top}_{t-1}}{\beta}\cdot\underbrace{(x_t-x_t^*)}_{\text{N.B.: } x_0 = x^*_0} = \\
-&  \sum_{t=0}^{T}\beta^t \lambda^{\top}_t \cdot (x^*_{t+1} - x_{t+1} ) +  \sum_{t = {\color{red}1}}^{T}\beta^{t-1} \frac{\lambda^{\top}_{t-1}}{\beta}\cdot(x_t-x_t^*)= \\
-&  \sum_{t=0}^{T}\beta^t \lambda^{\top}_t \cdot (x^*_{t+1} - x_{t+1} ) +  \sum_{t = {\color{red} 0}}^{{\color{red} T-1}}\beta^{{\color{red} t}} \frac{\lambda^{\top}_{{\color{red} t}}}{\beta}\cdot(x_{{\color{red} t+1}}-x_{{\color{red} t+1}}^*)= \\
-& \underbrace{\sum_{t=0}^{{\color{red} T-1}}\beta^t \lambda^{\top}_t \cdot (x^*_{t+1} - x_{t+1}) +  \sum_{t = 0}^{T-1}\beta^{t} \frac{\lambda^{\top}_{t}}{\beta}\cdot(x_{ t+1}-x_{t+1}^*)}_{<0 \text{ т.к. } 1/\beta > 1} + \\
+&  \sum_{t=0}^{T}\beta^t \lambda^{\top}_t \cdot (x^*_{t+1} - x_{t+1} ) +  \sum_{t = {\color{red}1}}^{T}\beta^{{\color{red} t-1}} \lambda^{\top}_{t-1}\cdot(x_{t}-x_{t}^*)= \\
+& \sum_{t=0}^{{\color{red} T-1}}\beta^t \lambda^{\top}_t \cdot (x^*_{t+1} - x_{t+1}) +  \sum_{t = {\color{red}0}}^{{\color{red}T-1}}\beta^{{\color{red}t}} \lambda^{\top}_{\color{red}t}\cdot(x_{\color{red} t+1}-x^*_{\color{red} t+1}) + \\
 & \beta^T \lambda^{\top}_T \cdot (x^*_{T+1} - x_{T+1})  \underbrace{\leq}_{\text{т.к. }\lambda_t,x_t \geq \mathbf{0}} \beta^T \lambda^{\top}_T \cdot x^*_{T+1}.
 \end{split}
 \end{equation*}
