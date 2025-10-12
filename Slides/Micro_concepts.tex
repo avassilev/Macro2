@@ -1,0 +1,437 @@
+% !TeX spellcheck = bg_BG
+\documentclass[leqno]{beamer}
+\mode<presentation>
+\usetheme{Warsaw}
+\useoutertheme{split}
+\usepackage{amsmath}
+\usepackage{amstext}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsbsy}
+%\usepackage[bookmarks=false]{hyperref}
+%\usepackage[round]{natbib}
+%\usepackage{rotating}
+%\usepackage{pstricks}
+\usepackage[T2A]{fontenc}
+\usepackage[cp1251]{inputenc}
+\usepackage[english,bulgarian]{babel}
+\usepackage[]{graphicx}
+\usepackage{xcolor}
+\newtheorem{thm}{Теорема}
+\newtheorem{prop}{Твърдение}
+\newtheorem{lem}{Лема}
+\newtheorem{cor}{Следствие}
+% \theoremstyle{remark} % наименованието е в италик (а не в курсив), тялото е стандартно (а не в италик)
+\theoremstyle{definition} % наименованието е в курсив, тялото е стандартно (а не в италик)
+\newtheorem{remark}{Забележка}
+\newtheorem{defin}{Дефиниция}
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\eeq}{\end{equation}}
+\newcommand{\bs}{\boldsymbol}
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\sign}{sign}
+\DeclareMathOperator*{\meas}{meas}
+\DeclareMathOperator*{\essinf}{essinf}
+\DeclareMathOperator*{\Ran}{Ran} \DeclareMathOperator*{\intr}{int}
+\DeclareMathOperator*{\grad}{grad}
+\DeclareMathOperator*{\dist}{dist}
+\title[]{Избрани постановки от микроикономиката}
+\author[]{Андрей Василев \\ \href{mailto:avassilev@fmi.uni-sofia.bg}{avassilev@fmi.uni-sofia.bg} }
+\date{}
+
+
+\begin{document}\newcounter{slidenum}
+
+\begin{frame}
+\begin{titlepage}
+
+\end{titlepage}
+\end{frame}
+
+
+%\section{Постановка}
+\begin{frame}[fragile]\setcounter{slidenum}{1}
+	\frametitle{Задача на потребителя (\arabic{slidenum})}
+	\framesubtitle{Формулировка}
+	Потребител трябва да вземе решение за покупка на количества от две стоки.
+	
+	$x_1, x_2 \ge 0 $ -- потребявани количества от стоки 1 и 2
+	
+	Предпочитанията се представят чрез функция на полезност: $U(x_1,x_2)$	
+	
+	\bigskip
+	
+	Свойства на $U$:
+	\begin{itemize}
+		\item $\frac{\partial U}{\partial x_1} > 0,\; \frac{\partial U}{\partial x_2} > 0$ -- липса на насищане
+		\item $\frac{\partial^2 U}{\partial x^2_1} < 0,\; \frac{\partial^2 U}{\partial x^2_2} < 0$ -- намаляваща пределна полезност
+	\end{itemize} \bigskip
+	
+	Бюджетно ограничение в общ вид:
+	\[ p_1 x_1 + p_2 x_2 \le I, \quad p_1,p_2,I > 0 \]
+	
+	$p_1,p_2 $ -- цени,~~ $I$ -- доход
+\end{frame}
+
+
+\begin{frame}[fragile]\stepcounter{slidenum}
+	\frametitle{Задача на потребителя (\arabic{slidenum})}
+	\framesubtitle{Формулировка}
+	Задачата на потребителя има вида:
+	\[
+	\max_{x_1, x_2} \; U(x_1, x_2)
+	\]
+	при условие
+	\[
+	p_1 x_1 + p_2 x_2 = I
+	\] \bigskip 
+	
+	\textbf{Забележка:}
+	\begin{itemize}\itemsep1em
+		\item Приема се, че ограничението е изпълнено като равенство
+		\item Пренебрегваме ограниченията $x_1, x_2 \ge 0$ 
+	\end{itemize}\bigskip
+	
+	Защо?
+\end{frame}
+
+
+\begin{frame}[fragile]\stepcounter{slidenum}
+	\frametitle{Задача на потребителя (\arabic{slidenum})}
+	\framesubtitle{Лагранжиан и условия от първи ред за оптимум}
+	
+	Лагранжиан:
+	\[ \mathcal{L}	= U(x_1, x_2) + \lambda (p_1x_1 + p_2x_2 - I) \]
+	
+	Условия от първи ред:
+	\[ \frac{\partial \mathcal{L}}{\partial x_1} = 0 \quad \Rightarrow \quad \frac{\partial U}{\partial x_1} + \lambda p_1 = 0, \]
+	\[
+	\frac{\partial \mathcal{L}}{\partial x_2} = 0 \quad \Rightarrow \quad \frac{\partial U}{\partial x_2} + \lambda p_2 = 0
+	\]
+	
+	Следователно имаме:
+	\[
+	\frac{\frac{\partial U}{\partial x_1}}{\frac{\partial U}{\partial x_2}} = \frac{p_1}{p_2}, \qquad \lambda < 0
+	\]
+\end{frame}
+
+
+\begin{frame}[fragile]\stepcounter{slidenum}
+	\frametitle{Задача на потребителя (\arabic{slidenum})}
+	\framesubtitle{Геометрична интерпретация на точката на равновесие}
+	Крива на безразличие (за зададено ниво на полезност $U^*$):
+	\[ \{ (x_1,x_2) \vert U(x_1,x_2) = U^* \} \]
+	
+	Върху крива на безразличие е в сила:
+	\[ dU \left(= \frac{\partial U}{\partial x_1}d x_1 + \frac{\partial U}{\partial x_2}d x_2 \right) = 0  \]
+	
+	Оттам наклонът на кривата на безразличие е:
+	\[ \frac{dx_2}{dx_1}\Big|_{U=U^*} = -\frac{\frac{\partial U}{\partial x_1}}{\frac{\partial U}{\partial x_2}}  \]
+	
+
+\end{frame}
+
+
+\begin{frame}[fragile]\stepcounter{slidenum}
+	\frametitle{Задача на потребителя (\arabic{slidenum})}
+	\framesubtitle{Геометрична интерпретация на точката на равновесие}
+	
+	Права на бюджетното ограничение:
+	\[
+	x_2 = \frac{I}{p_2} - \frac{p_1}{p_2}x_1
+	\]
+	
+	Тогава от условията за оптималност следва, че:
+	
+	\[
+	\frac{dx_2}{dx_1} = -\frac{\frac{\partial U}{\partial x_1}}{\frac{\partial U}{\partial x_2}} = -\frac{p_1}{p_2}
+	\] \bigskip
+	
+	В оптимум наклонът на кривата на безразличие е равен на наклона на бюджетното ограничение. Точката на оптимум е мястото, където кривата на безразличие е допирателна към бюджетното ограничение.
+\end{frame}
+
+
+\begin{frame}[fragile]\stepcounter{slidenum}
+	\frametitle{Задача на потребителя (\arabic{slidenum})}
+	\framesubtitle{Пример: функция на полезност от типа Коб-Дъглас}
+	
+	\[
+	U(x_1, x_2) = x_1^{\alpha} x_2^{\beta}, \quad \alpha, \beta > 0,~ \alpha + \beta \le 1
+	\]
+	
+	Условия от първи ред:
+	\[
+	\alpha x_1^{\alpha - 1}x_2^{\beta} + \lambda p_1 = 0, \quad
+	\beta x_1^{\alpha}x_2^{\beta - 1} + \lambda p_2 = 0
+	\]
+	
+	\[
+	\Rightarrow
+	\frac{p_2}{p_1} = \frac{\beta x_1}{\alpha x_2}
+	\Rightarrow
+	x_2 = \frac{\beta p_1}{\alpha p_2}x_1
+	\]
+	
+		
+	Заместваме в бюджетното ограничение:
+	\[ p_1 x_1 + p_2 \left(\frac{\beta p_1}{\alpha p_2} x_1\right) = I \]
+	
+
+\end{frame}
+
+
+
+\begin{frame}[fragile]\stepcounter{slidenum}
+	\frametitle{Задача на потребителя (\arabic{slidenum})}
+	\framesubtitle{Пример: функция на полезност от типа Коб-Дъглас}
+	Оттам
+	\[ x_1^* = \dfrac{\alpha}{\alpha+\beta} \dfrac{I}{p_1} \]
+	
+	и съответно
+	
+	\[ x_2^* = \frac{\beta p_1}{\alpha p_2}\dfrac{\alpha}{\alpha+\beta} \dfrac{I}{p_1} \]
+	
+	Окончателно:
+	\[\boxed{
+		x_1^* = \frac{\alpha}{\alpha+\beta}\frac{I}{p_1}, \quad
+		x_2^* = \frac{\beta}{\alpha+\beta}\frac{I}{p_2}
+	}\]
+	
+\end{frame}
+
+
+\begin{frame}[fragile]\stepcounter{slidenum}
+	\frametitle{Задача на потребителя (\arabic{slidenum})}
+	\framesubtitle{Как зависи оптималната стойност $U^*$ от дохода $I$?}
+	Полезност в оптимум:
+	\[
+	U^*(p_1, p_2, I)
+	= \left(\frac{\alpha}{\alpha+\beta}\frac{I}{p_1}\right)^{\alpha}
+	\left(\frac{\beta}{\alpha+\beta}\frac{I}{p_2}\right)^{\beta}
+	= 
+	\frac{\alpha^{\alpha}\beta^{\beta}}{(\alpha+\beta)^{\alpha+\beta}}
+	\frac{I^{\alpha+\beta}}{p_1^{\alpha}p_2^{\beta}}
+	\]\bigskip
+	
+	
+Оттук имаме 
+\[
+\frac{\partial U^*}{\partial I}
+= (\alpha+\beta)
+\frac{\alpha^{\alpha}\beta^{\beta}}{(\alpha+\beta)^{\alpha+\beta}}
+\frac{I^{\alpha+\beta-1}}{p_1^{\alpha}p_2^{\beta}} = (x_1^*)^\alpha (x_2^*)^\beta \, \dfrac{\alpha+\beta}{I}
+\]
+
+\end{frame}
+
+
+\begin{frame}[fragile]\stepcounter{slidenum}
+	\frametitle{Задача на потребителя (\arabic{slidenum})}
+	\framesubtitle{Зависимост на $U^*$ от дохода $I$}
+	
+	От условията от първи ред:
+	\[
+	\beta x_1^{\alpha}x_2^{\beta-1} = -\lambda p_2
+	\quad \Rightarrow \quad
+	x_1^{\alpha}x_2^{\beta} = \frac{-\lambda p_2 x_2}{\beta}
+	\]
+	
+	Замествайки в израза за $\frac{\partial U^*}{\partial I}$:
+	\begin{equation*}
+		\begin{split}
+		\frac{\partial U^*}{\partial I}	=  \frac{(\alpha+\beta)(-\lambda) p_2 x^*_2}{I\beta} = \underbrace{\dfrac{(\alpha+\beta)p_2}{\beta I}}_{ 1/x^*_2}  x^*_2 (-\lambda)
+		\end{split}
+	\end{equation*}
+	т.е.
+	\[
+	\boxed{\frac{\partial U^*}{\partial I} = -\lambda}
+	\]
+	
+	\textbf{Интерпретация на $(-\lambda)$} 
+\end{frame}
+
+
+\begin{frame}[fragile]\setcounter{slidenum}{1}
+	\frametitle{Оптимално потребление за два периода (\arabic{slidenum})}
+	\framesubtitle{Формулировка}
+	\begin{itemize}\itemsep1em
+		\item Икономически агент живее 2 периода 
+		\item В първия период получава доход $y$
+		\item Потребява се една стока с цена $p=1$ и за двата периода. Потреблението в периоди 1 и 2 е съответно $c_1$ и $c_2$.
+		\item Част от дохода може да се спести за втория период, като спестяванията се олихвяват с лихвен процент $ r $, т.е. във втория период агентът има на разположение \[ (y-c_1)(1+r) \]
+		\item Наличните финансови ресурси в период 2 се използват за потребление
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]\stepcounter{slidenum}
+	\frametitle{Оптимално потребление за два периода (\arabic{slidenum})}
+	\framesubtitle{Формулировка}
+	\begin{itemize}\itemsep1em
+		\item Функция на полезност:
+		\[ U(c_1,c_2) = \ln c_1 + \beta \ln c_2, \quad \beta \in (0,1) \]
+		\begin{itemize}
+			\item Интерпретация; случаите $\beta \rightarrow 0$ и $\beta \rightarrow 1$
+		\end{itemize}
+		\item \textbf{Задача}
+		\[ \max_{c_1,c_2} U(c_1,c_2)  \] при условие \[ c_2 = (y - c_1)(1 + r) \]
+		\item 	Бюджетното ограничение може да се запише и като:
+		\[	c_1 + \frac{c_2}{1 + r} = y \]
+		
+		{\small Интерпретация}
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]\stepcounter{slidenum}
+	\frametitle{Оптимално потребление за два периода (\arabic{slidenum})}
+	\framesubtitle{Решение}
+
+	Лагранжиан:
+	\[ \mathcal{L} = \ln c_1 + \beta \ln c_2 + \lambda \left( c_1 + \frac{c_2}{1 + r} - y \right) \]
+
+
+	НУ:	
+	\[ \frac{\partial \mathcal{L}}{\partial c_1} = \frac{1}{c_1} + \lambda = 0 \quad\Rightarrow\quad \lambda = -\frac{1}{c_1}	\]
+	
+	\[ \frac{\partial \mathcal{L}}{\partial c_2} = \frac{\beta}{c_2} + \frac{\lambda}{1 + r} = 0 \quad\Rightarrow\quad \lambda = -\frac{\beta (1 + r)}{c_2} \] \bigskip
+	
+	Елиминираме $\lambda$: \[ c_2 = \beta (1 + r) c_1 \] \smallskip
+	
+	(интерпретация: кога $c_2 \lesseqgtr c_1$ ?)
+\end{frame}
+
+\begin{frame}[fragile]\stepcounter{slidenum}
+	\frametitle{Оптимално потребление за два периода (\arabic{slidenum})}
+	\framesubtitle{Решение}
+
+Заместваме получения израз за $c_2$ в бюджетното ограничение:
+\[ c_1 + \frac{\beta (1 + r) c_1}{1 + r} = y \quad\Rightarrow\quad c_1^* = \frac{y}{1 + \beta} \]
+
+Тогава
+\[ c_2^* = (1 + r) \frac{\beta}{1 + \beta}y \]
+\end{frame}
+
+
+\begin{frame}[fragile]\setcounter{slidenum}{1}
+	\frametitle{Оптимално потребление за три периода (\arabic{slidenum})}
+	\framesubtitle{Формулировка}
+	\begin{itemize}\itemsep1em
+		\item Отново доход $y$ се получава само в първия период
+		\item Потребява се една стока с постоянна цена $p=1$ и за трите периода
+		\item \textbf{Задача}
+		\[\max_{c_1,c_2,c_3} U(c_1, c_2, c_3) = \ln c_1 + \beta \ln c_2 + \beta^2 \ln c_3 \]
+		 при условие \[ c_1 + \frac{c_2}{1 + r} + \frac{c_3}{(1 + r)^2} = y \]
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]\stepcounter{slidenum}
+	\frametitle{Оптимално потребление за три периода (\arabic{slidenum})}
+	\framesubtitle{Решение}
+
+Лагранжиан:
+\[ \mathcal{L} = \ln c_1 + \beta \ln c_2 + \beta^2 \ln c_3 + \lambda \left( c_1 + \frac{c_2}{1 + r} + \frac{c_3}{(1 + r)^2} - y \right) \]
+
+НУ:
+\[ \frac{\partial \mathcal{L}}{\partial c_1} = \frac{1}{c_1} + \lambda = 0 
+\quad \Rightarrow \quad \lambda = -\frac{1}{c_1} \]
+
+\[ \frac{\partial \mathcal{L}}{\partial c_2} = \frac{\beta}{c_2} + \frac{\lambda}{1 + r} = 0 
+\quad \Rightarrow \quad \lambda = -\frac{\beta(1 + r)}{c_2} \]
+
+\[ \frac{\partial \mathcal{L}}{\partial c_3} = \frac{\beta^2}{c_3} + \frac{\lambda}{(1 + r)^2} = 0 
+\quad \Rightarrow \quad \lambda = -\frac{\beta^2(1 + r)^2}{c_3} \]
+\end{frame}
+
+
+\begin{frame}[fragile]\stepcounter{slidenum}
+	\frametitle{Оптимално потребление за три периода (\arabic{slidenum})}
+	\framesubtitle{Решение}
+	Тогава:
+	\[ 	\frac{c_2}{c_1} = \beta(1 + r)	\]
+	
+	\[	\frac{c_3}{c_2} = \frac{\beta^2(1 + r)^2}{\beta(1 + r)} = \beta(1 + r)	\] \bigskip
+	
+	Т.е. връзката между потребленията в съседни периоди се запазва като структура и за задача с по-голям брой периоди.
+\end{frame}
+
+
+\begin{frame}[fragile]\setcounter{slidenum}{1}
+	\frametitle{Елементи от теорията на производството (\arabic{slidenum})}
+	\framesubtitle{}
+Производствена функция:
+\[ F(x_1, \ldots, x_n) \]
+
+$x_1,\ldots,x_n$ -- производствени фактори \bigskip
+
+Свойства на $F$:
+\[ \frac{\partial F}{\partial x_i} > 0, \qquad \frac{\partial^2 F}{\partial x_i^2} \le 0 \]
+
+$\frac{\partial F}{\partial x_i}$ -- пределен продукт на фактор $i$ \bigskip
+
+Аналогично на теорията на полезността се предполагат намаляващи пределни продукти на съответните фактори.
+
+\end{frame}
+
+
+\begin{frame}[fragile]\stepcounter{slidenum}
+	\frametitle{Елементи от теорията на производството (\arabic{slidenum})}
+	\framesubtitle{}
+	Примери за двуфакторни производствени функции:
+	
+	\[	F(x_1, x_2) = a x_1 + b x_2,~a,b>0 ~\longrightarrow~ \text{идеални заместители}	\]
+	
+	\[	F(x_1, x_2) = \min\{a x_1, b x_2\},~a,b>0 ~\longrightarrow~ \text{идеално допълващи се}	\]
+	
+	\[	F(x_1, x_2) = A x_1^{\alpha} x_2^{\beta}, \quad A, \alpha, \beta > 0, \; \alpha + \beta = 1 ~\longrightarrow~ \text{Коб-Дъглас} \]
+\end{frame}
+
+
+\begin{frame}[fragile]\stepcounter{slidenum}
+	\frametitle{Елементи от теорията на производството (\arabic{slidenum})}
+	\framesubtitle{}
+	По аналогия с теорията на полезността можем да изследваме как могат да се заместват производствените фактори, така че да се запази дадено ниво на производство:
+	\[ dF(x_1, x_2) = 0 \Rightarrow \frac{\partial F}{\partial x_1} dx_1 + \frac{\partial F}{\partial x_2} dx_2 = 0	\]
+	
+	\[ \underbrace{\frac{dx_2}{dx_1}}_{\text{MRTS}} = - \frac{\frac{\partial F}{\partial x_1}}{\frac{\partial F}{\partial x_2}} \]
+	
+	MRTS – пределна норма на техническо заместване
+\end{frame}
+
+\begin{frame}[fragile]\stepcounter{slidenum}
+	\frametitle{Елементи от теорията на производството (\arabic{slidenum})}
+	\framesubtitle{Максимизиране на печалбата}
+	Печалба:
+	\[	\Pi = p F(x_1, x_2) - w_1 x_1 - w_2 x_2	\]
+	
+	$p$ -- цена на стоката, $x_i$ -- използвани количества от производствените фактори, $w_i$ -- цени на производствените фактори \bigskip
+	
+	Задачата е $$ \max_{x_1, x_2} \Pi ,$$
+	т.е. максимизираме по количествата на производствените фактори, които влагаме в производството. \bigskip
+	
+	Тази постановка предполага, че всичко произведено може да бъде продадено по фиксираната цена $p$, която не се влияе от действията на разглежданата фирма.
+
+\end{frame}
+
+\begin{frame}[fragile]\stepcounter{slidenum}
+	\frametitle{Елементи от теорията на производството (\arabic{slidenum})}
+	\framesubtitle{Максимизиране на печалбата}
+
+	
+	НУ:
+	\[ \frac{\partial \Pi}{\partial x_i} = p \frac{\partial F}{\partial x_i} - w_i = 0 \quad\Rightarrow\quad \frac{\partial F}{\partial x_i} = \frac{w_i}{p}, ~i=1,2 \] \medskip
+	
+	
+	Интерпретация на НУ:
+	\begin{itemize}\itemsep1em
+		\item пределен продукт = \textbf{реална} цена на съответния фактор
+		\item $p\frac{\partial F}{\partial x_i} = w_i$ $\rightarrow$ стойност на пределния продукт = цена на фактора
+	\end{itemize} \medskip
+	
+	Очевидно постановката директно се пренася за общия случай на $n$ производствени фактора.
+\end{frame}
+
+\end{document}
+
+
